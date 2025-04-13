@@ -301,18 +301,29 @@ static tree_t* _parse_array_declaration(token_t** curr) {
 static tree_t* _parse_expression(token_t** curr) {
     if (!curr || !*curr) return NULL;
     token_t* left = *curr;
+
+    if ((*curr)->t_type == CALL_TOKEN) return _parse_function_call(curr);
+    else if ((*curr)->t_type == SYSCALL_TOKEN) return _parse_syscall(curr);
+    
+    /*
+    If variable is pointer type like array, string or ptr, 
+    we parse additional info about index, if it exist.
+    */
+    tree_t* left_node = NULL;
     if (
         (*curr)->t_type == ARR_VARIABLE_TOKEN || 
         (*curr)->t_type == STR_VARIABLE_TOKEN ||
         (*curr)->t_type == PTR_VARIABLE_TOKEN
-    ) return _parse_array_expression(curr);
-    else if ((*curr)->t_type == SYSCALL_TOKEN) return _parse_syscall(curr);
-    else if ((*curr)->t_type == CALL_TOKEN) return _parse_function_call(curr);
+    ) { 
+        left_node = _parse_array_expression(curr);
+    }
+    else {
+        left_node = _create_tree_node(left);
+        *curr = left->next;
+    }
     
-    tree_t* left_node = _create_tree_node(left);
     __fill_variable(left_node);
     
-    *curr = left->next;
     token_t* assign_token = *curr;
     if (!assign_token || assign_token->t_type == DELIMITER_TOKEN || assign_token->t_type == CLOSE_INDEX_TOKEN) {
         return left_node;
@@ -322,8 +333,9 @@ static tree_t* _parse_expression(token_t** curr) {
     tree_t* assign_node = _create_tree_node(assign_token);
 
     *curr = (*curr)->next;
-    if ((*curr)->t_type == SYSCALL_TOKEN) right = _parse_syscall(curr);
+    if ((*curr)->t_type == ARR_VARIABLE_TOKEN || (*curr)->t_type == STR_VARIABLE_TOKEN) right = _parse_array_expression(curr);
     else if ((*curr)->t_type == CALL_TOKEN) right = _parse_function_call(curr);
+    else if ((*curr)->t_type == SYSCALL_TOKEN) return _parse_syscall(curr);
     else right = _parse_expression(curr);
     
     _add_child_node(assign_node, left_node);
@@ -340,20 +352,8 @@ static tree_t* _parse_array_expression(token_t** curr) {
         tree_t* offset_exp = _parse_expression(&((*curr)->next));
         while (*curr && (*curr)->t_type != CLOSE_INDEX_TOKEN) (*curr) = (*curr)->next;
         _add_child_node(arr_name_node, offset_exp);
-
         *curr = (*curr)->next;
-        token_t* assign_token = *curr;
-        if (!assign_token || assign_token->t_type == DELIMITER_TOKEN) {
-            return arr_name_node;
-        }
-
-        tree_t* assign_node = _create_tree_node(assign_token);
-        *curr = (*curr)->next;
-        tree_t* right = _parse_expression(curr);
-
-        _add_child_node(assign_node, arr_name_node);
-        if (right) _add_child_node(assign_node, right);
-        return assign_node;
+        return arr_name_node;
     }
 
     return arr_name_node;
