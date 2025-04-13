@@ -26,7 +26,6 @@ typedef enum {
     CLOSE_INDEX_TOKEN,
 
     // Types
-    PTR_TYPE_TOKEN,
     INT_TYPE_TOKEN,
     SHORT_TYPE_TOKEN,
     CHAR_TYPE_TOKEN,
@@ -67,7 +66,6 @@ typedef enum {
     LARGER_TOKEN,
 
     // Vars
-    PTR_VARIABLE_TOKEN,
     INT_VARIABLE_TOKEN,
     SHORT_VARIABLE_TOKEN,
     CHAR_VARIABLE_TOKEN,

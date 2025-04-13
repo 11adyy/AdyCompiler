@@ -1,6 +1,7 @@
 start
-    function printNum ptr buffer; int num; int size; fstart
-        int buffIndex = size - 1;
+    function printNum int num; fstart
+        int buffIndex = 19;
+        str buff = "                    ";
         int tmp = 0;
         while num > 0; lstart
             tmp = num / 10;
@@ -8,18 +9,15 @@ start
             tmp = num - tmp;
             tmp = tmp + 48;
 
-            buffer[buffIndex] = tmp;
+            buff[buffIndex] = tmp;
             buffIndex = buffIndex - 1;
 
             num = num / 10;
         lend
-        
-        syscall 4 1 buffer size;
+
+        syscall 4 1 buff 20;
     fend 1;
     
-    arr printBuffer 20 1 =;
-    ptr bufferPtr = printBuffer;
-
     int a = 0;
     int b = 1;
     int c = 0;
@@ -28,7 +26,7 @@ start
         c = a + b;
         a = b;
         b = c;
-        callfunc printNum bufferPtr c 20;
+        callfunc printNum c;
         count = count + 1;
     lend
 exit 1;

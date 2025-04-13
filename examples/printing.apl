@@ -10,15 +10,15 @@ start
         Print result of arithmetic operations.
     :
     str buffer = "   ";
-    char new = c + 48;
-    buffer[0] = new;
+    c = c + 48;
+    buffer[0] = c;
     syscall stdout 1 buffer 3;
 
     :
         Getting value on index 2 and printing on the screen.
     :
-    arr array 7 4 = 1 2 3 4 5 6 7;
-    int thirdelem = array[3];
+    arr array 7 4 = 1 2 3 4 5 6 7;          : Array initialization :
+    int thirdelem = array[3];               : Getting third index :
     thirdelem = thirdelem + 48;
     str input = "         ";
     input[0] = thirdelem;
