@@ -6,54 +6,43 @@ Also hello world program
 :
 
 start
-    function printStr int ptr; int size; fstart
-    :
-        Print string to console.
-        Params 
-            - ptr - Pointer to string.
-            - size - String size.
-    :
-        syscall 4 1 ptr size;
-    fend 1;
-
-    str welcomeMsg = "Brainfuck interpriter! Input code ";
-    callfunc printStr welcomeMsg 34;
+    str startBrk = "start ["; : 7 :
+    str endBrk = "end ]"; : 5 :
 
     arr code 10000 1 =;
-    syscall 3 0 code 10000;
+    syscall 3 0 code 139;
+    arr brk 1 1 = 32;
 
-    char brk = 0;
     int codelength = 0;
-    while code[codelength] != brk; lstart
+    while code[codelength] != brk[0]; lstart
         codelength = codelength + 1;
     lend
+
+    : syscall 4 1 code codelength; :
+    : syscall 4 1 startBrk 7; :
+    : syscall 4 1 endBrk 5; :
+    arr codes 2 1 = 91 93;
 
     arr bracketmap 10000 4 =;
     arr stack 10000 4 =;
     int stackptr = 0;
     int pos = 0;
 
-    char plus           = 43; : + :
-    char minus          = 45; : - :
-    char dot            = 46; : . :
-    char comma          = 44; : , :
-    char leftMove       = 60; : < :
-    char rightMove      = 62; : > :
-    char openBracket    = 91; : [ :
-    char closedBracket  = 93; : ] :
 
     while pos < codelength; lstart
-        char c = code[pos];
+        int c = code[pos];
         int handled = 0;
 
-        if c == openBracket; ifstart
+        if code[pos] == codes[0]; ifstart
             stack[stackptr] = pos;
             stackptr = stackptr + 1;
             handled = 1;
+            syscall 4 1 startBrk 7;
         ifend
         
         if handled == 0; ifstart
-            if c == closedBracket; ifstart
+            if code[pos] == codes[1]; ifstart
+                syscall 4 1 endBrk 5;
                 if stackptr > 0; ifstart
                     stackptr = stackptr - 1;
                     int matchpos = stack[stackptr];
@@ -67,23 +56,23 @@ start
         
         pos = pos + 1;
     lend
-    
+
     arr tape 30000 1 =;
     int pointer = 0;
     int pc = 0;
 
     while pc < codelength; lstart
-        char cmd = code[pc];
+        int cmd = code[pc];
         int processed = 0;
         
-        if cmd == rightMove; ifstart
+        if cmd == 62; ifstart
             pointer = pointer + 1;
             pc = pc + 1;
             processed = 1;
         ifend
 
         if processed == 0; ifstart
-            if cmd == leftMove; ifstart
+            if cmd == 60; ifstart
                 pointer = pointer - 1;
                 pc = pc + 1;
                 processed = 1;
@@ -91,7 +80,7 @@ start
         ifend
 
         if processed == 0; ifstart
-            if cmd == plus; ifstart
+            if cmd == 43; ifstart
                 tape[pointer] = tape[pointer] + 1;
                 pc = pc + 1;
                 processed = 1;
@@ -99,7 +88,7 @@ start
         ifend
         
         if processed == 0; ifstart
-            if cmd == minus; ifstart
+            if cmd == 45; ifstart
                 tape[pointer] = tape[pointer] - 1;
                 pc = pc + 1;
                 processed = 1;
@@ -107,18 +96,18 @@ start
         ifend
         
         if processed == 0; ifstart
-            if cmd == dot; ifstart
-                str fbuf = "  ";
+            if cmd == 46; ifstart
+                arr fbuf 2 1 =;
                 fbuf[0] = tape[pointer];
-                callfunc printStr fbuf 2;
+                syscall 4 1 fbuf 1;
                 pc = pc + 1;
                 processed = 1;
             ifend
         ifend
         
         if processed == 0; ifstart
-            if cmd == comma; ifstart
-                str sbuf = "  ";
+            if cmd == 44; ifstart
+                arr sbuf 2 1 =;
                 syscall 3 0 sbuf 1;
                 tape[pointer] = sbuf[0];
                 pc = pc + 1;
@@ -127,11 +116,11 @@ start
         ifend
         
         if processed == 0; ifstart
-            if cmd == openBracket; ifstart
-                if tape[pointer] == brk; ifstart
-                    pc = bracketmap[pc] + 1;
+            if cmd == 91; ifstart
+                if tape[pointer] == 0; ifstart
+                    pc = bracketmap[pc];
                 ifend
-                if tape[pointer] != brk; ifstart
+                if tape[pointer] != 0; ifstart
                     pc = pc + 1;
                 ifend
                 processed = 1;
@@ -139,12 +128,13 @@ start
         ifend
         
         if processed == 0; ifstart
-            if cmd == closedBracket; ifstart
-                if tape[pointer] != brk; ifstart
-                    pc = bracketmap[pc] + 1;
+            if cmd == 93; ifstart
+                int temppc = pc;
+                if tape[pointer] != 0; ifstart
+                    pc = bracketmap[temppc];
                 ifend
-                if tape[pointer] == brk; ifstart
-                    pc = pc + 1;
+                if tape[pointer] == 0; ifstart
+                    pc = temppc + 1;
                 ifend
                 processed = 1;
             ifend
