@@ -1,6 +1,6 @@
-# AdyCompiler Language Reference
+# AdyCompiler Reference
 
-**AdyCompiler** is a compact hobby compile for language with a simple syntax, inspired by C and assembly. It is designed for studying compilation, interpreter creation, translation, and low-level code generation.
+**AdyCompiler** is a compact hobby compile for Ady Programming Language with a simple syntax, inspired by C and assembly. It is designed for studying compilation, interpreter creation, translation, and low-level code generation.
 
 ---
 
