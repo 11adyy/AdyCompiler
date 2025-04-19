@@ -12,12 +12,10 @@
 #define CLOSE_BLOCK     "}"
 
 // Function
-#define FUNCTION_COMMAND "function"
+#define FUNCTION_COMMAND        "function"
 
 // Types
-#define PTR_COMMAND     "ptr"
-#define RO_COMMAND      "ro"
-#define GLOB_COMMAND    "glob"
+#define PTR_VARIABLE    "ptr"
 #define INT_VARIABLE    "int"
 #define SHORT_VARIABLE  "short"
 #define CHAR_VARIABLE   "char"
@@ -25,13 +23,9 @@
 #define ARR_VARIABLE    "arr"
 
 // Commands
-#define SWITCH_COMMAND  "switch"
-#define CASE_COMMAND    "case"
-#define DEFAULT_COMMAND "default"
-#define WHILE_COMAND    "while"
-#define IF_COMMAND      "if"
-#define ELSE_COMMAND    "else"
-#define SYSCALL_COMMAND "syscall"
+#define WHILE_COMAND        "while"
+#define IF_COMMAND          "if"
+#define SYSCALL_COMMAND     "syscall"
 
 // Symbols and statements (Operands)
 #define ASIGN_STATEMENT         "="

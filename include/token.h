@@ -12,10 +12,12 @@
 #define TOKEN_MAX_SIZE  128
 #define BUFFER_SIZE     8192
 
+
 typedef enum {
     // Unknowns
     UNKNOWN_STRING_TOKEN,
     UNKNOWN_NUMERIC_TOKEN,
+    UNKNOWN_SYMBOL_TOKEN,
     UNKNOWN_COMMAND_TOKEN,
 
     COMMENT_TOKEN,
@@ -26,12 +28,13 @@ typedef enum {
     CLOSE_BLOCK_TOKEN,
 
     // Types
+    PTR_TYPE_TOKEN,
     INT_TYPE_TOKEN,
     SHORT_TYPE_TOKEN,
     CHAR_TYPE_TOKEN,
-    STR_TYPE_TOKEN,
+    STRING_TYPE_TOKEN,
     ARRAY_TYPE_TOKEN,
-    
+
     // Commands
     IMPORT_TOKEN,
     IMPORT_SELECT_TOKEN,
@@ -41,18 +44,16 @@ typedef enum {
     SYSCALL_TOKEN,
     CALL_TOKEN,
     LABEL_TOKEN,
-    
+
     // Function
     FUNC_TOKEN,
     
-    // Condition scope
-    SWITCH_TOKEN,
-    CASE_TOKEN,
-    DEFAULT_TOKEN,
+    // While
     WHILE_TOKEN,
-    IF_TOKEN,
-    ELSE_TOKEN,
     
+    // If
+    IF_TOKEN,
+
     // Statements
     PLUS_TOKEN,
     MINUS_TOKEN,
@@ -67,11 +68,9 @@ typedef enum {
     BITMOVE_RIGHT_TOKEN,
     BITAND_TOKEN,
     BITOR_TOKEN,
-    
+
     // Vars
-    PTR_TYPE_TOKEN,
-    RO_TYPE_TOKEN,
-    GLOB_TYPE_TOKEN,
+    PTR_VARIABLE_TOKEN,
     INT_VARIABLE_TOKEN,
     SHORT_VARIABLE_TOKEN,
     CHAR_VARIABLE_TOKEN,
@@ -79,15 +78,14 @@ typedef enum {
     ARR_VARIABLE_TOKEN,
 
     // Values
-    STRING_VALUE_TOKEN,
-    CHAR_VALUE_TOKEN
+    INT_VALUE_TOKEN,
+    STRING_VALUE_TOKEN
 } token_type_t;
 
 typedef enum {
     CHAR_ALPHA,
     CHAR_DIGIT,
     CHAR_QUOTE,
-    CHAR_SING_QUOTE,
     CHAR_OPEN_INDEX,
     CHAR_CLOSE_INDEX,
     CHAR_OTHER,
@@ -98,18 +96,10 @@ typedef enum {
 } char_type_t;
 
 typedef struct token {
-    // Token compiler information
-    int ro;   // ReadOnly flag
-    int glob; // Global flag
-    int ptr;  // Is pointer flag
     token_type_t t_type;
-    unsigned char value[TOKEN_MAX_SIZE];
-
-    // Arch information
-    struct token* next;
-    
-    // Symantic information
     int line_number;
+    unsigned char value[TOKEN_MAX_SIZE];
+    struct token* next;
 } token_t;
 
 

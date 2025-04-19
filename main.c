@@ -12,6 +12,7 @@ int main(int argc, char* argv[]) {
     mm_init();
     params_t p = { .save_asm = 0, .syntax = 0 };
 
+    int first = 1;
     char* output_location = NULL;
     for (int i = 1; i < argc; i++) {
         if (!str_strcmp(argv[i], "-h")) {
@@ -32,12 +33,13 @@ int main(int argc, char* argv[]) {
                 return EXIT_FAILURE;
             }
 
-            builder_add_file(argv[i]);
+            build(argv[i], first);
+            first = 0;
         }
     }
 
     set_params(&p);
-    int build_res = builder_compile(output_location);
+    int build_res = build_all(output_location);
     if (!build_res) {
         print_error("Error via compilation! Code: %i", build_res);
         return EXIT_FAILURE;
