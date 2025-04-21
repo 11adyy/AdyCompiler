@@ -2,7 +2,7 @@ from "string.apl" import prints gets;
 
 :
 Brainfuck interpriter on APL
-For work test, input "++++++++[>++++++++<-]>+." sequence. Interpriter should return 'A' character.
+For work test, input ++++++++[>++++++++<-]>+. sequence. Interpriter should return 'A' character.
 Also hello world program
 ++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.
 
@@ -149,4 +149,4 @@ start
         }
     }
 
-exit 0;
+exit 1;
