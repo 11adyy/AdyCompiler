@@ -62,54 +62,85 @@ start
     int pc = 0;
 
     while pc < codelength; {
-        switch code[pc]; {
-            case rightMove; {
-                pointer = pointer + 1;
-                pc = pc + 1;
-            }
-            case leftMove; {
+        char cmd = code[pc];
+        int processed = 0;
+        
+        if cmd == rightMove; {
+            pointer = pointer + 1;
+            pc = pc + 1;
+            processed = 1;
+        }
+
+        if processed == 0; {
+            if cmd == leftMove; {
                 pointer = pointer - 1;
                 pc = pc + 1;
+                processed = 1;
             }
-            case plus; {
+        }
+
+        if processed == 0; {
+            if cmd == plus; {
                 tape[pointer] = tape[pointer] + 1;
                 pc = pc + 1;
+                processed = 1;
             }
-            case minus; {
+        }
+        
+        if processed == 0; {
+            if cmd == minus; {
                 tape[pointer] = tape[pointer] - 1;
                 pc = pc + 1;
+                processed = 1;
             }
-            case dot; {
+        }
+        
+        if processed == 0; {
+            if cmd == dot; {
                 arr fbuf 2 char = 10 0;
                 fbuf[0] = tape[pointer];
                 prints fbuf;
                 pc = pc + 1;
+                processed = 1;
             }
-            case comma; {
+        }
+        
+        if processed == 0; {
+            if cmd == comma; {
                 arr sbuf 2 char = 10 0;
-                gets sbuf 2;
+                gets sbuf 1;
                 tape[pointer] = sbuf[0];
                 pc = pc + 1;
+                processed = 1;
             }
-            case openBracket; {
+        }
+        
+        if processed == 0; {
+            if cmd == openBracket; {
                 if tape[pointer] == brk; {
                     pc = bracketmap[pc] + 1;
                 }
-                else {
+                if tape[pointer] != brk; {
                     pc = pc + 1;
                 }
+                processed = 1;
             }
-            case closedBracket; {
+        }
+        
+        if processed == 0; {
+            if cmd == closedBracket; {
                 if tape[pointer] != brk; {
                     pc = bracketmap[pc] + 1;
                 }
-                else {
+                if tape[pointer] == brk; {
                     pc = pc + 1;
                 }
+                processed = 1;
             }
-            default {
-                pc = pc + 1;
-            }
+        }
+        
+        if processed == 0; {
+            pc = pc + 1;
         }
     }
 

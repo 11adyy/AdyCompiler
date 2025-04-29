@@ -1,7 +1,7 @@
 from "string.apl" import prints;
 
 start
-    int option = 12;
+    int option = 10;
     switch option; {
         case 1; {
             prints "1!";
@@ -29,9 +29,6 @@ start
         }
         case 11; {
             prints "11!";
-        }
-        default {
-            prints "default!";
         }
     }
 exit 1;
