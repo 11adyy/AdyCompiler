@@ -1,4 +1,4 @@
-from "string.apl" import prints gets strlen;
+from "string.apl" import prints gets itoa;
 
 :
 Brainfuck interpriter on APL
