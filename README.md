@@ -16,7 +16,8 @@
 
 # Summary
 
-**AdyCompiler** is a compact hobby compiler for `Ady Programming Language` with a simple syntax, inspired by C and assembly. It is designed for studying compilation, code optimization, translation, and low-level microcode generation.
+**AdyCompiler** is a compact hobby compiler for `Ady Programming Language` with a simple syntax, inspired by C and assembly. It is designed for studying compilation, code optimization, translation, and low-level microcode generation. </br>
+**Main goal** of this project is learning of compilers architecture and porting one to `AdyOS` project.
 
 ---
 
@@ -36,7 +37,7 @@ Main idea of this compiler is simplification of architecture of real compilers l
 - deadopt - [WIP algorithm. See description here: https://en.wikipedia.org/wiki/Control_flow]
 
 After compiler optimization, we go into the `backend`.</br>
-In backend we generate ASM microcode, whose architecture depends on the target system architecture, such as `x86_64` or `x86_32`.
+In backend we generate ASM microcode (WIP opcodes and ELF executable), whose architecture depends on the target system architecture, such as `x86_64` or `x86_32`.
 
 ## AST
 
@@ -48,7 +49,7 @@ A number of compilers generate an Abstract Syntax Tree (next `AST`), and this on
             [expression]
                 [...]
 
-- `CALL_TOKEN` - This token tells us, that the next few tokens are the function name and the function's input arguments. Token itself is the function name: </br>
+- `CALL_TOKEN` - This token tells us, that the next few tokens are the function name and the function's input arguments. Token itself is the nfunction name: </br>
 
         [CALL_TOKEN (name)]
             [SCOPE]
@@ -78,16 +79,16 @@ A number of compilers generate an Abstract Syntax Tree (next `AST`), and this on
 Every program begins with the `start` entrypoint and ends with the `exit [return_code];` statement.
 
 ```
-start 
-    ... // code 
-exit 0;
+    start 
+        ... // code 
+    exit 0;
 ```
 
 Also every program can contain `pre-implemented` code blocks and data segments:
 
 ```
     function a ; { }
-    glob int b = 0;
+    glob int a = 0;
 
     start
     exit 0;
@@ -211,19 +212,19 @@ Functions are declared using the `function` keyword.
 ### String Input/Output
 
 ```
-    syscall(4, 1, ptr, size);
-    syscall(3, 0, ptr, size);
+    syscall 4 1 ptr size;
+    syscall 3 0 ptr size;
 ```
 
 ### Wrapping in a function:
 
 ```
     function printStr ptr char buffer; int size; {
-        return syscall(4, 1, buffer, size); 
+        return syscall 4 1 buffer size; 
     }
 
     function getStr ptr char buffer; int size; {
-        return syscall(3, 0, buffer, size); 
+        return syscall 3 0 buffer size; 
     }
 ```
 
@@ -299,8 +300,8 @@ If you want see more examples, please look into the folder `examples`.
 
 # Links
 
-- [Compiler architecture](https://cs.lmu.edu/~ray/notes/compilerarchitecture/) </br>
-- [GCC architecture](https://en.wikibooks.org/wiki/GNU_C_Compiler_Internals/GNU_C_Compiler_Architecture) </br>
-- [AST tips](https://dev.to/balapriya/abstract-syntax-tree-ast-explained-in-plain-english-1h38) </br>
-- [Control flow algorithm](https://en.wikipedia.org/wiki/Control_flow) </br>
-- [Summary about optimization](https://en.wikipedia.org/wiki/Optimizing_compiler) </br>
+[Compiler architecture](https://cs.lmu.edu/~ray/notes/compilerarchitecture/) </br>
+[GCC architecture](https://en.wikibooks.org/wiki/GNU_C_Compiler_Internals/GNU_C_Compiler_Architecture) </br>
+[AST tips](https://dev.to/balapriya/abstract-syntax-tree-ast-explained-in-plain-english-1h38) </br>
+[Control flow algorithm](https://en.wikipedia.org/wiki/Control_flow) </br>
+[Summary about optimization](https://en.wikipedia.org/wiki/Optimizing_compiler) </br>
