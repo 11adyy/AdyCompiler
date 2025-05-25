@@ -4,4 +4,3 @@
 builds/
 .DS_Store
 *.asm
-*.o
