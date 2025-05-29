@@ -1,4 +1,5 @@
-#include <optimization.h>
+#include "../../include/optimization.h"
+
 
 static int _find_assign(tree_t* root, char* varname, int* status, int local) {
     if (!root) return 0;

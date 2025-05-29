@@ -1,4 +1,5 @@
-#include <varmem.h>
+#include "../../include/varmem.h"
+
 
 static variable_info_t* _vars_h = NULL;
 static int _current_offset_var = 0;

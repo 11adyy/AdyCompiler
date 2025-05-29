@@ -1,4 +1,5 @@
-#include <optimization.h>
+#include "../../include/optimization.h"
+
 
 static int _find_usage(tree_t* root, const char* varname, int* status, int local, int offset) {
     if (!root) return 0;

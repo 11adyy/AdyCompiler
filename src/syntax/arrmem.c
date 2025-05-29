@@ -1,4 +1,5 @@
-#include <arrmem.h>
+#include "../../include/arrmem.h"
+
 
 static array_info_t* _arrs_h = NULL;
 

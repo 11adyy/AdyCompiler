@@ -1,4 +1,5 @@
-#include <optimization.h>
+#include "../../include/optimization.h"
+
 
 static int _recalc_offs(tree_t* root, const char* func) {
     if (!root) return 0;

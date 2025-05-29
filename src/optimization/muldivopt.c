@@ -1,4 +1,5 @@
-#include <optimization.h>
+#include "../../include/optimization.h"
+
 
 static int _find_muldiv(tree_t* root, int* fold) {
     if (!root) return 0;

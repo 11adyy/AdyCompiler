@@ -1,4 +1,5 @@
-#include <generator.h>
+#include "../include/generator.h"
+
 
 static int _label_counter = 0;
 static int _current_depth = 1;
