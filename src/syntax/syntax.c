@@ -1,5 +1,4 @@
-#include "../../include/syntax.h"
-
+#include <syntax.h>
 
 static char* _current_function_name = NULL;
 static tree_t* _parser_dummy(               token_t**);
@@ -548,7 +547,7 @@ static tree_t* _parse_switch_expression(token_t** curr) {
             }
             else {
                 *curr = (*curr)->next;
-                case_val = create_tree_node(create_token(DEFAULT_TOKEN, NULL, 0, 0));
+                case_val = create_tree_node(TKN_create_token(DEFAULT_TOKEN, NULL, 0, 0));
             }
             
             if (!case_val) {
@@ -656,7 +655,7 @@ tree_t* create_syntax_tree(token_t* head) {
     tree_t* body = _parse_scope(&curr_head, EXIT_TOKEN);
     if (!body) print_warn("No body in file!");
     else {
-        tree_t* exit_node = create_tree_node(create_token(EXIT_TOKEN, NULL, 0, curr_head->line_number));
+        tree_t* exit_node = create_tree_node(TKN_create_token(EXIT_TOKEN, NULL, 0, curr_head->line_number));
         if (!exit_node) {
             print_error("Exit parse error!");
             unload_syntax_tree(root);
