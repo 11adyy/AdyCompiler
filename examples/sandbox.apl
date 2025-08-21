@@ -1,9 +1,0 @@
-from "stdio.apl" import puts putc;
-start
-:
-    arr hello_str 0 char = { 'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', 10, 0 };
-    puts(hello_str);
-:
-    putc('H');
-    putc(0);
-exit 1;
