@@ -5,12 +5,9 @@ ptr - 0 we ignore ptr flag.
 Return variable bitness (size in bits). 
 */
 int VRS_variable_bitness(token_t* token, char ptr) {
-    if (!token) return 8;
+    if (!token) return 0;
     if (ptr && token->vinfo.ptr) return BASE_BITNESS;
     switch (token->t_type) {
-        case UNKNOWN_NUMERIC_TOKEN:
-        case LONG_TYPE_TOKEN:
-        case LONG_VARIABLE_TOKEN:  return 64;
         case INT_TYPE_TOKEN:
         case INT_VARIABLE_TOKEN:   return 32;
         case SHORT_TYPE_TOKEN:
@@ -18,10 +15,10 @@ int VRS_variable_bitness(token_t* token, char ptr) {
         case CHAR_TYPE_TOKEN:
         case CHAR_VALUE_TOKEN:
         case CHAR_VARIABLE_TOKEN:  return 8;
-        default:                   return 8;
+        default:                   return BASE_BITNESS;
     }
 
-    return 8;
+    return 0;
 } 
 
 /* Return 1 if token is pointer (arr, string, ptr). Otherwise return 0. */
