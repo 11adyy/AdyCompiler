@@ -16,7 +16,11 @@ TEST_SRCS[test_mrk]="src/prep/token.c src/prep/markup.c std/*.c"
 TEST_CODES[test_mrk]="tests/dummy_data/prep/markup.apl"
 
 TEST_SRCS[test_sem]="src/prep/*.c src/ast/*.c std/*.c"
-TEST_CODES[test_sem]="tests/dummy_data/prep/semantic.apl"
+TEST_CODES[test_sem]="
+    tests/dummy_data/sem/arrs.apl
+    tests/dummy_data/sem/vars.apl
+    tests/dummy_data/sem/func.apl
+"
 
 TEST_SRCS[test_ast]="src/prep/*.c src/ast/*.c std/*.c"
 TEST_CODES[test_ast]="
@@ -25,6 +29,7 @@ TEST_CODES[test_ast]="
     tests/dummy_data/ast/func.apl
     tests/dummy_data/ast/cond.apl
     tests/dummy_data/ast/oper.apl
+    tests/dummy_data/ast/stat.apl
 "
 
 # ==== Optimization testing ====
@@ -57,6 +62,7 @@ TEST_CODES[test_gen]="
     tests/dummy_data/gen/func.apl
     tests/dummy_data/gen/cond.apl
     tests/dummy_data/gen/oper.apl
+    tests/dummy_data/gen/stat.apl
 "
 
 # ======================================
