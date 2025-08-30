@@ -209,7 +209,7 @@ A number of compilers generate an Abstract Syntax Tree (next `AST`), and this on
             [LEFT expression]
             [RIGHT expression]
 
-Full text of all rules present [here](https://github.com/11adyy/AdyCompiler.PETPRJ/blob/x86_64/src/ast/README.md). Instead of wasting space, lets take a look on the visual example with translation of this code below:
+Full text of all rules present [here](https://github.com/11adyy/AdyCompiler.PETPRJ/blob/x86_64/src/ast/apl_parsers/README.md). Instead of wasting space, lets take a look on the visual example with translation of this code below:
 ```APL
 {
     start {
