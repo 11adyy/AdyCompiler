@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <syntax.h>
 #include <deadfunc.h>
+#include <apl_parser.h>
 #include "ast_helper.h"
 
 int main(int argc, char* argv[]) {
@@ -27,7 +28,23 @@ int main(int argc, char* argv[]) {
 
     arrmem_ctx_t actx = { .h = NULL };
     varmem_ctx_t vctx = { .h = NULL, .offset = 0 };
-    syntax_ctx_t sctx = { .arrs = &actx, .vars = &vctx };
+    syntax_ctx_t sctx = { 
+        .arrs = &actx, .vars = &vctx,
+        .block      = apl_parse_block,
+        .switchstmt = apl_parse_switch,
+        .condop     = apl_parse_condop,
+        .arraydecl  = apl_parse_array_declaration,
+        .vardecl    = apl_parse_variable_declaration,
+        .rexit      = apl_parse_rexit,
+        .funccall   = apl_parse_funccall,
+        .function   = apl_parse_function,
+        .import     = apl_parse_import,
+        .expr       = apl_parse_expression,
+        .scope      = apl_parse_scope,
+        .start      = apl_parse_start,
+        .syscall    = apl_parse_syscall
+    };
+    
     STX_create(tkn, &sctx);
 
     deadfunc_ctx_t dctx = { .ctx = { NULL }, .size = 0 };
