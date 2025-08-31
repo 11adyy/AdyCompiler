@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) {
 
     arrmem_ctx_t actx = { .h = NULL };
     varmem_ctx_t vctx = { .h = NULL, .offset = 0 };
-    syntax_ctx_t sctx = { 
-        .arrs = &actx, .vars = &vctx,
+    syntax_ctx_t sctx = { .arrs = &actx, .vars = &vctx };
+    parser_t p = {
         .block      = apl_parse_block,
         .switchstmt = apl_parse_switch,
         .condop     = apl_parse_condop,
@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
         .syscall    = apl_parse_syscall
     };
 
-    STX_create(tkn, &sctx);
+    STX_create(tkn, &sctx, &p);
     OPT_condunroll(&sctx);
     
     print_ast(sctx.r, 0);
