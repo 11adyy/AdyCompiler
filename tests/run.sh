@@ -20,6 +20,7 @@ TEST_CODES[test_sem]="
     tests/dummy_data/sem/arrs.apl
     tests/dummy_data/sem/vars.apl
     tests/dummy_data/sem/func.apl
+    tests/dummy_data/sem/ro.apl
 "
 
 TEST_SRCS[test_ast]="src/prep/*.c src/ast/*.c src/ast/*/*.c std/*.c"
@@ -30,6 +31,7 @@ TEST_CODES[test_ast]="
     tests/dummy_data/ast/cond.apl
     tests/dummy_data/ast/oper.apl
     tests/dummy_data/ast/stat.apl
+    tests/dummy_data/ast/error.apl
 "
 
 # ==== Optimization testing ====
