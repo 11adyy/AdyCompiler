@@ -1,5 +1,5 @@
 {
-    from "string.apl" import puts gets itoa;
+    from "string.apl" import puts, gets, itoa;
 
     :
     Brainfuck interpriter on APL

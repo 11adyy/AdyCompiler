@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <syntax.h>
+#include <markup.h>
 #include <strdecl.h>
 #include <deadscope.h>
 #include <offsetopt.h>
@@ -38,6 +39,7 @@ int main(int argc, char* argv[]) {
         .condop     = apl_parse_condop,
         .arraydecl  = apl_parse_array_declaration,
         .vardecl    = apl_parse_variable_declaration,
+        .extrn      = apl_parse_extern,
         .rexit      = apl_parse_rexit,
         .funccall   = apl_parse_funccall,
         .function   = apl_parse_function,

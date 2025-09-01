@@ -23,6 +23,7 @@ ast_node_t* apl_parse_array_declaration(token_t** curr, syntax_ctx_t* ctx, parse
 ast_node_t* apl_parse_variable_declaration(token_t** curr, syntax_ctx_t* ctx, parser_t* p);
 
 /* apl_func.c */
+ast_node_t* apl_parse_extern(token_t** curr, syntax_ctx_t* ctx, parser_t* p);
 ast_node_t* apl_parse_rexit(token_t** curr, syntax_ctx_t* ctx, parser_t* p);
 ast_node_t* apl_parse_funccall(token_t** curr, syntax_ctx_t* ctx, parser_t* p);
 ast_node_t* apl_parse_function(token_t** curr, syntax_ctx_t* ctx, parser_t* p);
