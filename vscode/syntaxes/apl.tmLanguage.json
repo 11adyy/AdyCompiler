@@ -1,0 +1,106 @@
+{
+  "scopeName": "source.apl",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#types"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#numbers"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.block.apl",
+          "begin": ":",
+          "end": ":"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.apl",
+          "match": "\\b(start|exit|return|if|else|while|switch|case|default|syscall)\\b"
+        },
+        {
+          "name": "keyword.declaration.apl",
+          "match": "\\b(function|extern|exfunc)\\b"
+        },
+        {
+          "name": "storage.type.apl",
+          "match": "\\b(int|short|long|char|str|ptr)\\b"
+        },
+        {
+          "name": "entity.name.function.apl",
+          "match": "(?<=\\bfunction\\s)\\w+"
+        },
+        {
+          "name": "entity.name.function.call.apl",
+          "match": "\\b\\w+(?=\\s*\\()"
+        },
+        {
+          "name": "variable.other.apl",
+          "match": "(?<=\\b(glob|ro)\\s+(ptr\\s+)?(int|short|long|char|str)\\s)\\w+"
+        },
+        {
+          "name": "constant.numeric.apl",
+          "match": "\\b\\d+\\b"
+        },
+        {
+          "name": "string.quoted.double.apl",
+          "begin": "\"",
+          "end": "\""
+        },
+        {
+          "name": "comment.line.apl",
+          "begin": "//",
+          "end": "$"
+        },
+        {
+          "name": "comment.block.apl",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "name": "storage.type.apl",
+          "match": "\\b(long|int|short|char|str|arr)\\b"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.apl",
+          "match": "\\\"([^\\\"\\\\]|\\\\.)*\\\""
+        },
+        {
+          "name": "string.quoted.single.apl",
+          "match": "'([^'\\\\]|\\\\.)*'"
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.apl",
+          "match": "\\b[0-9]+\\b"
+        }
+      ]
+    }
+  }
+}

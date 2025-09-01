@@ -1,0 +1,31 @@
+{
+  "name": "APL Theme",
+  "type": "dark",
+  "colors": {},
+  "tokenColors": [
+    {
+      "scope": "keyword.control.apl",
+      "settings": { "foreground": "#FF00FF" }
+    },
+    {
+      "scope": "keyword.declaration.apl",
+      "settings": { "foreground": "#FF00FF" }
+    },
+    {
+      "scope": "entity.name.function.apl, entity.name.function.call.apl",
+      "settings": { "foreground": "#FFD700" }
+    },
+    {
+      "scope": "variable.other.apl",
+      "settings": { "foreground": "#00FF00" }
+    },
+    {
+      "scope": "storage.type.apl",
+      "settings": { "foreground": "#00BFFF" }
+    },
+    {
+      "scope": "constant.numeric.apl",
+      "settings": { "foreground": "#FF4500" } 
+    }
+  ]
+}
