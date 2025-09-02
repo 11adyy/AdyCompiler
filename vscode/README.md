@@ -1,5 +1,10 @@
 
 # APL (Ady) — VS Code Extension
+
+<p align="center">
+    <img src="syntax_highlight.png" alt="Extension work example"/>
+</p>
+
 ## Quick install
 ```bash
 npm install
