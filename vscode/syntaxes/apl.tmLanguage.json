@@ -1,21 +1,13 @@
 {
   "scopeName": "source.apl",
   "patterns": [
-    {
-      "include": "#comments"
-    },
-    {
-      "include": "#keywords"
-    },
-    {
-      "include": "#types"
-    },
-    {
-      "include": "#strings"
-    },
-    {
-      "include": "#numbers"
-    }
+    { "include": "#comments" },
+    { "include": "#keywords" },
+    { "include": "#types" },
+    { "include": "#modifiers" },
+    { "include": "#strings" },
+    { "include": "#numbers" },
+    { "include": "#variables" }
   ],
   "repository": {
     "comments": {
@@ -31,15 +23,11 @@
       "patterns": [
         {
           "name": "keyword.control.apl",
-          "match": "\\b(start|exit|return|if|else|while|switch|case|default|syscall)\\b"
+          "match": "\\b(from|import|start|exit|return|if|else|while|switch|case|default|syscall)\\b"
         },
         {
           "name": "keyword.declaration.apl",
           "match": "\\b(function|extern|exfunc)\\b"
-        },
-        {
-          "name": "storage.type.apl",
-          "match": "\\b(int|short|long|char|str|ptr)\\b"
         },
         {
           "name": "entity.name.function.apl",
@@ -48,29 +36,6 @@
         {
           "name": "entity.name.function.call.apl",
           "match": "\\b\\w+(?=\\s*\\()"
-        },
-        {
-          "name": "variable.other.apl",
-          "match": "(?<=\\b(glob|ro)\\s+(ptr\\s+)?(int|short|long|char|str)\\s)\\w+"
-        },
-        {
-          "name": "constant.numeric.apl",
-          "match": "\\b\\d+\\b"
-        },
-        {
-          "name": "string.quoted.double.apl",
-          "begin": "\"",
-          "end": "\""
-        },
-        {
-          "name": "comment.line.apl",
-          "begin": "//",
-          "end": "$"
-        },
-        {
-          "name": "comment.block.apl",
-          "begin": "/\\*",
-          "end": "\\*/"
         }
       ]
     },
@@ -78,7 +43,15 @@
       "patterns": [
         {
           "name": "storage.type.apl",
-          "match": "\\b(long|int|short|char|str|arr)\\b"
+          "match": "\\b(long|int|short|char|str|arr|ptr)\\b"
+        }
+      ]
+    },
+    "modifiers": {
+      "patterns": [
+        {
+          "name": "storage.modifier.apl",
+          "match": "\\b(ro|glob)\\b"
         }
       ]
     },
@@ -99,6 +72,14 @@
         {
           "name": "constant.numeric.apl",
           "match": "\\b[0-9]+\\b"
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.other.apl",
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
         }
       ]
     }

@@ -1,9 +1,9 @@
 {
   "name": "apl-lang-simple",
-  "displayName": "APL (Ady) — Simple Support",
+  "displayName": "APL (Ady) — Language support",
   "description": "VS Code syntax highlighting + simple autocomplete for Ady (APL)",
   "version": "0.0.1",
-  "publisher": "your-name",
+  "publisher": "11adyy",
   "engines": {
     "vscode": "^1.80.0"
   },
