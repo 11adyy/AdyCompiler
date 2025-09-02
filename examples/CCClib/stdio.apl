@@ -1,6 +1,6 @@
-{
-    from "string.apl" import strlen;
+from "string.apl" import strlen;
 
+{
     function puts(ptr char string) {
         long strSize = strlen(string);
         return syscall(1, 1, string, strSize);
