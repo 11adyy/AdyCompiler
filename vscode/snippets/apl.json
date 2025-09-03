@@ -4,7 +4,7 @@
     "prefix": "start",
     "body": [
       "{",
-      "\tstart(long argc, ptr char argv) {",
+      "\tstart(long argc, ptr long argv) {",
       "\t\t$0",
       "\t\texit ${1:0};",
       "\t}",
@@ -16,7 +16,7 @@
     "scope": "apl",
     "prefix": "function",
     "body": [
-      "function name(...) {",
+      "function name(: ... :) {",
       "\t: ... :",
       "\treturn 0;",
       "}"
@@ -66,5 +66,80 @@
       "\t}",
       "}"
     ]
+  },
+  "APL Keywords Extern": {
+    "prefix": "extern",
+    "body": "extern",
+    "description": "APL keyword"
+  },
+  "APL Keywords Exfunc": {
+    "prefix": "exfunc",
+    "body": "exfunc",
+    "description": "APL keyword"
+  },
+  "APL Keywords From": {
+    "prefix": "from",
+    "body": "from",
+    "description": "APL keyword"
+  },
+  "APL Keywords Import": {
+    "prefix": "import",
+    "body": "import",
+    "description": "APL keyword"
+  },
+  "APL Keywords Exit": {
+    "prefix": "exit",
+    "body": "exit",
+    "description": "APL keyword"
+  },
+  "APL Keywords Return": {
+    "prefix": "return",
+    "body": "return",
+    "description": "APL keyword"
+  },
+  "APL Modifiers RO": {
+    "prefix": "ro",
+    "body": "ro",
+    "description": "APL modifier"
+  },
+  "APL Modifiers GLOB": {
+    "prefix": "glob",
+    "body": "glob",
+    "description": "APL modifier"
+  },
+  "APL Types PTR": {
+    "prefix": "ptr",
+    "body": "ptr",
+    "description": "APL u64 type"
+  },
+  "APL Types String": {
+    "prefix": "str",
+    "body": "str",
+    "description": "APL str type"
+  },
+  "APL Types Long": {
+    "prefix": "long",
+    "body": "long",
+    "description": "APL i64 type"
+  },
+  "APL Types Int": {
+    "prefix": "int",
+    "body": "int",
+    "description": "APL i32 type"
+  },
+  "APL Types Short": {
+    "prefix": "short",
+    "body": "short",
+    "description": "APL i16 type"
+  },
+  "APL Types Char": {
+    "prefix": "char",
+    "body": "char",
+    "description": "APL i8 type"
+  },
+  "APL Types Array": {
+    "prefix": "arr",
+    "body": "arr name[type, size] =;",
+    "description": "APL array type"
   }
 }
