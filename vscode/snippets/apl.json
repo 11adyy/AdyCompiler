@@ -107,6 +107,16 @@
     "body": "glob",
     "description": "APL modifier"
   },
+  "APL Types REF": {
+    "prefix": "ref",
+    "body": "ref",
+    "description": "APL reference operation"
+  },
+  "APL Types DREF": {
+    "prefix": "dref",
+    "body": "dref",
+    "description": "APL de-reference operation"
+  },
   "APL Types PTR": {
     "prefix": "ptr",
     "body": "ptr",
