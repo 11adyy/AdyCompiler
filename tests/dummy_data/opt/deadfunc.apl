@@ -1,7 +1,7 @@
 {
     from "asd.apl" import strlen;
 
-    function itoa(char a) {
+    function itoa(i8 a) {
         return 1;
     }
 

@@ -49,6 +49,13 @@
         "language": "apl",
         "path": "./snippets/apl.json"
       }
+    ],
+    "themes": [
+      {
+        "label": "APL Theme",
+        "uiTheme": "vs-dark",
+        "path": "./themes/apl-color-theme.json"
+      }
     ]
   },
   "scripts": {

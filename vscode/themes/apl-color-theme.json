@@ -2,30 +2,28 @@
   "name": "APL Theme",
   "type": "dark",
   "colors": {},
+  "semanticHighlighting": false,
+  
   "tokenColors": [
     {
-      "scope": "keyword.control.apl",
+      "scope": ["keyword.control.apl"],
       "settings": { "foreground": "#FF00FF" }
     },
     {
-      "scope": "keyword.declaration.apl",
+      "scope": ["keyword.declaration.apl"],
       "settings": { "foreground": "#FF00FF" }
     },
     {
-      "scope": "entity.name.function.apl, entity.name.function.call.apl",
+      "scope": ["entity.name.function.apl", "entity.name.function.call.apl"],
       "settings": { "foreground": "#FFD700" }
     },
     {
-      "scope": "variable.other.apl",
-      "settings": { "foreground": "#00FF00" }
-    },
-    {
-      "scope": "storage.type.apl",
+      "scope": ["storage.type.apl"],
       "settings": { "foreground": "#00BFFF" }
     },
     {
-      "scope": "constant.numeric.apl",
-      "settings": { "foreground": "#FF4500" } 
+      "scope": ["storage.type.primitive.apl", "source.apl storage.type.primitive", "storage.type"],
+      "settings": { "foreground": "#4fbf4f" }
     }
   ]
 }
