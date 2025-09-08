@@ -128,24 +128,44 @@
     "description": "APL str type"
   },
   "APL Types Long": {
-    "prefix": "long",
-    "body": "long",
+    "prefix": "i64",
+    "body": "i64",
     "description": "APL i64 type"
   },
   "APL Types Int": {
-    "prefix": "int",
-    "body": "int",
+    "prefix": "i32",
+    "body": "i32",
     "description": "APL i32 type"
   },
   "APL Types Short": {
-    "prefix": "short",
-    "body": "short",
+    "prefix": "i16",
+    "body": "i16",
     "description": "APL i16 type"
   },
   "APL Types Char": {
-    "prefix": "char",
-    "body": "char",
+    "prefix": "i8",
+    "body": "i8",
     "description": "APL i8 type"
+  },
+  "APL Types uLong": {
+    "prefix": "u64",
+    "body": "u64",
+    "description": "APL u64 type"
+  },
+  "APL Types uInt": {
+    "prefix": "u32",
+    "body": "u32",
+    "description": "APL u32 type"
+  },
+  "APL Types uShort": {
+    "prefix": "u16",
+    "body": "u16",
+    "description": "APL u16 type"
+  },
+  "APL Types uChar": {
+    "prefix": "u8",
+    "body": "u8",
+    "description": "APL u8 type"
   },
   "APL Types Array": {
     "prefix": "arr",
