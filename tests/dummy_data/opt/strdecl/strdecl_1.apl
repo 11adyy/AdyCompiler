@@ -1,0 +1,18 @@
+{
+    from "string.apl" import strlen;
+    start(i64 argc, ptr u64 argv) {
+        str a1 = "Hello, World!";
+        exit strlen("Hello, World!");
+    }
+}
+
+: Expected
+{
+    ro str str_0 = "Hello, World!";
+    from "string.apl" import strlen;
+    start(i64 argc, ptr u64 argv) {
+        str a1 = "Hello, World!";
+        exit strlen(str_0);
+    }
+}
+:
