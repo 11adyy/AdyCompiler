@@ -12,6 +12,15 @@
     ],
     "description": "APL program skeleton"
   },
+  "asm-block": {
+    "scope": "apl",
+    "prefix": "asm",
+    "body": [
+      "asm (var1, var2, ...) {",
+      "\t\"mov rax, &var1\"",
+      "}"
+    ]
+  },
   "function-definition": {
     "scope": "apl",
     "prefix": "function",
