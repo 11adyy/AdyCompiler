@@ -42,7 +42,8 @@ int main(int argc, char* argv[]) {
         .expr       = apl_parse_expression,
         .scope      = apl_parse_scope,
         .start      = apl_parse_start,
-        .syscall    = apl_parse_syscall
+        .syscall    = apl_parse_syscall,
+        .asmer      = apl_parse_asm
     };
 
     STX_create(tkn, &sctx, &p);

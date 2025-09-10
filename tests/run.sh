@@ -26,6 +26,7 @@ TEST_CODES[test_sem]="
     tests/dummy_data/sem/sem_3.apl
     tests/dummy_data/sem/sem_4.apl
     tests/dummy_data/sem/sem_5.apl
+    tests/dummy_data/sem/sem_6.apl
 "
 
 TEST_SRCS[test_ast]="src/prep/*.c src/ast/*.c src/ast/*/*.c std/*.c"
@@ -45,7 +46,10 @@ TEST_CODES[test_ast]="
 
 # ==== Optimization testing ====
 TEST_SRCS[test_varinline]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/opt/varinline.c std/*.c"
-TEST_CODES[test_varinline]="tests/dummy_data/opt/varinline.apl"
+TEST_CODES[test_varinline]="
+    tests/dummy_data/opt/varinline/varinline_1.apl
+    tests/dummy_data/opt/varinline/varinline_2.apl
+"
 
 TEST_SRCS[test_constopt]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/opt/varinline.c src/opt/constopt.c std/*.c"
 TEST_CODES[test_constopt]="
@@ -85,6 +89,7 @@ TEST_CODES[test_offsetopt]="
     tests/dummy_data/opt/offsetopt/offsetopt_1.apl
     tests/dummy_data/opt/offsetopt/offsetopt_2.apl
     tests/dummy_data/opt/offsetopt/offsetopt_3.apl
+    tests/dummy_data/opt/offsetopt/offsetopt_4.apl
 "
 
 # ==== Generation testing ====
