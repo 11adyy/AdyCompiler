@@ -16,15 +16,16 @@ TEST_SRCS[test_mrk]="src/prep/token.c src/prep/markup.c std/*.c"
 TEST_CODES[test_mrk]="
     tests/dummy_data/prep/markup/markup_1.apl
     tests/dummy_data/prep/markup/markup_2.apl
+    tests/dummy_data/prep/markup/markup_3.apl
 "
 
 TEST_SRCS[test_sem]="src/sem/*.c src/prep/*.c src/ast/*.c src/ast/*/*.c std/*.c"
 TEST_CODES[test_sem]="
-    tests/dummy_data/sem/size.apl
-    tests/dummy_data/sem/vars.apl
-    tests/dummy_data/sem/arrs.apl
-    tests/dummy_data/sem/func.apl
-    tests/dummy_data/sem/ro.apl
+    tests/dummy_data/sem/sem_1.apl
+    tests/dummy_data/sem/sem_2.apl
+    tests/dummy_data/sem/sem_3.apl
+    tests/dummy_data/sem/sem_4.apl
+    tests/dummy_data/sem/sem_5.apl
 "
 
 TEST_SRCS[test_ast]="src/prep/*.c src/ast/*.c src/ast/*/*.c std/*.c"
