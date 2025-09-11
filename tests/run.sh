@@ -31,17 +31,17 @@ TEST_CODES[test_sem]="
 
 TEST_SRCS[test_ast]="src/prep/*.c src/ast/*.c src/ast/*/*.c std/*.c"
 TEST_CODES[test_ast]="
-    tests/dummy_data/ast/vars.apl
-    tests/dummy_data/ast/arrs.apl
-    tests/dummy_data/ast/func.apl
-    tests/dummy_data/ast/cond.apl
-    tests/dummy_data/ast/oper.apl
-    tests/dummy_data/ast/stat.apl
-    tests/dummy_data/ast/error.apl
-    tests/dummy_data/ast/ext.apl
-    tests/dummy_data/ast/import.apl
-    tests/dummy_data/ast/ptr.apl
-    tests/dummy_data/ast/asm.apl
+    tests/dummy_data/ast/ast_1.apl
+    tests/dummy_data/ast/ast_2.apl
+    tests/dummy_data/ast/ast_3.apl
+    tests/dummy_data/ast/ast_4.apl
+    tests/dummy_data/ast/ast_5.apl
+    tests/dummy_data/ast/ast_6.apl
+    tests/dummy_data/ast/ast_7.apl
+    tests/dummy_data/ast/ast_8.apl
+    tests/dummy_data/ast/ast_9.apl
+    tests/dummy_data/ast/ast_10.apl
+    tests/dummy_data/ast/ast_11.apl
 "
 
 # ==== Optimization testing ====
@@ -95,18 +95,18 @@ TEST_CODES[test_offsetopt]="
 # ==== Generation testing ====
 TEST_SRCS[test_gen]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/opt/*.c src/gen/*.c src/gen/*/*.c std/*.c"
 TEST_CODES[test_gen]="
-    tests/dummy_data/gen/vars.apl
-    tests/dummy_data/gen/arrs.apl
-    tests/dummy_data/gen/func.apl
-    tests/dummy_data/gen/cond.apl
-    tests/dummy_data/gen/oper.apl
-    tests/dummy_data/gen/stat.apl
-    tests/dummy_data/gen/print.apl
-    tests/dummy_data/gen/ext.apl
-    tests/dummy_data/gen/import.apl
-    tests/dummy_data/gen/crc32.apl
-    tests/dummy_data/gen/ptr.apl
-    tests/dummy_data/gen/asm.apl
+    tests/dummy_data/gen/gen_1.apl
+    tests/dummy_data/gen/gen_2.apl
+    tests/dummy_data/gen/gen_3.apl
+    tests/dummy_data/gen/gen_4.apl
+    tests/dummy_data/gen/gen_5.apl
+    tests/dummy_data/gen/gen_6.apl
+    tests/dummy_data/gen/gen_7.apl
+    tests/dummy_data/gen/gen_8.apl
+    tests/dummy_data/gen/gen_9.apl
+    tests/dummy_data/gen/gen_10.apl
+    tests/dummy_data/gen/gen_11.apl
+    tests/dummy_data/gen/gen_12.apl
 "
 
 TEST_SRCS[test_build]="src/builder.c src/prep/*.c src/sem/*.c src/ast/*.c src/ast/*/*.c src/opt/*.c src/gen/*.c src/gen/*/*.c std/*.c"
