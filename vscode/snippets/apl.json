@@ -113,6 +113,11 @@
     "body": "glob",
     "description": "APL modifier"
   },
+  "APL Modifiers NOT": {
+    "prefix": "not",
+    "body": "not",
+    "description": "APL modifier"
+  },
   "APL Types REF": {
     "prefix": "ref",
     "body": "ref",
