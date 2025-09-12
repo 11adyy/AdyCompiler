@@ -1,6 +1,6 @@
-from "string.apl" import strlen;
-
 {
+    from "string.apl" import strlen;
+    
     glob function puts(ptr i8 s) {
         return syscall(1, 1, s, strlen(s));
     }
