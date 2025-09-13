@@ -17,6 +17,7 @@ TEST_CODES[test_mrk]="
     tests/dummy_data/prep/markup/markup_1.apl
     tests/dummy_data/prep/markup/markup_2.apl
     tests/dummy_data/prep/markup/markup_3.apl
+    tests/dummy_data/prep/markup/markup_4.apl
 "
 
 TEST_SRCS[test_sem]="src/sem/*.c src/prep/*.c src/ast/*.c src/ast/*/*.c std/*.c"
