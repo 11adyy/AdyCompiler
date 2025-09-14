@@ -106,6 +106,8 @@ TEST_CODES[test_offsetopt]="
     tests/dummy_data/opt/offsetopt/offsetopt_3.apl
     tests/dummy_data/opt/offsetopt/offsetopt_4.apl
     tests/dummy_data/opt/offsetopt/offsetopt_5.apl
+    tests/dummy_data/opt/offsetopt/offsetopt_6.apl
+    tests/dummy_data/opt/offsetopt/offsetopt_7.apl
 "
 
 # ==== Generation testing ====
