@@ -1,5 +1,5 @@
 {
-    from "stdio.apl" import putc, gets;
+    from "stdio.apl" import puts, putc, gets;
 
 :
     Brainfuck interpriter on APL
