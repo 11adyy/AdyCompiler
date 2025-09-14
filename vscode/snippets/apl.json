@@ -128,15 +128,25 @@
     "body": "dref",
     "description": "APL de-reference operation"
   },
+  "APL Types String": {
+    "prefix": "str",
+    "body": "str",
+    "description": "APL str type"
+  },
   "APL Types PTR": {
     "prefix": "ptr",
     "body": "ptr",
     "description": "APL u64 type"
   },
-  "APL Types String": {
-    "prefix": "str",
-    "body": "str",
-    "description": "APL str type"
+  "APL Types F64": {
+    "prefix": "f64",
+    "body": "f64",
+    "description": "APL f64 type"
+  },
+  "APL Types F32": {
+    "prefix": "f32",
+    "body": "f32",
+    "description": "APL f32 type"
   },
   "APL Types Long": {
     "prefix": "i64",
