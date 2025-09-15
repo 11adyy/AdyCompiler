@@ -25,6 +25,7 @@ TEST_CODES[test_mrk]="
     tests/dummy_data/prep/markup/markup_5.apl
     tests/dummy_data/prep/markup/markup_6.apl
     tests/dummy_data/prep/markup/markup_7.apl
+    tests/dummy_data/prep/markup/markup_8.apl
 "
 
 TEST_SRCS[test_sem]="src/sem/*.c src/prep/*.c src/ast/*.c src/ast/*/*.c std/*.c"
@@ -138,6 +139,7 @@ TEST_CODES[test_gen]="
     tests/dummy_data/gen/gen_14.apl
     tests/dummy_data/gen/gen_15.apl
     tests/dummy_data/gen/gen_16.apl
+    tests/dummy_data/gen/gen_17.apl
 "
 
 TEST_SRCS[test_build]="src/builder.c src/prep/*.c src/sem/*.c src/ast/*.c src/ast/*/*.c src/opt/*.c src/gen/*.c src/gen/*/*.c std/*.c"
