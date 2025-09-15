@@ -10,7 +10,11 @@ declare -A TEST_CODES
 
 # ==== Base testing ====
 TEST_SRCS[test_tok]="src/prep/token.c std/*.c"
-TEST_CODES[test_tok]="tests/dummy_data/prep/token.txt"
+TEST_CODES[test_tok]="
+    tests/dummy_data/prep/token/token_1.apl
+    tests/dummy_data/prep/token/token_2.apl
+    tests/dummy_data/prep/token/token_3.apl
+"
 
 TEST_SRCS[test_mrk]="src/prep/token.c src/prep/markup.c std/*.c"
 TEST_CODES[test_mrk]="
@@ -20,6 +24,7 @@ TEST_CODES[test_mrk]="
     tests/dummy_data/prep/markup/markup_4.apl
     tests/dummy_data/prep/markup/markup_5.apl
     tests/dummy_data/prep/markup/markup_6.apl
+    tests/dummy_data/prep/markup/markup_7.apl
 "
 
 TEST_SRCS[test_sem]="src/sem/*.c src/prep/*.c src/ast/*.c src/ast/*/*.c std/*.c"
@@ -32,6 +37,7 @@ TEST_CODES[test_sem]="
     tests/dummy_data/sem/sem_6.apl
     tests/dummy_data/sem/sem_7.apl
     tests/dummy_data/sem/sem_8.apl
+    tests/dummy_data/sem/sem_9.apl
 "
 
 TEST_SRCS[test_ast]="src/prep/*.c src/ast/*.c src/ast/*/*.c std/*.c"
@@ -49,6 +55,7 @@ TEST_CODES[test_ast]="
     tests/dummy_data/ast/ast_11.apl
     tests/dummy_data/ast/ast_12.apl
     tests/dummy_data/ast/ast_13.apl
+    tests/dummy_data/ast/ast_14.apl
 "
 
 # ==== Optimization testing ====
@@ -108,6 +115,8 @@ TEST_CODES[test_offsetopt]="
     tests/dummy_data/opt/offsetopt/offsetopt_5.apl
     tests/dummy_data/opt/offsetopt/offsetopt_6.apl
     tests/dummy_data/opt/offsetopt/offsetopt_7.apl
+    tests/dummy_data/opt/offsetopt/offsetopt_8.apl
+    tests/dummy_data/opt/offsetopt/offsetopt_9.apl
 "
 
 # ==== Generation testing ====
@@ -128,6 +137,7 @@ TEST_CODES[test_gen]="
     tests/dummy_data/gen/gen_13.apl
     tests/dummy_data/gen/gen_14.apl
     tests/dummy_data/gen/gen_15.apl
+    tests/dummy_data/gen/gen_16.apl
 "
 
 TEST_SRCS[test_build]="src/builder.c src/prep/*.c src/sem/*.c src/ast/*.c src/ast/*/*.c src/opt/*.c src/gen/*.c src/gen/*/*.c std/*.c"
