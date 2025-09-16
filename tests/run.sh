@@ -128,6 +128,7 @@ TEST_CODES[test_deadopt]="
     tests/dummy_data/opt/deadopt/deadopt_2.apl
     tests/dummy_data/opt/deadopt/deadopt_3.apl
     tests/dummy_data/opt/deadopt/deadopt_4.apl
+    tests/dummy_data/opt/deadopt/deadopt_5.apl
 "
 
 # ==== Generation testing ====
