@@ -122,6 +122,14 @@ TEST_CODES[test_offsetopt]="
     tests/dummy_data/opt/offsetopt/offsetopt_9.apl
 "
 
+TEST_SRCS[test_deadopt]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/opt/deadopt.c std/*.c"
+TEST_CODES[test_deadopt]="
+    tests/dummy_data/opt/deadopt/deadopt_1.apl
+    tests/dummy_data/opt/deadopt/deadopt_2.apl
+    tests/dummy_data/opt/deadopt/deadopt_3.apl
+    tests/dummy_data/opt/deadopt/deadopt_4.apl
+"
+
 # ==== Generation testing ====
 TEST_SRCS[test_gen]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/opt/*.c src/gen/*.c src/gen/*/*.c std/*.c"
 TEST_CODES[test_gen]="
@@ -223,7 +231,7 @@ for i in "${!test_names[@]}"; do
     code_file="${codes[$CODE_IDX]}"
 
     echo "== Compilation: $test_file =="
-    gcc $INCLUDES ${TEST_SRCS[$test_name]} "$test_file" \
+    gcc-14 $INCLUDES ${TEST_SRCS[$test_name]} "$test_file" \
         -DWARNING_LOGS -DERROR_LOGS -DLOGGING_LOGS -DINFO_LOGS -DDEBUG_LOGS -g -O0 -o "tests/$test_name"
 
     if [[ -n "$DEBUGGER" ]]; then
