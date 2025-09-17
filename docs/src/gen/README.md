@@ -4,7 +4,7 @@ Note: This microcode example was generated without any optimization approaches.
 
 ## Local and global variable declaration
 Source code:
-```APL
+```apl
 {
     glob int glint = 1;
     ro int glroint = 2;
@@ -56,7 +56,7 @@ syscall
 
 ## Array and string declaration
 Source code:
-```APL
+```apl
 {
     glob str string = "String variable!";
     start {
@@ -134,7 +134,7 @@ syscall
 
 ## Operand operation generation
 Source code:
-```APL
+```apl
 {
     start {
         int a = 10 * 12 + (13 + 14) * 15;
@@ -242,7 +242,7 @@ section .text
 
 ## Branch generation
 Source code:
-```APL
+```apl
 {
     start {
         while 1; {
@@ -358,7 +358,7 @@ __end_cases_2__:
 
 ## strlen function generation
 Source code:
-```APL
+```apl
 function strlen(ptr char string) {
     int length = 0;
     while string[0]; {
@@ -410,7 +410,7 @@ __end_strlen__:
 
 ## ASM block generation
 Source code:
-```APL
+```apl
 {
     start(i64 argc, ptr u64 argv) {
         i32 a = 0;

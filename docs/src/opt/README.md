@@ -1,20 +1,10 @@
 # Optimization
-## Navigation
-- [Dead functions elimination](#dead-functions-elimination)
-- [String declaration](#string-declaration)
-- [Variable inline](#variable-inline)
-- [Constant folding](#constant-folding)
-- [Conditional branches unroll](#conditional-branches-unroll)
-- [Dead scope elimination](#dead-scope-elimination)
-- [Stack reusage](#stack-reusage)
-- [Example](#example)
-
 ## Dead functions elimination
 - [deadfunc](https://github.com/11adyy/AdyCompiler.PETPRJ/blob/x86_64/src/opt/deadfunc.c) - The first optimization algorithm. It removes unused functions by iterating through all input files, registering referenced functions, and deleting all unreferenced ones.
 
 ## String declaration
 - [strdecl](https://github.com/11adyy/AdyCompiler.PETPRJ/blob/x86_64/src/opt/strdecl.c) - The second optimization algorithm handles read-only strings. If the user declares strings with `ro` or `glob` flags, this algorithm allocates them in the `.data` or `.rodata` section instead of the stack. Example:
-```APL
+```apl
 {
     start() {
         glob str fstring = "Global";
@@ -26,7 +16,7 @@
 ```
 
 Final output:
-```APL
+```apl
 {
     glob ro str str_0 = "Global";
     ro str str_1 = "ReadOnly";
@@ -45,7 +35,7 @@ Note 2: Strings with same data will be united into one shadow variable under `ro
 
 ## Variable inline
 - [varinline](https://github.com/11adyy/AdyCompiler.PETPRJ/blob/x86_64/src/opt/varinline.c) - The third optimization works together with the fourth one. It implements variable inlining and constant propagation. If the value of a variable is known, it replaces all occurrences with the value and removes the declaration. Example:
-```APL
+```apl
 {
     start() {
         i32 a = 10;
@@ -57,7 +47,7 @@ Note 2: Strings with same data will be united into one shadow variable under `ro
 ```
 
 Will be transformed into:
-```APL
+```apl
 {
     start() {
         exit 10 + 11;
@@ -66,7 +56,7 @@ Will be transformed into:
 ```
 
 Also this method implements something similar to data flow analyze. We track variable value in scope and stop inline operations if we can't predict future. For example this code below:
-```APL
+```apl
 {
     start(i64 argc, ptr u64 argv) {
         i32 a = 10;
@@ -100,7 +90,7 @@ Also this method implements something similar to data flow analyze. We track var
 ```
 
 Will become:
-```APL
+```apl
 {
     start(i64 argc, ptr u64 argv) {
         i32 a = 10;
@@ -136,7 +126,7 @@ _________________                  <= Now variable "a" is unpredicted in compile
 ```
 
 After variable inline, this module remove all unused variables (that never assign elsewhere). This will produce final output:
-```APL
+```apl
 {
     start(i64 argc, ptr u64 argv) {
         i32 a = 10;
@@ -163,7 +153,7 @@ After variable inline, this module remove all unused variables (that never assig
 ```
 
 `while` loops change some logic. For example:
-```APL
+```apl
 {
     start(i64 argc, ptr u64 argv) {
         i8 a = 10;
@@ -182,7 +172,7 @@ After variable inline, this module remove all unused variables (that never assig
 ```
 
 Produced code:
-```APL
+```apl
 {
     start(i64 argc, ptr u64 argv) {
         i8 a = 10;
@@ -197,7 +187,7 @@ Produced code:
 ```
 
 Note: If we remove `a = a + 1;` line from while, it will invoke inline to `while 15 < 100; {`:
-```APL
+```apl
 {
     start(i64 argc, ptr u64 argv) {
         while 15 < 100; {
@@ -209,7 +199,7 @@ Note: If we remove `a = a + 1;` line from while, it will invoke inline to `while
 
 ## Constant folding
 - [constopt](https://github.com/11adyy/AdyCompiler.PETPRJ/blob/x86_64/src/opt/constopt.c) - The fourth optimization is always executed after the third one and continues constant propagation by folding constant expressions. Example:
-```APL
+```apl
 {
     start() {
         exit 10 + 11;
@@ -218,7 +208,7 @@ Note: If we remove `a = a + 1;` line from while, it will invoke inline to `while
 ```
 
 Becomes:
-```APL
+```apl
 {
     start() {
         exit 21;
@@ -228,7 +218,7 @@ Becomes:
 
 ## Conditional branches unroll
 - [condunroll](https://github.com/11adyy/AdyCompiler.PETPRJ/blob/x86_64/src/opt/condunroll.c) - The fifth optimization works with `switch`, `if`, and `while` statements, similarly to funcopt. Its main goal is removing unreachable code in condition scopes. For instance, code inside `while (0)` is never executed, same situation with `else` block in `if 1;` statement. Example:
-```APL
+```apl
 {
     start() {
         if 1; {
@@ -253,7 +243,7 @@ Becomes:
 ```
 
 Will be simplified to:
-```APL
+```apl
 {
     start() {
         {
@@ -271,7 +261,7 @@ Will be simplified to:
 
 ## Dead scope elimination
 - [deadscope](https://github.com/11adyy/AdyCompiler.PETPRJ/blob/x86_64/src/opt/deadscope.c) - This optimization cleans the `AST` from dead scopes. A dead scope is one that does not affect the environment (does not invoke functions and does not modify variables from outer scopes). Example:
-```APL
+```apl
 {
     start() {
         {
@@ -288,7 +278,7 @@ Will be simplified to:
 ```
 
 After eliminating dead scopes:
-```APL
+```apl
 {
     start() {
         {
@@ -302,7 +292,7 @@ After eliminating dead scopes:
 
 ## Dead code elimination
 - [deadopt](https://github.com/11adyy/AdyCompiler.PETPRJ/blob/x86_64/src/opt/deadopt.c) - All code that unreacheble should be eliminated. For example:
-```APL
+```apl
 i32 a = 0;
 exit 0;
 i32 b = 1;              <= Unreachable code
@@ -310,7 +300,7 @@ exit 1;
 ```
 
 Or how function can "kill" code:
-```APL
+```apl
 function foo() {
     exit 1;
 }
@@ -322,7 +312,7 @@ exit 1;
 ```
 
 Or how optimization work with branches:
-```APL
+```apl
 if 1; {                 <= "Unpredicted" section. Will "kill" code below only if all branches are "killers"
     exit 1;
 }
@@ -338,7 +328,7 @@ exit 0;                 <= Still reachable
 
 ## Stack reusage
 - [offsetopt](https://github.com/11adyy/AdyCompiler.PETPRJ/blob/x86_64/src/opt/offsetopt.c) - This optimization pass finalizes the previous ones by recalculating local and global variable/array offsets. It implements stack slot reuse by reassigning memory locations of variables that are no longer live.
-```APL
+```apl
 {
     start(i64 argc, ptr u64 argv) {
         : 24 : i8 val = 0;                             <= Allocation of 8 bytes in stack
@@ -358,7 +348,7 @@ Main idea of this module is to track variable usage and ownership (similar to th
 4) When a variable’s offset is reused, the variable is unregistered and also removed from all owner lists where it appears.
 
 Stack offset managing based on bitmap allocator (similar to Linux Physical Memory Manager). This mean, that we can handle next case with arrays in stack:
-```APL
+```apl
 {
     start(i64 argc, ptr u64 argv) {
         : 24 : i32 a = 0;               <= Allocate 8 bytes
@@ -372,7 +362,7 @@ Stack offset managing based on bitmap allocator (similar to Linux Physical Memor
 ```
 
 And one last example:
-```APL
+```apl
 {
     start() {
         : 16 : i32 a = 0;               <= Allocate 8 bytes
@@ -391,7 +381,7 @@ And one last example:
 ## Example
 For visual example, let's optimize this code:
 - Source.apl
-```APL
+```apl
 0  {
 1      from "string.apl" import strlen;
 2      extern exfunc printf;
@@ -444,7 +434,7 @@ For visual example, let's optimize this code:
 ```
 
 - DeadFunc.apl (`import` and `putc` was removed)
-```APL
+```apl
 0  {
 2      extern exfunc printf;
 6      start() {
@@ -493,7 +483,7 @@ For visual example, let's optimize this code:
 ```
 
 - StringDecl.apl (`"Hello from program!"` moved to global `str_0` variable)
-```APL
+```apl
 0  {
 2      extern exfunc printf;
 +      glob str str_0 = "Hello from program!";
@@ -543,7 +533,7 @@ For visual example, let's optimize this code:
 ```
 
 - VarInline.apl (`b` from `i32 c = b + 10;`(14) replaced by value. Result: `i32 c = 20 + 10;`. Same situation with `d` and `exit d;`(46))
-```APL
+```apl
 0  {
 2      extern exfunc printf;
 +      glob str str_0 = "Hello from program!";
@@ -591,7 +581,7 @@ For visual example, let's optimize this code:
 ```
 
 - ConstFold.apl (`20 + 10`(14) fold to `30`, `a = a * 8`(19) optimized to `a = a << 8`)
-```APL
+```apl
 0  {
 2      extern exfunc printf;
 +      glob str str_0 = "Hello from program!";
@@ -640,7 +630,7 @@ For visual example, let's optimize this code:
 ```
 
 - CondUnroll.apl (`if 1;` unrolled to straightforward block, `while 0;` replaced with `else` section, `switch 0;` replaced with `default` section)
-```APL
+```apl
 0  {
 2      extern exfunc printf;
 +      glob str str_0 = "Hello from program!";
@@ -672,7 +662,7 @@ For visual example, let's optimize this code:
 ```
 
 - DeadScope.apl (Scopes that don't affect on enviroment removed)
-```APL
+```apl
 0  {
 2      extern exfunc printf;
 +      glob str str_0 = "Hello from program!";
@@ -696,7 +686,7 @@ For visual example, let's optimize this code:
 ```
 
 - DeadVar.apl (Variables that affect only on itselves removed)
-```APL
+```apl
 0  {
 2      extern exfunc printf;
 +      glob str str_0 = "Hello from program!";
