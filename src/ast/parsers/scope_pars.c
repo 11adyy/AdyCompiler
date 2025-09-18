@@ -1,4 +1,4 @@
-#include <ast/parsers/apl_parser.h>
+#include <ast/parsers/parser.h>
 
 ast_node_t* apl_parse_scope(token_t** curr, syntax_ctx_t* ctx, parser_t* p) {
     ast_node_t* node = NULL;
