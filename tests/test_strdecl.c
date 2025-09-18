@@ -1,11 +1,11 @@
 #include <stdio.h>
-#include <token.h>
+#include <prep/token.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <markup.h>
-#include <syntax.h>
-#include <strdecl.h>
-#include <apl_parser.h>
+#include <prep/markup.h>
+#include <ast/syntax.h>
+#include <ast/opt/strdecl.h>
+#include <ast/parsers/apl_parser.h>
 #include "ast_helper.h"
 
 int main(int argc, char* argv[]) {
