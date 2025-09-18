@@ -140,6 +140,11 @@ TEST_CODES[test_deadopt]="
 TEST_SRCS[test_ir]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/ir/*.c src/ir/*/*.c std/*.c"
 TEST_CODES[test_ir]="
     tests/dummy_data/ir/ir_1.apl
+    tests/dummy_data/ir/ir_2.apl
+    tests/dummy_data/ir/ir_3.apl
+    tests/dummy_data/ir/ir_4.apl
+    tests/dummy_data/ir/ir_5.apl
+    tests/dummy_data/ir/ir_6.apl
 "
 
 TEST_SRCS[test_gen]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/opt/*.c src/gen/*.c src/gen/*/*.c std/*.c"
