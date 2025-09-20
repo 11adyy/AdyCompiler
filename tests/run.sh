@@ -139,16 +139,16 @@ TEST_CODES[test_deadopt]="
 "
 
 # ==== Generation testing ====
-TEST_SRCS[test_ir]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/ir/*.c src/ir/*/*.c src/asm/*.c src/asm/*/*.c std/*.c"
+TEST_SRCS[test_ir]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/lir/*.c src/lir/*/*.c src/asm/*.c src/asm/*/*.c std/*.c"
 TEST_CODES[test_ir]="
-    tests/dummy_data/ir/ir_1.apl
-    tests/dummy_data/ir/ir_2.apl
-    tests/dummy_data/ir/ir_3.apl
-    tests/dummy_data/ir/ir_4.apl
-    tests/dummy_data/ir/ir_5.apl
-    tests/dummy_data/ir/ir_6.apl
-    tests/dummy_data/ir/ir_7.apl
-    tests/dummy_data/ir/ir_8.apl
+    tests/dummy_data/lir/ir_1.apl
+    tests/dummy_data/lir/ir_2.apl
+    tests/dummy_data/lir/ir_3.apl
+    tests/dummy_data/lir/ir_4.apl
+    tests/dummy_data/lir/ir_5.apl
+    tests/dummy_data/lir/ir_6.apl
+    tests/dummy_data/lir/ir_7.apl
+    tests/dummy_data/lir/ir_8.apl
 "
 
 TEST_SRCS[test_gen]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/ast/opt/*.c src/asm/*.c src/asm/*/*.c std/*.c"
@@ -174,7 +174,7 @@ TEST_CODES[test_gen]="
     tests/dummy_data/gen/gen_19.apl
 "
 
-TEST_SRCS[test_build]="src/builder.c src/prep/*.c src/sem/*.c src/ast/*.c src/ast/*/*.c src/ir/*.c src/ir/*/*.c src/asm/*.c src/asm/*/*.c std/*.c"
+TEST_SRCS[test_build]="src/builder.c src/prep/*.c src/sem/*.c src/ast/*.c src/ast/*/*.c src/lir/*.c src/lir/*/*.c src/asm/*.c src/asm/*/*.c std/*.c"
 TEST_CODES[test_build]="
     tests/dummy_data/builder/builder_1.apl
     tests/dummy_data/builder/builder_2.apl
