@@ -1,6 +1,6 @@
 #include <ast/parsers/parser.h>
 
-ast_node_t* apl_parse_syscall(token_t** curr, syntax_ctx_t* ctx, parser_t* p) {
+ast_node_t* apl_parse_syscall(token_t** curr, syntax_ctx_t* ctx) {
     ast_node_t* node = AST_create_node(*curr);
     if (!node) return NULL;
 
@@ -13,7 +13,7 @@ ast_node_t* apl_parse_syscall(token_t** curr, syntax_ctx_t* ctx, parser_t* p) {
                 continue;
             }
 
-            ast_node_t* arg = p->expr(curr, ctx, p);
+            ast_node_t* arg = apl_parse_expression(curr, ctx);
             if (arg) AST_add_node(node, arg);
         }
     }
