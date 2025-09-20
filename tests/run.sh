@@ -139,16 +139,25 @@ TEST_CODES[test_deadopt]="
 "
 
 # ==== Generation testing ====
-TEST_SRCS[test_ir]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/lir/*.c src/lir/*/*.c src/asm/*.c src/asm/*/*.c std/*.c"
-TEST_CODES[test_ir]="
-    tests/dummy_data/lir/ir_1.apl
-    tests/dummy_data/lir/ir_2.apl
-    tests/dummy_data/lir/ir_3.apl
-    tests/dummy_data/lir/ir_4.apl
-    tests/dummy_data/lir/ir_5.apl
-    tests/dummy_data/lir/ir_6.apl
-    tests/dummy_data/lir/ir_7.apl
-    tests/dummy_data/lir/ir_8.apl
+TEST_SRCS[test_hir]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/hir/*.c src/hir/*/*.c std/*.c"
+TEST_CODES[test_hir]="
+    tests/dummy_data/hir/gen/hirgen_1.apl
+    tests/dummy_data/hir/gen/hirgen_2.apl
+    tests/dummy_data/hir/gen/hirgen_3.apl
+    tests/dummy_data/hir/gen/hirgen_4.apl
+    tests/dummy_data/hir/gen/hirgen_5.apl
+"
+
+TEST_SRCS[test_lir]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/lir/*.c src/lir/*/*.c src/asm/*.c src/asm/*/*.c std/*.c"
+TEST_CODES[test_lir]="
+    tests/dummy_data/lir/gen/lirgen_1.apl
+    tests/dummy_data/lir/gen/lirgen_2.apl
+    tests/dummy_data/lir/gen/lirgen_3.apl
+    tests/dummy_data/lir/gen/lirgen_4.apl
+    tests/dummy_data/lir/gen/lirgen_5.apl
+    tests/dummy_data/lir/gen/lirgen_6.apl
+    tests/dummy_data/lir/gen/lirgen_7.apl
+    tests/dummy_data/lir/gen/lirgen_8.apl
 "
 
 TEST_SRCS[test_gen]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/ast/opt/*.c src/asm/*.c src/asm/*/*.c std/*.c"
@@ -251,7 +260,7 @@ for i in "${!test_names[@]}"; do
     code_file="${codes[$CODE_IDX]}"
 
     echo "== Compilation: $test_file =="
-    gcc $INCLUDES ${TEST_SRCS[$test_name]} "$test_file" \
+    gcc-14 $INCLUDES ${TEST_SRCS[$test_name]} "$test_file" \
         -DWARNING_LOGS -DERROR_LOGS -DLOGGING_LOGS -DINFO_LOGS -DDEBUG_LOGS -g -O0 -o "tests/$test_name"
 
     if [[ -n "$DEBUGGER" ]]; then
