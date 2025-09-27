@@ -175,6 +175,8 @@ TEST_CODES[test_dfg]="
     tests/dummy_data/hir/opt/dfg/dfg_1.apl
     tests/dummy_data/hir/opt/dfg/dfg_2.apl
     tests/dummy_data/hir/opt/dfg/dfg_3.apl
+    tests/dummy_data/hir/opt/dfg/dfg_4.apl
+    tests/dummy_data/hir/opt/dfg/dfg_5.apl
 "
 
 TEST_SRCS[test_lir]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/lir/*.c src/lir/*/*.c src/asm/*.c src/asm/*/*.c std/*.c"
