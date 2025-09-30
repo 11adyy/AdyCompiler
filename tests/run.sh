@@ -149,16 +149,16 @@ TEST_CODES[test_ra]="
     tests/dummy_data/hir/opt/ra/ra_4.apl
 "
 
-TEST_SRCS[test_lir]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/lir/*.c src/lir/*/*.c src/asm/*.c src/asm/*/*.c std/*.c"
+TEST_SRCS[test_lir]="
+    src/prep/*.c src/symtab/*.c 
+    src/ast/*.c src/ast/parsers/*.c 
+    src/hir/*.c src/hir/*/*.c src/hir/opt/cfg/*.c src/hir/opt/ssa/*.c src/hir/opt/dfg/*.c src/hir/opt/ra/*.c
+    src/lir/*.c src/lir/*/*.c
+    std/*.c
+"
+
 TEST_CODES[test_lir]="
     tests/dummy_data/lir/gen/lirgen_1.apl
-    tests/dummy_data/lir/gen/lirgen_2.apl
-    tests/dummy_data/lir/gen/lirgen_3.apl
-    tests/dummy_data/lir/gen/lirgen_4.apl
-    tests/dummy_data/lir/gen/lirgen_5.apl
-    tests/dummy_data/lir/gen/lirgen_6.apl
-    tests/dummy_data/lir/gen/lirgen_7.apl
-    tests/dummy_data/lir/gen/lirgen_8.apl
 "
 
 TEST_SRCS[test_asm]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/ast/opt/*.c src/asm/*.c src/asm/*/*.c std/*.c"
