@@ -159,6 +159,7 @@ TEST_SRCS[test_lir]="
 
 TEST_CODES[test_lir]="
     tests/dummy_data/lir/gen/lirgen_1.apl
+    tests/dummy_data/lir/gen/lirgen_2.apl
 "
 
 TEST_SRCS[test_asm]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/ast/opt/*.c src/asm/*.c src/asm/*/*.c std/*.c"
