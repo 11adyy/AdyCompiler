@@ -14,6 +14,7 @@ TEST_CODES[test_tok]="
     tests/dummy_data/prep/token/token_1.apl
     tests/dummy_data/prep/token/token_2.apl
     tests/dummy_data/prep/token/token_3.apl
+    tests/dummy_data/prep/token/token_4.apl
 "
 
 TEST_SRCS[test_mrk]="src/prep/token.c src/prep/markup.c std/*.c"
