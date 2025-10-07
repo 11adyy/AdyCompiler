@@ -166,27 +166,17 @@ TEST_CODES[test_lir]="
     tests/dummy_data/lir/gen/lirgen_4.apl
 "
 
-TEST_SRCS[test_asm]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/ast/opt/*.c src/asm/*.c src/asm/*/*.c std/*.c"
+TEST_SRCS[test_asm]="
+    src/prep/*.c src/symtab/*.c 
+    src/ast/*.c src/ast/parsers/*.c 
+    src/hir/*.c src/hir/*/*.c src/hir/opt/cfg/*.c src/hir/opt/ssa/*.c src/hir/opt/dfg/*.c src/hir/opt/ra/*.c
+    src/lir/*.c src/lir/*/*.c
+    src/asm/*.c src/asm/*/*.c
+    std/*.c
+"
+
 TEST_CODES[test_asm]="
     tests/dummy_data/asm/asm_1.apl
-    tests/dummy_data/asm/asm_2.apl
-    tests/dummy_data/asm/asm_3.apl
-    tests/dummy_data/asm/asm_4.apl
-    tests/dummy_data/asm/asm_5.apl
-    tests/dummy_data/asm/asm_6.apl
-    tests/dummy_data/asm/asm_7.apl
-    tests/dummy_data/asm/asm_8.apl
-    tests/dummy_data/asm/asm_9.apl
-    tests/dummy_data/asm/asm_10.apl
-    tests/dummy_data/asm/asm_11.apl
-    tests/dummy_data/asm/asm_12.apl
-    tests/dummy_data/asm/asm_13.apl
-    tests/dummy_data/asm/asm_14.apl
-    tests/dummy_data/asm/asm_15.apl
-    tests/dummy_data/asm/asm_16.apl
-    tests/dummy_data/asm/asm_17.apl
-    tests/dummy_data/asm/asm_18.apl
-    tests/dummy_data/asm/asm_19.apl
 "
 
 TEST_SRCS[test_build]="src/builder.c src/prep/*.c src/sem/*.c src/ast/*.c src/ast/*/*.c src/lir/*.c src/lir/*/*.c src/asm/*.c src/asm/*/*.c std/*.c"
