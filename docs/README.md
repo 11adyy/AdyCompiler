@@ -1,8 +1,5 @@
-# AdyCompiler documentation
-The **Ady Programming Language (APL)** is a system-level programming language designed for learning and experimenting with modern compiler concepts. It combines low-level capabilities from `ASM` with practices inspired by modern languages like `Rust` and `C`.  
-
-## Summary
-APL is intended for:
+# Summary
+The **Ady Programming Language (APL)** is a system-level programming language designed for learning and experimenting with modern compiler concepts. It combines low-level capabilities from `ASM` with practices inspired by modern languages like `Rust` and `C`. `APL` is intended for:
 - **Systems programming** — operating systems, compilers, interpreters, and embedded software.  
 - **Educational purposes** — a language to study compiler design, interpreters, and programming language concepts.  
 
@@ -158,7 +155,7 @@ extern i8 size;
 arr arr1[size, i32];
 ```
 
-Runtime-size arrays will die when code returns from their home scope. That's why this code below still illegal:
+`Runtime-sized` arrays will die when code returns from their home scope. That's why this code below still illegal:
 ```apl
 extern i8 size;
 ptr u8 a;
