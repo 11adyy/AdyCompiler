@@ -8,7 +8,7 @@ cd "$(dirname "$0")/.."
 declare -A TEST_SRCS
 declare -A TEST_CODES
 
-# ==== Base testing ====
+# ==== Prep testing ====
 TEST_SRCS[test_tok]="src/prep/token.c std/*.c"
 TEST_CODES[test_tok]="
     tests/dummy_data/prep/token/token_1.apl
@@ -46,6 +46,7 @@ TEST_CODES[test_sem]="
     tests/dummy_data/sem/sem_12.apl
 "
 
+# ==== AST testing ====
 TEST_SRCS[test_ast]="src/prep/*.c src/symtab/*.c src/ast/*.c src/ast/*/*.c std/*.c"
 TEST_CODES[test_ast]="
     tests/dummy_data/ast/gen/astgen_1.apl
@@ -67,7 +68,7 @@ TEST_CODES[test_ast]="
     tests/dummy_data/ast/gen/astgen_17.apl
 "
 
-# ==== Optimization testing ====
+# ==== AST optimization testing ====
 TEST_SRCS[test_constopt]="src/prep/*.c src/ast/*.c src/ast/*/*.c src/ast/opt/varinline.c src/ast/opt/constopt.c std/*.c"
 TEST_CODES[test_constopt]="
     tests/dummy_data/ast/opt/constopt/constopt_1.apl
@@ -95,7 +96,7 @@ TEST_CODES[test_deadscope]="
     tests/dummy_data/ast/opt/deadscope/deadscope_3.apl
 "
 
-# ==== Generation testing ====
+# ==== HIR testing ====
 TEST_SRCS[test_hir]="src/prep/*.c src/symtab/*.c src/ast/*.c src/ast/parsers/*.c src/hir/*.c src/hir/*/*.c std/*.c"
 TEST_CODES[test_hir]="
     tests/dummy_data/hir/gen/hirgen_1.apl
@@ -105,57 +106,58 @@ TEST_CODES[test_hir]="
     tests/dummy_data/hir/gen/hirgen_5.apl
 "
 
-TEST_SRCS[test_cfg]="src/prep/*.c src/symtab/*.c src/ast/*.c src/ast/parsers/*.c src/hir/*.c src/hir/*/*.c src/hir/opt/cfg/*.c std/*.c"
+TEST_SRCS[test_cfg]="src/prep/*.c src/symtab/*.c src/ast/*.c src/ast/parsers/*.c src/hir/*.c src/hir/*/*.c src/hir/cfg/*.c std/*.c"
 TEST_CODES[test_cfg]="
-    tests/dummy_data/hir/opt/cfg/cfg_1.apl
-    tests/dummy_data/hir/opt/cfg/cfg_2.apl
-    tests/dummy_data/hir/opt/cfg/cfg_3.apl
+    tests/dummy_data/hir/cfg/cfg_1.apl
+    tests/dummy_data/hir/cfg/cfg_2.apl
+    tests/dummy_data/hir/cfg/cfg_3.apl
 "
 
-TEST_SRCS[test_ssa]="src/prep/*.c src/symtab/*.c src/ast/*.c src/ast/parsers/*.c src/hir/*.c src/hir/*/*.c src/hir/opt/cfg/*.c src/hir/opt/ssa/*.c std/*.c"
+TEST_SRCS[test_ssa]="src/prep/*.c src/symtab/*.c src/ast/*.c src/ast/parsers/*.c src/hir/*.c src/hir/*/*.c src/hir/cfg/*.c src/hir/ssa/*.c std/*.c"
 TEST_CODES[test_ssa]="
-    tests/dummy_data/hir/opt/ssa/ssa_1.apl
-    tests/dummy_data/hir/opt/ssa/ssa_2.apl
-    tests/dummy_data/hir/opt/ssa/ssa_3.apl
-    tests/dummy_data/hir/opt/ssa/ssa_4.apl
-    tests/dummy_data/hir/opt/ssa/ssa_5.apl
+    tests/dummy_data/hir/ssa/ssa_1.apl
+    tests/dummy_data/hir/ssa/ssa_2.apl
+    tests/dummy_data/hir/ssa/ssa_3.apl
+    tests/dummy_data/hir/ssa/ssa_4.apl
+    tests/dummy_data/hir/ssa/ssa_5.apl
 "
 
 TEST_SRCS[test_dfg]="
     src/prep/*.c src/symtab/*.c 
     src/ast/*.c src/ast/parsers/*.c 
-    src/hir/*.c src/hir/*/*.c src/hir/opt/cfg/*.c src/hir/opt/ssa/*.c src/hir/opt/dfg/*.c 
+    src/hir/*.c src/hir/*/*.c src/hir/cfg/*.c src/hir/ssa/*.c src/hir/dfg/*.c 
     std/*.c
 "
 
 TEST_CODES[test_dfg]="
-    tests/dummy_data/hir/opt/dfg/dfg_1.apl
-    tests/dummy_data/hir/opt/dfg/dfg_2.apl
-    tests/dummy_data/hir/opt/dfg/dfg_3.apl
-    tests/dummy_data/hir/opt/dfg/dfg_4.apl
-    tests/dummy_data/hir/opt/dfg/dfg_5.apl
+    tests/dummy_data/hir/dfg/dfg_1.apl
+    tests/dummy_data/hir/dfg/dfg_2.apl
+    tests/dummy_data/hir/dfg/dfg_3.apl
+    tests/dummy_data/hir/dfg/dfg_4.apl
+    tests/dummy_data/hir/dfg/dfg_5.apl
 "
 
 TEST_SRCS[test_ra]="
     src/prep/*.c src/symtab/*.c 
     src/ast/*.c src/ast/parsers/*.c 
-    src/hir/*.c src/hir/*/*.c src/hir/opt/cfg/*.c src/hir/opt/ssa/*.c src/hir/opt/dfg/*.c src/hir/opt/ra/*.c 
+    src/hir/*.c src/hir/*/*.c src/hir/cfg/*.c src/hir/ssa/*.c src/hir/dfg/*.c src/hir/ra/*.c 
     std/*.c
 "
 
 TEST_CODES[test_ra]="
-    tests/dummy_data/hir/opt/ra/ra_1.apl
-    tests/dummy_data/hir/opt/ra/ra_2.apl
-    tests/dummy_data/hir/opt/ra/ra_3.apl
-    tests/dummy_data/hir/opt/ra/ra_4.apl
-    tests/dummy_data/hir/opt/ra/ra_5.apl
+    tests/dummy_data/hir/ra/ra_1.apl
+    tests/dummy_data/hir/ra/ra_2.apl
+    tests/dummy_data/hir/ra/ra_3.apl
+    tests/dummy_data/hir/ra/ra_4.apl
+    tests/dummy_data/hir/ra/ra_5.apl
 "
 
+# ==== LIR testing ====
 TEST_SRCS[test_lir]="
     src/prep/*.c src/symtab/*.c 
     src/ast/*.c src/ast/parsers/*.c 
-    src/hir/*.c src/hir/*/*.c src/hir/opt/cfg/*.c src/hir/opt/ssa/*.c src/hir/opt/dfg/*.c src/hir/opt/ra/*.c
-    src/lir/*.c src/lir/*/*.c
+    src/hir/*.c src/hir/*/*.c src/hir/cfg/*.c src/hir/ssa/*.c src/hir/dfg/*.c src/hir/ra/*.c
+    src/lir/*.c src/lir/*/*.c src/lir/*/*/*.c
     std/*.c
 "
 
@@ -175,6 +177,7 @@ TEST_SRCS[test_asm]="
     std/*.c
 "
 
+# ==== ASM testing ====
 TEST_CODES[test_asm]="
     tests/dummy_data/asm/asm_1.apl
     tests/dummy_data/asm/asm_2.apl
