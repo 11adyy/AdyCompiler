@@ -139,6 +139,7 @@ TEST_CODES[test_dag]="
     tests/dummy_data/hir/dag/dag_1.apl
     tests/dummy_data/hir/dag/dag_2.apl
     tests/dummy_data/hir/dag/dag_3.apl
+    tests/dummy_data/hir/dag/dag_4.apl
 "
 
 TEST_SRCS[test_dfg]="
