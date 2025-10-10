@@ -97,7 +97,7 @@ TEST_CODES[test_deadscope]="
 "
 
 # ==== HIR testing ====
-TEST_SRCS[test_hir]="src/prep/*.c src/symtab/*.c src/ast/*.c src/ast/parsers/*.c src/hir/*.c src/hir/*/*.c std/*.c"
+TEST_SRCS[test_hir]="src/prep/*.c src/symtab/*.c src/ast/*.c src/ast/parsers/*.c src/hir/*.c src/hir/hirgen/*.c std/*.c"
 TEST_CODES[test_hir]="
     tests/dummy_data/hir/gen/hirgen_1.apl
     tests/dummy_data/hir/gen/hirgen_2.apl
@@ -106,7 +106,7 @@ TEST_CODES[test_hir]="
     tests/dummy_data/hir/gen/hirgen_5.apl
 "
 
-TEST_SRCS[test_cfg]="src/prep/*.c src/symtab/*.c src/ast/*.c src/ast/parsers/*.c src/hir/*.c src/hir/*/*.c src/hir/cfg/*.c std/*.c"
+TEST_SRCS[test_cfg]="src/prep/*.c src/symtab/*.c src/ast/*.c src/ast/parsers/*.c src/hir/*.c src/hir/hirgen/*.c src/hir/cfg/*.c std/*.c"
 TEST_CODES[test_cfg]="
     tests/dummy_data/hir/cfg/cfg_1.apl
     tests/dummy_data/hir/cfg/cfg_2.apl
@@ -140,6 +140,7 @@ TEST_CODES[test_dag]="
     tests/dummy_data/hir/dag/dag_2.apl
     tests/dummy_data/hir/dag/dag_3.apl
     tests/dummy_data/hir/dag/dag_4.apl
+    tests/dummy_data/hir/dag/dag_5.apl
 "
 
 TEST_SRCS[test_dfg]="
