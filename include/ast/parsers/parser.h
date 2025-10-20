@@ -2,10 +2,10 @@
 #define APL_PARSER_H_
 
 #include <std/str.h>
+#include <prep/token.h>
 #include <prep/token_types.h>
 #include <std/stack.h>
 #include <prep/dict.h>
-#include <prep/token.h>
 #include <ast/ast.h>
 #include <ast/synctx.h>
 #include <symtab/symtab.h>
@@ -78,5 +78,6 @@ ast_node_t* apl_parse_start(list_iter_t* it, syntax_ctx_t* ctx, sym_table_t* smt
 
 /* apl_syscall.c */
 ast_node_t* apl_parse_syscall(list_iter_t* it, syntax_ctx_t* ctx, sym_table_t* smt);
+ast_node_t* apl_parse_breakpoint(list_iter_t* it, syntax_ctx_t* ctx, sym_table_t* smt);
 
 #endif
