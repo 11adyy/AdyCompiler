@@ -1,4 +1,5 @@
-/* phi.c - Calculate positions of PHI functions for variables and create placeholders for SSA versions
+/*
+phi.c - Calculate positions of PHI functions for variables and create placeholders for SSA versions
 */
 
 #include <hir/ssa.h>

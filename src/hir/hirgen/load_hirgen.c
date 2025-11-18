@@ -7,11 +7,7 @@ hir_subject_t* HIR_generate_load(ast_node_t* node, hir_ctx_t* ctx, sym_table_t* 
         else {
             if (!node->token->flags.dref) res = HIR_SUBJ_ASTVAR(node);
             else {
-                res = HIR_SUBJ_TMPVAR(
-                    HIR_get_tmptype_tkn(node->token, 0), 
-                    VRTB_add_info(NULL, TKN_get_tmp_type(node->token->t_type), 0, NULL, &smt->v)
-                );
-
+                res = HIR_SUBJ_TMPVAR(HIR_get_tmptype_tkn(node->token, 0), VRTB_add_info(NULL, TKN_get_tmp_type(node->token->t_type), 0, NULL, &smt->v));
                 HIR_BLOCK2(ctx, HIR_GDREF, res, HIR_SUBJ_ASTVAR(node));
             }
         }
@@ -22,7 +18,7 @@ hir_subject_t* HIR_generate_load(ast_node_t* node, hir_ctx_t* ctx, sym_table_t* 
             case UNKNOWN_NUMERIC_TOKEN: res = HIR_SUBJ_NUMBER(node->token->value); break;
             case ARR_VARIABLE_TOKEN:
             case STR_VARIABLE_TOKEN: {
-_indexing: {}
+    _indexing: {}
                 ast_node_t* off = node->child;
                 if (!off) res = HIR_SUBJ_ASTVAR(node); 
                 else {
@@ -59,10 +55,7 @@ _indexing: {}
 
                 break;
             }
-
-            default: 
-                res = HIR_SUBJ_ASTVAR(node); 
-            break;
+            default: res = HIR_SUBJ_ASTVAR(node); break;
         }
     }
 
@@ -79,5 +72,6 @@ _end: {}
         res = neg;
     }
 
-    return res ? res : HIR_SUBJ_CONST(0);
+    if (!res) res = HIR_SUBJ_CONST(0);
+    return res;
 }

@@ -1,4 +1,5 @@
-/* ssa.c - Transfer input HIR program (with PHI placeholders) into the SSA form
+/*
+ssa.c - Transfer input HIR program (with PHI placeholders) into the SSA form
 */
 
 #include <hir/ssa.h>
@@ -72,10 +73,7 @@ static int _insert_phi_preamble(cfg_block_t* block, long bid, int a, int b, sym_
             HIR_insert_block_before(union_command, trg->l->hmap.entry);
         }
 
-        if (trg->hmap.entry == trg->hmap.exit) {
-            trg->hmap.entry = union_command;
-        }
-        
+        if (trg->hmap.entry == trg->hmap.exit) trg->hmap.entry = union_command;
         break;
     }
 
