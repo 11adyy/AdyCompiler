@@ -95,6 +95,24 @@ Hello there
 :
 ```
 
+# Program entry point
+Function becomes entry point in two ways:
+- If this is a `start` function
+- If this is the lowest function in file (If there is no `start` function)
+
+Example without defined `start`:
+```apl
+function fang() => i0; { return; }
+function naomi() => i0; { return; } : <= Becomes entry point :
+```
+
+Example with defined `start`:
+```apl
+function fang() => i0; { return; }
+function naomi() => i0; { return; }
+start() { exit 0; } : <= Becomes entry point :
+```
+
 # Types
 ## Primitives
 - `f64`, `f32` - double and float; non-floating values are converted to double if used in double operations.
@@ -132,6 +150,11 @@ i8 a = 255;
 u8 b = 0b0;
 i8 c = 0xF;
 i8 d = 'a';
+```
+
+- `i0` - Void type. Should be used in the function return type.
+```apl
+function fang() => i0; { return; }
 ```
 
 ## Strings and arrays
@@ -283,15 +306,15 @@ switch cond; {
 ## Functions
 Functions can be defined by `function` keyword. Also, if you want to use function in another `.apl`/(or whatever language that support extern) file, you can append `glob` keyword. One note here, that if you want to invoke this function from another language, keep in mind, that APL change local function name by next pattern: `__apl_{name}`, that's why prefer mark them with `glob` key. 
 ```apl
-function foo() => i32 { }
-glob function bar(i32 a = 10) => ptr u64 { }
-function baz(i32 b = bar(11)) => u8 { }
+function max() => i32 { }
+glob function chloe(i32 a = 10) => ptr u64 { }
+function min(i32 b = chloe(11)) => u8 { }
 ```
 
 APL support default values in functions. Compiler will pass this default args in function call if you don't provide enoght.
 ```apl
-bar(); : => bar(10); :
-baz(); : => baz(bar(11)); :
+chloe(); : => chloe(10); :
+min(); : => min(chloe(11)); :
 ```
 
 ## Inbuilt macros
@@ -307,9 +330,9 @@ syscall(1, 1, ref msg, strlen(ref msg));
 i32 a = 0;
 i32 ret = 0;
 asm(a, ret) {
-   "mov rax, %1 ; mov rax, a",
+   "mov rax, %0 ; mov rax, a",
    "syscall",
-   "mov %0, rax ; mov ret, rax"
+   "mov %1, rax ; mov ret, rax"
 }
 ```
 

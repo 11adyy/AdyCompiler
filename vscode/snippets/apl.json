@@ -193,6 +193,11 @@
     "body": "u8",
     "description": "APL u8 type"
   },
+  "APL Types void": {
+    "prefix": "i0",
+    "body": "i0",
+    "description": "APL i0 type"
+  },
   "APL Types Array": {
     "prefix": "arr",
     "body": "arr name[0, type] =;",
