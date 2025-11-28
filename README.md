@@ -1,8 +1,8 @@
 # AdyCompiler
-AdyCompiler is a compact hobby compiler for Ady Programming Language with a simple syntax, inspired by C and Rust. It is designed for studying compilation, code optimization, translation, and low-level microcode generation.
+AdyCompiler is a compact hobby compiler for the `Ady Programming Language` with a simple syntax, inspired by C and Rust. It is designed for studying compilation, code optimization, translation, and low-level microcode generation.
 
 # Main idea of this project
-Main goal of this project is learning of compilers architecture and porting one to AdyOS project (I want to code apps for OS inside this OS). Also, according to my bias to assembly and C languages (I just love them), this language will stay "low-level" as it possible, but some features can be added in future with strings (inbuild concat, comparison and etc).
+Main goal of this project is learning of compilers architecture and porting one to the `AdyOS` project (I just want to code apps for `my` OS inside `my` OS). Also, according to my bias to `assembly` and `C` languages (I just love them), this language will stay "low-level" as it possible, but some features can be added in future with strings (inbuild concat, comparison, etc).
 
 # Used links and literature
 - Aarne Ranta. *Implementing Programming Languages. An Introduction to Compilers and Interpreters*
@@ -60,6 +60,16 @@ This `README` file contains the main information about this compiler and the dev
    - [Third pass](#third-pass)
 - [Codegen (nasm) part](#codegen-nasm-part)
    - [Example of generated code](#example-of-generated-code)
+
+## Project structure
+- `examples/` - AdyLanguage code examples.
+- `include/` - Include headers of this compiler and standart libs.
+- `src/` - Source files of this compiler.
+- `std/` - Standart libs that are used in this compiler.
+- `tests/` - Tests folder for this complier.
+- `vscode/` - VScode AdyLanguage extention.
+- `commits.py` - Special commit tool for better maintaining this project.
+- `Makefile` - Main build script.
 
 ## Introduction
 For additional experience, I chose to take on an extra challenge — creating a programming language. This language has an `EBNF-defined` syntax, its own [VS Code extension](https://github.com/11adyy/AdyCompiler/tree/HIR_LIR_SSA/vscode), and documentation. While explaining each layer of the compiler, I will also provide direct examples written in this language.
