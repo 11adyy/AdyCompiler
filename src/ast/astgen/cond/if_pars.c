@@ -1,6 +1,6 @@
-#include <ast/astgens/astgens.h>
+#include <ast/astgen/astgen.h>
 
-ast_node_t* apl_parse_while(list_iter_t* it, ast_ctx_t* ctx, sym_table_t* smt) {
+ast_node_t* apl_parse_if(list_iter_t* it, ast_ctx_t* ctx, sym_table_t* smt) {
     ast_node_t* node = AST_create_node(CURRENT_TOKEN);
     if (!node) {
         print_error("AST_create_node error!");
