@@ -81,7 +81,12 @@
   "APL Keywords Lis": {
     "prefix": "lis",
     "body": "lis",
-    "description": "APL keyword"
+    "description": "APL LiS keyword"
+  },
+  "APL Keywords break": {
+    "prefix": "break",
+    "body": "break",
+    "description": "APL break keyword"
   },
   "APL Keywords Exfunc": {
     "prefix": "exfunc",
