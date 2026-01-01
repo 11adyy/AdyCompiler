@@ -48,8 +48,14 @@
     "body": [
       "while cond; {",
       "\t: ... :",
-      "}",
-      "else {",
+      "}"
+    ]
+  },
+  "loop-loop": {
+    "scope": "apl",
+    "prefix": "loop",
+    "body": [
+      "loop {",
       "\t: ... :",
       "}"
     ]

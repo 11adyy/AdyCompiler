@@ -127,6 +127,23 @@ Returns an ast node.
 ast_node_t* apl_parse_while(list_iter_t* it, ast_ctx_t* ctx, sym_table_t* smt);
 
 /*
+Parse .apl 'loop' block with input tokens. Should be invoked on 'loop' token.
+Snippet:
+```apl
+loop {
+}
+```
+
+Params:
+    - `it` - Current iterator on token list.
+    - `ctx` - AST ctx.
+    - `smt` - Symtable pointer.
+
+Returns an ast node.
+*/
+ast_node_t* apl_parse_loop(list_iter_t* it, ast_ctx_t* ctx, sym_table_t* smt);
+
+/*
 Parse .apl declaration array block. Should be invoked on array declaration block.
 Snippet:
 ```apl

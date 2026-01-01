@@ -22,6 +22,16 @@ Logs for the first and second versions are quite short because I don’t remembe
 
 ----------------------------------------
 
+## Loop statement
+Now the `APL` supports the `loop` statement!
+```apl
+loop {
+    break;
+}
+```
+
+This statement the same with the `loop` from Rust.
+
 ## Break statement
 Now the `APL` supports the `break` statement!
 ```apl
