@@ -209,6 +209,11 @@
     "body": "i0",
     "description": "APL i0 type"
   },
+  "APL Convert": {
+    "prefix": "as",
+    "body": "as",
+    "description": "Cast something to a type"
+  },
   "APL Types Array": {
     "prefix": "arr",
     "body": "arr name[0, type] =;",
