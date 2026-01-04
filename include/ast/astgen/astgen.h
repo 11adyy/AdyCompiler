@@ -434,10 +434,17 @@ Params:
     - `it` - Current iterator on token list.
     - `ctx` - AST ctx.
     - `smt` - Symtable pointer.
+    - `na` - No assign.
+             Note: By default (0), this function parses an entire 
+                   expression with a assign symbol. That means, that
+                   expressions such as `a = b`, `a + b = a + b` will
+                   be full parsed.
+                   If you want to parse only the left part (before assign),
+                   set this flag to 1.
 
 Returns an ast node.
 */
-ast_node_t* apl_parse_expression(list_iter_t* it, ast_ctx_t* ctx, sym_table_t* smt);
+ast_node_t* apl_parse_expression(list_iter_t* it, ast_ctx_t* ctx, sym_table_t* smt, int na);
 
 /*
 Parse .apl scope block. Should be invoked on scope token.
@@ -498,8 +505,6 @@ lis;
 
 Params:
     - `it` - Current iterator on token list.
-    - `ctx` - AST ctx.
-    - `smt` - Symtable pointer.
 
 Returns an ast node.
 */
@@ -532,5 +537,53 @@ Params:
 Returns an ast node.
 */
 ast_node_t* apl_parse_conv(list_iter_t* it);
+
+/*
+Parse .apl 'ref' command. Should be invoked on a 'ref' token.
+Snippet:
+```apl
+i32 b = ref variable;
+```
+
+Params:
+    - `it` - Current iterator on token list.
+    - `ctx` - AST ctx.
+    - `smt` - Symtable pointer.
+
+Returns an ast node.
+*/
+ast_node_t* apl_parse_ref(list_iter_t* it, ast_ctx_t* ctx, sym_table_t* smt);
+
+/*
+Parse .apl 'dref' command. Should be invoked on a 'dref' token.
+Snippet:
+```apl
+i32 b = dref variable;
+```
+
+Params:
+    - `it` - Current iterator on token list.
+    - `ctx` - AST ctx.
+    - `smt` - Symtable pointer.
+
+Returns an ast node.
+*/
+ast_node_t* apl_parse_dref(list_iter_t* it, ast_ctx_t* ctx, sym_table_t* smt);
+
+/*
+Parse .apl 'neg' command. Should be invoked on a 'neg' token.
+Snippet:
+```apl
+i32 b = neg variable;
+```
+
+Params:
+    - `it` - Current iterator on token list.
+    - `ctx` - AST ctx.
+    - `smt` - Symtable pointer.
+
+Returns an ast node.
+*/
+ast_node_t* apl_parse_neg(list_iter_t* it, ast_ctx_t* ctx, sym_table_t* smt);
 
 #endif
