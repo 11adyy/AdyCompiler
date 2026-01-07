@@ -12,211 +12,429 @@
     ],
     "description": "APL program skeleton"
   },
+
   "asm-block": {
     "scope": "apl",
     "prefix": "asm",
     "body": [
-      "asm (var1, var2, ...) {",
-      "\t\"mov rax, &var1\"",
+      "asm (${1:arg1}${2:, arg2}) {",
+      "\t\"${0:mov rax, &arg1}\"",
       "}"
-    ]
+    ],
+    "description": "Inline asm block"
   },
+
   "function-definition": {
     "scope": "apl",
     "prefix": "function",
     "body": [
-      "function foo() => i32 {",
-      "\treturn 0;",
+      "function ${1:name}(${2:}) => ${3:i32} {",
+      "\t${0:return 0;}",
       "}"
-    ]
+    ],
+    "description": "Function definition"
   },
+
+  "function-prototype": {
+    "scope": "apl",
+    "prefix": "fproto",
+    "body": [
+      "function ${1:name}(${2:})${3: => ${4:i32}};"
+    ],
+    "description": "Function prototype (declaration)"
+  },
+
+  "global-var": {
+    "scope": "apl",
+    "prefix": "globvar",
+    "body": [
+      "glob ${1:i32} ${2:name}${3: = ${4:0}};"
+    ],
+    "description": "Global variable declaration"
+  },
+
+  "ro-global-var": {
+    "scope": "apl",
+    "prefix": "rovar",
+    "body": [
+      "ro ${1:i32} ${2:name}${3: = ${4:0}};"
+    ],
+    "description": "Read-only global variable declaration"
+  },
+
+  "local-var": {
+    "scope": "apl",
+    "prefix": "var",
+    "body": [
+      "${1:i32} ${2:name}${3: = ${4:0}};"
+    ],
+    "description": "Local variable declaration"
+  },
+
+  "array-declaration": {
+    "scope": "apl",
+    "prefix": "arr",
+    "body": [
+      "arr ${1:name}[${2:10}, ${3:i32}]${4: = {${5:0}}};"
+    ],
+    "description": "Array declaration"
+  },
+
   "if-statement": {
     "scope": "apl",
     "prefix": "if",
     "body": [
-      "if cond; {",
-      "\t: ... :",
+      "if ${1:cond}; {",
+      "\t${0:: ... :}",
       "}",
       "else {",
       "\t: ... :",
       "}"
-    ]
+    ],
+    "description": "If / else statement"
   },
+
   "while-loop": {
     "scope": "apl",
     "prefix": "while",
     "body": [
-      "while cond; {",
-      "\t: ... :",
+      "while ${1:cond}; {",
+      "\t${0:: ... :}",
       "}"
-    ]
+    ],
+    "description": "While loop"
   },
+
   "loop-loop": {
     "scope": "apl",
     "prefix": "loop",
     "body": [
       "loop {",
-      "\t: ... :",
+      "\t${0:: ... :}",
       "}"
-    ]
+    ],
+    "description": "Infinite loop"
   },
-  "syscall-invoke": {
-    "scope": "apl",
-    "prefix": "syscall",
-    "body": [
-      "syscall(arg, ...);"
-    ]
-  },
+
   "switch-statement": {
     "scope": "apl",
     "prefix": "switch",
     "body": [
-      "switch cond; {",
-      "\tcase val; {",
+      "switch ${1:expr}; {",
+      "\tcase ${2:0}; {",
+      "\t\t${0:: ... :}",
       "\t}",
       "\tdefault {",
+      "\t\t: ... :",
       "\t}",
       "}"
-    ]
+    ],
+    "description": "Switch statement (switch expr; { case lit; block })"
   },
+
+  "return-statement": {
+    "scope": "apl",
+    "prefix": "return",
+    "body": [
+      "return ${0};"
+    ],
+    "description": "Return statement"
+  },
+
+  "break-statement": {
+    "scope": "apl",
+    "prefix": "break",
+    "body": [
+      "break;"
+    ],
+    "description": "Break statement"
+  },
+
+  "exit-statement": {
+    "scope": "apl",
+    "prefix": "exit",
+    "body": [
+      "exit ${0:0};"
+    ],
+    "description": "Exit statement"
+  },
+
+  "lis-statement": {
+    "scope": "apl",
+    "prefix": "lis",
+    "body": [
+      "lis \"${0:text}\";"
+    ],
+    "description": "LiS statement"
+  },
+
+  "syscall-invoke": {
+    "scope": "apl",
+    "prefix": "syscall",
+    "body": [
+      "syscall(${1:arg1}${2:, arg2});"
+    ],
+    "description": "Syscall invocation"
+  },
+
+  "import-op": {
+    "scope": "apl",
+    "prefix": "from",
+    "body": [
+      "from \"${1:module}\" import ${0:name};"
+    ],
+    "description": "Import statement"
+  },
+
+  "extern-exfunc": {
+    "scope": "apl",
+    "prefix": "externex",
+    "body": [
+      "extern exfunc ${0:name};"
+    ],
+    "description": "Extern function prototype"
+  },
+
+  "extern-var": {
+    "scope": "apl",
+    "prefix": "externvar",
+    "body": [
+      "extern ${1:i32} ${0:name};"
+    ],
+    "description": "Extern variable prototype"
+  },
+
+  "pp-include": {
+    "scope": "apl",
+    "prefix": "#include",
+    "body": [
+      "#include \"${0:file}\""
+    ],
+    "description": "Preprocessor include directive"
+  },
+
+  "pp-define": {
+    "scope": "apl",
+    "prefix": "#define",
+    "body": [
+      "#define ${1:NAME} ${0:value}"
+    ],
+    "description": "Preprocessor define directive"
+  },
+
+  "pp-undef": {
+    "scope": "apl",
+    "prefix": "#undef",
+    "body": [
+      "#undef ${0:NAME}"
+    ],
+    "description": "Preprocessor undef directive"
+  },
+
+  "pp-ifdef": {
+    "scope": "apl",
+    "prefix": "#ifdef",
+    "body": [
+      "#ifdef ${1:NAME}",
+      "${0}",
+      "#endif"
+    ],
+    "description": "Preprocessor ifdef block"
+  },
+
+  "pp-ifndef": {
+    "scope": "apl",
+    "prefix": "#ifndef",
+    "body": [
+      "#ifndef ${1:NAME}",
+      "${0}",
+      "#endif"
+    ],
+    "description": "Preprocessor ifndef block"
+  },
+
+  "pp-line": {
+    "scope": "apl",
+    "prefix": "#line",
+    "body": [
+      "#line ${1:1} \"${0:file}\""
+    ],
+    "description": "Preprocessor line directive"
+  },
+
+  "pp-endif": {
+    "scope": "apl",
+    "prefix": "#endif",
+    "body": [
+      "#endif"
+    ],
+    "description": "Preprocessor endif directive"
+  },
+
   "APL Keywords Extern": {
+    "scope": "apl",
     "prefix": "extern",
     "body": "extern",
     "description": "APL keyword"
   },
   "APL Keywords Lis": {
+    "scope": "apl",
     "prefix": "lis",
     "body": "lis",
     "description": "APL LiS keyword"
   },
   "APL Keywords break": {
+    "scope": "apl",
     "prefix": "break",
     "body": "break",
     "description": "APL break keyword"
   },
   "APL Keywords Exfunc": {
+    "scope": "apl",
     "prefix": "exfunc",
     "body": "exfunc",
     "description": "APL keyword"
   },
   "APL Keywords From": {
+    "scope": "apl",
     "prefix": "from",
     "body": "from",
     "description": "APL keyword"
   },
   "APL Keywords Import": {
+    "scope": "apl",
     "prefix": "import",
     "body": "import",
     "description": "APL keyword"
   },
   "APL Keywords Exit": {
+    "scope": "apl",
     "prefix": "exit",
     "body": "exit",
     "description": "APL keyword"
   },
   "APL Keywords Return": {
+    "scope": "apl",
     "prefix": "return",
     "body": "return",
     "description": "APL keyword"
   },
+
   "APL Modifiers RO": {
+    "scope": "apl",
     "prefix": "ro",
     "body": "ro",
     "description": "APL modifier"
   },
   "APL Modifiers GLOB": {
+    "scope": "apl",
     "prefix": "glob",
     "body": "glob",
     "description": "APL modifier"
   },
   "APL Modifiers NOT": {
+    "scope": "apl",
     "prefix": "not",
     "body": "not",
     "description": "APL modifier"
   },
-  "APL Types REF": {
+
+  "APL Ops REF": {
+    "scope": "apl",
     "prefix": "ref",
     "body": "ref",
     "description": "APL reference operation"
   },
-  "APL Types DREF": {
+  "APL Ops DREF": {
+    "scope": "apl",
     "prefix": "dref",
     "body": "dref",
     "description": "APL de-reference operation"
   },
+
   "APL Types String": {
+    "scope": "apl",
     "prefix": "str",
     "body": "str",
     "description": "APL str type"
   },
   "APL Types PTR": {
+    "scope": "apl",
     "prefix": "ptr",
     "body": "ptr",
-    "description": "APL u64 type"
+    "description": "APL ptr type"
   },
   "APL Types F64": {
+    "scope": "apl",
     "prefix": "f64",
     "body": "f64",
     "description": "APL f64 type"
   },
   "APL Types F32": {
+    "scope": "apl",
     "prefix": "f32",
     "body": "f32",
     "description": "APL f32 type"
   },
   "APL Types Long": {
+    "scope": "apl",
     "prefix": "i64",
     "body": "i64",
     "description": "APL i64 type"
   },
   "APL Types Int": {
+    "scope": "apl",
     "prefix": "i32",
     "body": "i32",
     "description": "APL i32 type"
   },
   "APL Types Short": {
+    "scope": "apl",
     "prefix": "i16",
     "body": "i16",
     "description": "APL i16 type"
   },
   "APL Types Char": {
+    "scope": "apl",
     "prefix": "i8",
     "body": "i8",
     "description": "APL i8 type"
   },
   "APL Types uLong": {
+    "scope": "apl",
     "prefix": "u64",
     "body": "u64",
     "description": "APL u64 type"
   },
   "APL Types uInt": {
+    "scope": "apl",
     "prefix": "u32",
     "body": "u32",
     "description": "APL u32 type"
   },
   "APL Types uShort": {
+    "scope": "apl",
     "prefix": "u16",
     "body": "u16",
     "description": "APL u16 type"
   },
   "APL Types uChar": {
+    "scope": "apl",
     "prefix": "u8",
     "body": "u8",
     "description": "APL u8 type"
   },
   "APL Types void": {
+    "scope": "apl",
     "prefix": "i0",
     "body": "i0",
     "description": "APL i0 type"
   },
+
   "APL Convert": {
+    "scope": "apl",
     "prefix": "as",
     "body": "as",
     "description": "Cast something to a type"
-  },
-  "APL Types Array": {
-    "prefix": "arr",
-    "body": "arr name[0, type] =;",
-    "description": "APL array type"
   }
 }
