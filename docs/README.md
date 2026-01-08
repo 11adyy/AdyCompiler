@@ -109,6 +109,12 @@ Hello there
 :
 ```
 
+- **File names**: Sneaky case for file names. If this is a 'header' file, add the `_h` path to the name.
+```
+print_h.apl <- Prototypes and includes
+print.apl   <- Implementation
+``` 
+
 # Program entry point
 Function becomes an entry point in two cases:
 - If this is a `start` function.

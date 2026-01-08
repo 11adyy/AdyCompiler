@@ -1,5 +1,6 @@
 {
     #include "print_h.apl"
+    #include "string_h.apl"
 
     function foo() => i0;
     
