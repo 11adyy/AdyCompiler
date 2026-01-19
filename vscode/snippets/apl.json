@@ -338,7 +338,12 @@
     "body": "not",
     "description": "APL modifier"
   },
-
+  "APL Ops POPARG": {
+    "scope": "apl",
+    "prefix": "poparg",
+    "body": "poparg",
+    "description": "APL pop argument operation"
+  },
   "APL Ops REF": {
     "scope": "apl",
     "prefix": "ref",
