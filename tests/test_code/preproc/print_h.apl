@@ -15,11 +15,11 @@
 
 : OUTPUT
 {
-#line 0 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/string_h.apl"
+#line 0 "{X}.apl"
   
     function strlen(ptr i8 s) => i64;
 
-#line 4 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/print_h.apl"
+#line 4 "{X}.apl"
     
     function print(ptr str msg) => i0;
 }

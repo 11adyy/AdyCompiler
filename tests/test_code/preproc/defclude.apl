@@ -14,10 +14,10 @@
 
 : OUTPUT
 {
-#line 0 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/define.apl"
+#line 0 "{X}.apl"
  
     function a();
  
-#line 3 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/defclude.apl"
+#line 3 "{X}.apl"
 }
 :

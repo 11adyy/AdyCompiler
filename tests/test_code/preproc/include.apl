@@ -11,30 +11,24 @@
 
 : OUTPUT
 {
-#line 0 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/print_h.apl"
-#line 0 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/string_h.apl"
+#line 0 "{X}.apl"
+#line 0 "{X}.apl"
     
     function strlen(ptr i8 s) => i64;
  
-#line 4 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/print_h.apl"
+#line 4 "{X}.apl"
    
     function print(ptr str msg) => i0;
  
-#line 2 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/include.apl"
-#line 0 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/print_h.apl"
-#line 0 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/string_h.apl"
-#line 4 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/print_h.apl"
-#line 3 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/include.apl"
-#line 0 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/print_h.apl"
-#line 0 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/string_h.apl"
-#line 4 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/print_h.apl"
-#line 4 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/include.apl"
-#line 0 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/print_h.apl"
-#line 0 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/string_h.apl"
-#line 4 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/print_h.apl"
-#line 5 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/include.apl"
-#line 0 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/print_h.apl"
-#line 6 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/include.apl"
+#line 2 "{X}.apl"
+#line 0 "{X}.apl"
+#line 3 "{X}.apl"
+#line 0 "{X}.apl"
+#line 4 "{X}.apl"
+#line 0 "{X}.apl"
+#line 5 "{X}.apl"
+#line 0 "{X}.apl"
+#line 6 "{X}.apl"
 
     start() {
     }
