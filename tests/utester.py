@@ -149,7 +149,7 @@ def _entry() -> None:
         sys.exit(1)
 
     results: list[dict] = []
-    for apl_file in test_dir.glob("*.apl"):
+    for apl_file in test_dir.rglob("*.apl"):
         results.append(_run_test(binary, apl_file))
 
     failed = 0
