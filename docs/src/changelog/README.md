@@ -26,8 +26,25 @@ Logs for the first and second versions are quite short because I don’t remembe
 
 ----------------------------------------
 
+## Matricies!
+Now the compiler supports multi-indexation!
+```apl
+extern ptr ptr u32 matrix;
+matrix[0][0] = 1;
+```
+
+To declare matricies, you will still need to use regular arrays:
+```apl
+arr a[2, u32];
+arr b[2, u32];
+arr c[2, ptr u32] = { ref a, ref b };
+
+c[0][0] = 1; : a[0] :
+c[1][0] = 1; : b[0] :
+```
+
 ## if-elseif-else syntax support
-Not this compiler support the next code snippet:
+Now this compiler supports the next code snippet:
 ```apl
 if a; {
 
