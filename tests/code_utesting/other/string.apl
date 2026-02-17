@@ -1,7 +1,7 @@
 {
     #include "string_h.apl"
 
-    function strlen(ptr i8 s) => i64 {
+    function strlen(ptr i8 s) -> i64 {
         i64 l = 0;
         while dref s; {
             s += 1;
