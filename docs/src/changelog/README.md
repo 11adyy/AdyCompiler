@@ -26,6 +26,20 @@ Logs for the first and second versions are quite short because I don’t remembe
 
 ----------------------------------------
 
+## i0 variable type
+The `i0` variable type now is possible to use for variables. 
+```apl
+ptr i0 a;
+```
+
+It must have the `ptr` keyword/s. Otherwise it won't work. </br>
+Also, now the pointer function by default is the `ptr i0` type.
+```apl
+function foo();
+ptr i0 a = foo();
+a();
+```
+
 ## Local functions
 Same as in Rust, functions can define another functions in their body:
 ```apl
