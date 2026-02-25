@@ -26,6 +26,65 @@ Logs for the first and second versions are quite short because I don’t remembe
 
 ----------------------------------------
 
+## Local functions
+Same as in Rust, functions can define another functions in their body:
+```apl
+function foo() -> i0 {
+    function bar() -> i32 {
+        return 32;
+    }
+    return bar();
+}
+```
+
+These functions can be optimized as a regular one. Also, these functions (at this moment) don't have any access for outer variables:
+```apl
+function var_decl() -> i0 {
+    i32 a;
+    function var_try_to_use() -> i0 {
+        a += 1; : <= Illegal :
+    }
+    var_try_to_use();
+}
+```
+
+Also, such functions can be used as a return value when you want to implement something like a 'function factory':
+```apl
+function factory(i32 key) -> ptr u64 {
+    switch key; {
+        case 1; {
+            function foo() {
+                return 1;
+            }
+            return foo;
+        }
+        default; {}
+        case 2; {
+            function bar() {
+                return 2;
+            }
+            return bar;
+        }
+    }
+}
+
+start() {
+    exit factory(1)();
+}
+```
+
+## Scope functions
+At this moment a pretty useless feature of the compiler:
+```apl
+{
+    function foo();
+}
+{
+    function foo();
+}
+```
+Scopes now participate in function symbol resolution.
+
 ## Function return type new semantic
 The semantic of the APL has moved a bit towards Rust language. Now instead of the '=>' as a rtype, you will need to use the '->'.
 ```apl
