@@ -68,7 +68,7 @@ ast_node_t* apl_parse_switch(PARSER_ARGS) {
             return NULL;
         }
 
-        ast_node_t* case_body = apl_parse_scope(it, ctx, smt, carry);
+        ast_node_t* case_body = apl_parse_scope(it, ctx, smt, 1);
         if (!case_body) {
             PARSE_ERROR("Error during the parsing process for the case!");
             AST_unload(case_node);

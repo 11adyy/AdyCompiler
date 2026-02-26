@@ -25,8 +25,8 @@ ast_node_t* apl_parse_if(PARSER_ARGS) {
     AST_add_node(node, cond);
 
     ast_node_t* tbranch = NULL;
-    if (!consume_token(it, OPEN_BLOCK_TOKEN)) tbranch = apl_parse_line_scope(it, ctx, smt, carry);
-    else tbranch = apl_parse_scope(it, ctx, smt, carry);
+    if (!consume_token(it, OPEN_BLOCK_TOKEN)) tbranch = apl_parse_line_scope(it, ctx, smt, 1);
+    else tbranch = apl_parse_scope(it, ctx, smt, 1);
     if (!tbranch) {
         PARSE_ERROR("Error during the true branch parsing in the '%s' statement!", IF_COMMAND);
         AST_unload(node);
@@ -40,7 +40,7 @@ ast_node_t* apl_parse_if(PARSER_ARGS) {
         ast_node_t* fbranch = NULL;
         forward_token(it, 1);
         switch (CURRENT_TOKEN->t_type) {
-            case OPEN_BLOCK_TOKEN: fbranch = apl_parse_scope(it, ctx, smt, carry);      break;
+            case OPEN_BLOCK_TOKEN: fbranch = apl_parse_scope(it, ctx, smt, 1);          break;
             case IF_TOKEN:         fbranch = apl_parse_if(it, ctx, smt, carry);         break;
             default:               fbranch = apl_parse_line_scope(it, ctx, smt, carry); break;
         }
