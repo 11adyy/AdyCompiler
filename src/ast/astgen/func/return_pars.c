@@ -17,14 +17,14 @@ ast_node_t* apl_parse_return(PARSER_ARGS) {
         return node;
     }
 
-    ast_node_t* exp_node = apl_parse_expression(it, ctx, smt, 1);
-    if (!exp_node) {
+    ast_node_t* value = apl_parse_expression(it, ctx, smt, 1);
+    if (value) AST_add_node(node, value);
+    else {
         PARSE_ERROR("Error during the return statement! return <stmt>!");
         AST_unload(node);
         RESTORE_TOKEN_POINT;
         return NULL;
     }
 
-    AST_add_node(node, exp_node);
     return node;
 }
