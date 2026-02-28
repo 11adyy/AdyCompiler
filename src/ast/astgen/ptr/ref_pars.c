@@ -13,7 +13,7 @@ ast_node_t* apl_parse_ref(PARSER_ARGS) {
 
     forward_token(it, 1);
     ast_node_t* body = apl_parse_expression(it, ctx, smt, 1);
-    if (!body) AST_add_node(base, body);
+    if (body) AST_add_node(base, body);
     else {
         PARSE_ERROR("Error during the reference body parse! ref <exp>!");
         AST_unload(base);
