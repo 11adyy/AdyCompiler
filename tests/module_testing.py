@@ -368,7 +368,7 @@ def _run_test(binary: str, binary_leak: str | None, test_file: Path) -> dict:
         "diff": None if ok else (why + "\n\n" + _make_diff(expected_n, actual_n))
     }
 
-def find_test_roots(start_path: Path) -> list[Path]:
+def _find_test_roots(start_path: Path) -> list[Path]:
     roots = []
     for root, _, _ in os.walk(start_path):
         root_path = Path(root)
@@ -377,14 +377,14 @@ def find_test_roots(start_path: Path) -> list[Path]:
 
     return roots
 
-def collect_apl_files(root: Path, all_roots: set[Path]) -> list[Path]:
+def _collect_apl_files(root: Path, all_roots: set[Path]) -> list[Path]:
     apl_files = []
     try:
         for entry in root.iterdir():
             if entry.is_dir():
                 if entry in all_roots:
                     continue
-                apl_files.extend(collect_apl_files(entry, all_roots))
+                apl_files.extend(_collect_apl_files(entry, all_roots))
             elif entry.suffix == ".apl":
                 apl_files.append(entry)
     except PermissionError:
@@ -406,7 +406,7 @@ def _entry() -> None:
 
     os.makedirs(args.output_dir, exist_ok=True)
 
-    all_roots = find_test_roots(test_top)
+    all_roots = _find_test_roots(test_top)
     if not all_roots:
         print(f"No test modules found (no base.c + dependencies.json) under {test_top}", file=sys.stderr)
         sys.exit(1)
@@ -451,7 +451,7 @@ def _entry() -> None:
                 output_dir=str(module_out_dir),
                 extra_flags=['Wno-int-conversion', 'Wno-unused-function']
             )
-        _out = _buf.getvalue()
+        _out: str = _buf.getvalue()
         if _out:
             for _line in _out.rstrip("\n").splitlines():
                 tqdm.write(_line)
@@ -462,7 +462,7 @@ def _entry() -> None:
             failed_modules += 1
             continue
 
-        apl_files = collect_apl_files(root, all_roots_set)
+        apl_files: list = _collect_apl_files(root, all_roots_set)
         need_leak_bin = False
         for apl in apl_files:
             try:
