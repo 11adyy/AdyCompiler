@@ -197,6 +197,14 @@
     ],
     "description": "Cold branch annotation"
   },
+  "annotation-register": {
+    "scope": "apl",
+    "prefix": "regann",
+    "body": [
+      "@[register(${1:10})]"
+    ],
+    "description": "Register bindings for variables annotation"
+  },
   "annotation-stack": {
     "scope": "apl",
     "prefix": "annstack",
