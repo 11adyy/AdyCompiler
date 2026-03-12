@@ -1,9 +1,9 @@
 {
   "name": "apl-lang-simple",
-  "displayName": "APL — Language support",
+  "displayName": "APL — VSCode language support",
   "description": "VS Code extention for APL",
   "icon": "./apl.png",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "11adyy",
   "engines": {
     "vscode": "^1.80.0"

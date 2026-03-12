@@ -1,26 +1,22 @@
-{
-    #include "print_h.apl"
+#include "print_h.apl"
 
-    function print(ptr str msg) -> i0 {
-        syscall(0x2000004, 1, msg, strlen(msg));
-    }
+function print(ptr str msg) -> i0 {
+    syscall(0x2000004, 1, msg, strlen(msg));
 }
 
 : OUTPUT
-{
 #line 0 "{X}.apl"
 #line 0 "{X}.apl"
      
-    function strlen(ptr i8 s) -> i64;
+function strlen(ptr i8 s) -> i64;
  
-#line 4 "{X}.apl"
+#line 3 "{X}.apl"
    
-    function print(ptr str msg) -> i0;
+function print(ptr str msg) -> i0;
 
-#line 2 "{X}.apl"
+#line 1 "{X}.apl"
 
-    function print(ptr str msg) -> i0 {
-        syscall(0x2000004, 1, msg, strlen(msg));
-    }
+function print(ptr str msg) -> i0 {
+    syscall(0x2000004, 1, msg, strlen(msg));
 }
 :
