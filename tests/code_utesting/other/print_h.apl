@@ -1,14 +1,12 @@
-{
 #ifndef PRINT_H_
 #define PRINT_H_ 0
-    #include "string_h.apl"
+#include "string_h.apl"
 
-    : Basic print function that is based on
-      a syscall invoke.
-      Params
-      - `msg` - Input message to print.
-      
-      Returns i0 aka nothing. :
-    function print(ptr str msg) -> i0;
+: Basic print function that is based on
+  a syscall invoke.
+  Params
+  - `msg` - Input message to print.
+  
+  Returns i0 aka nothing. :
+function print(ptr str msg) -> i0;
 #endif
-}
