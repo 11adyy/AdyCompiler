@@ -32,6 +32,3 @@ APL does not enforce these restrictions. APL only ensures that the compiler does
     }
 }
 ```
-
-**Note 1!:** Be sure that you've disabled all optimizations before the code debug given the preservation of a code from transformation.
-**Note 2!:** To make this works, use any debugging tool such as `gdb` and `lldb`.
