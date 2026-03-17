@@ -736,20 +736,6 @@ Returns an ast node.
 ast_node_t* apl_parse_neg(PARSER_ARGS);
 
 /*
-Parse .apl 'poparg' command. Should be invoked on a 'poparg' token.
-Snippet:
-```apl
-i32 a = poparg as i32;
-```
-
-Params:
-    - `it` - Current iterator on token list.
-
-Returns an ast node.
-*/
-ast_node_t* apl_parse_poparg(PARSER_ARGS);
-
-/*
 Parse an annotation and push it onto the stack.
 Params:
     - <parser_args>
