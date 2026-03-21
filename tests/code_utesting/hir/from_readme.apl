@@ -1,0 +1,31 @@
+#line 0 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/print_h.apl"
+#line 0 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/string_h.apl"
+function strlen(ptr i8 s) -> i64;
+#line 4 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/print_h.apl"
+function print(ptr str msg) -> i0;
+#line 2 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/basic.apl"
+@[entry("_main")]
+function main(i32 argc, ptr ptr i8 argv) {
+    str msg = "Hello world!";
+    print(ref msg);
+    exit 0;
+}
+
+: OUTPUT
+{
+    fn _main(i32 argc, i8** argv)
+    {
+        i32s %2 = alloc(8);
+        i32s %2 = load_starg();
+        i8s** %3 = alloc(8);
+        i8s** %3 = load_starg();
+        {
+            strs %4 = str_alloc(Hello world!);
+            i8t* %5 = &(strs %4);
+            use i8t* %5;
+            call print1(str* msg) -> i0, argc args(i8t* %5,);
+            exit num? 0;
+        }
+    }
+}
+:
