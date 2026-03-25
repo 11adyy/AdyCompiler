@@ -31,6 +31,7 @@ ast_node_t* apl_parse_lambda(PARSER_ARGS) {
     }
 
     if (!consume_token(it, LAMBDA_TOKEN)) {
+    if (!consume_token(it, LAMBDA_TOKEN)) {
         PARSE_ERROR("Expected the 'LAMBDA_TOKEN'!");
         AST_unload(base);
         RESTORE_TOKEN_POINT;
@@ -38,6 +39,10 @@ ast_node_t* apl_parse_lambda(PARSER_ARGS) {
     }
 
     ast_node_t* body = NULL;
+    PRESERVE_AST_CARRY_ARG({ 
+        if (!consume_token(it, OPEN_BLOCK_TOKEN)) body = apl_parse_line_scope(it, ctx, smt, 1);
+        else body = apl_parse_scope(it, ctx, smt, 1);
+     }, base);
     PRESERVE_AST_CARRY_ARG({ 
         if (!consume_token(it, OPEN_BLOCK_TOKEN)) body = apl_parse_line_scope(it, ctx, smt, 1);
         else body = apl_parse_scope(it, ctx, smt, 1);
@@ -51,7 +56,7 @@ ast_node_t* apl_parse_lambda(PARSER_ARGS) {
     }
 
     string_t* anon_name = create_string("__anon_function_lambda");
-    base->sinfo.v_id = FNTB_add_info(anon_name, NULL,  0, 1, 0, 0,  base->sinfo.s_id, args, NULL, &smt->f);
+    base->sinfo.v_id = FNTB_add_info(anon_name, NULL,  0, 1, 0, 0, 0,  base->sinfo.s_id, args, NULL, &smt->f);
 
     destroy_string(anon_name);
     stack_pop(&ctx->scopes.stack, NULL);
