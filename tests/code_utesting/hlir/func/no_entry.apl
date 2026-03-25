@@ -1,4 +1,6 @@
-function foo() {
+{
+    function foo() {
+    }
 }
 
 : OUTPUT

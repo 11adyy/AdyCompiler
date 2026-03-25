@@ -1,7 +1,7 @@
 {
     function foo(u32 a);
     start() {
-        ptr i0 a = foo;
+        ptr u32 a = foo;
         a(10);
         foo(10);
     }

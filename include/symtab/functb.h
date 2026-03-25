@@ -24,7 +24,6 @@ typedef struct {
         char    used     : 1;
         char    local    : 1;
         char    naked    : 1;
-        char    vargs    : 1;
     } flags;
 } func_info_t;
 
@@ -86,7 +85,7 @@ Returns -1 if fails or a new function's ID.
 */
 symbol_id_t FNTB_add_info(
     string_t* name, string_t* vname,
-    int global, int local, int entry, int naked, int vargs, /* flags */
+    int global, int local, int entry, int naked, /* flags */
     symbol_id_t s_id, ast_node_t* args, ast_node_t* rtype, functab_ctx_t* ctx
 );
 
