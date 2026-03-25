@@ -31,7 +31,6 @@ ast_node_t* apl_parse_lambda(PARSER_ARGS) {
     }
 
     if (!consume_token(it, LAMBDA_TOKEN)) {
-    if (!consume_token(it, LAMBDA_TOKEN)) {
         PARSE_ERROR("Expected the 'LAMBDA_TOKEN'!");
         AST_unload(base);
         RESTORE_TOKEN_POINT;
@@ -39,10 +38,6 @@ ast_node_t* apl_parse_lambda(PARSER_ARGS) {
     }
 
     ast_node_t* body = NULL;
-    PRESERVE_AST_CARRY_ARG({ 
-        if (!consume_token(it, OPEN_BLOCK_TOKEN)) body = apl_parse_line_scope(it, ctx, smt, 1);
-        else body = apl_parse_scope(it, ctx, smt, 1);
-     }, base);
     PRESERVE_AST_CARRY_ARG({ 
         if (!consume_token(it, OPEN_BLOCK_TOKEN)) body = apl_parse_line_scope(it, ctx, smt, 1);
         else body = apl_parse_scope(it, ctx, smt, 1);
