@@ -5,7 +5,7 @@ start(i64 argc, ptr u64 argv) {
     exit 0;
 }
 
-: OUTPUT
+:/ OUTPUT
 #line 0 "{X}.apl"
 #line 0 "{X}.apl"
  
@@ -21,4 +21,4 @@ start(i64 argc, ptr u64 argv) {
     print("Hello world!\n");
     exit 0;
 }
-:
+/:

@@ -7,7 +7,7 @@
 start() {
 }
 
-: OUTPUT
+:/ OUTPUT
 #line 0 "{X}.apl"
 #line 0 "{X}.apl"
     
@@ -29,4 +29,4 @@ function print(ptr str msg) -> i0;
 
 start() {
 }
-:
+/:
