@@ -10,8 +10,8 @@
 #include "define.apl"
 #endif
 
-: OUTPUT
+:/ OUTPUT
 #line 0 "{X}.apl"
 function a(); 
 #line 2 "{X}.apl"
-:
+/:

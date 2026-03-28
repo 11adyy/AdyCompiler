@@ -83,6 +83,14 @@
     "body": "poparg",
     "description": "APL poparg expression"
   },
+  "APL Ops SIZEOF": {
+    "scope": "apl",
+    "prefix": "sizeof",
+    "body": [
+      "sizeof(${1:i32})"
+    ],
+    "description": "APL sizeof expression"
+  },
   "APL Types void": {
     "scope": "apl",
     "prefix": "i0",
