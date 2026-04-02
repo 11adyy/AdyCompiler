@@ -17,15 +17,15 @@ section .text
 _apl_bar1:
 push rbp
 mov rbp, rsp
-mov r15, 1
-mov rax, r15
+mov r15b, 1
+mov al, r15b
 mov rsp, rbp
 pop rbp
 ret
 ; BB6:
 _apl_foo0:
-mov r15, 1
-mov rax, r15
+mov r15b, 1
+mov al, r15b
 ret
 ; BB4:
 global _main
