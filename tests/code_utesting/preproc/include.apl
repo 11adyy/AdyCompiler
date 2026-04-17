@@ -15,7 +15,7 @@ function strlen(ptr i8 s) -> i64;
  
 #line 3 "{X}.apl"
    
-function print(ptr str msg) -> i0;
+function print(ptr i8 msg) -> i0;
  
 #line 1 "{X}.apl"
 #line 0 "{X}.apl"

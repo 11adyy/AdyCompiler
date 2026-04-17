@@ -1,6 +1,6 @@
 #include "print_h.apl"
 
-function print(ptr str msg) -> i0 {
+function print(ptr i8 msg) -> i0 {
     syscall(0x2000004, 1, msg, strlen(msg));
 }
 
@@ -12,11 +12,11 @@ function strlen(ptr i8 s) -> i64;
  
 #line 3 "{X}.apl"
    
-function print(ptr str msg) -> i0;
+function print(ptr i8 msg) -> i0;
 
 #line 1 "{X}.apl"
 
-function print(ptr str msg) -> i0 {
+function print(ptr i8 msg) -> i0 {
     syscall(0x2000004, 1, msg, strlen(msg));
 }
 /:
