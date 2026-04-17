@@ -610,7 +610,7 @@ For instance let's consider the next piece of code:
       - `msg` - Input message to print.
       
       Returns i0 aka nothing. :
-    function print(ptr str msg) => i0;
+    function print(ptr i8 msg) => i0;
 #endif
 }
 
@@ -643,7 +643,7 @@ After the PP, we will get a new form of the code:
 #line 0 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/dummy_data/string_h.apl"    
     function strlen(ptr i8 s) => i64;
 #line 4 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/dummy_data/print_h.apl"
-    function print(ptr str msg) => i0;
+    function print(ptr i8 msg) => i0;
 #line 2 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/dummy_data/include_test.apl"
 #line 0 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/dummy_data/string_h.apl"
 #line 3 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/dummy_data/include_test.apl"
