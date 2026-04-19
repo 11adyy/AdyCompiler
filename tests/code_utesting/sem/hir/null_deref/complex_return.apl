@@ -22,13 +22,13 @@ start() {
 }
 
 :/ OUTPUT
-[WARNING] [12:28] Function 'foo' has some arguments, which have wrong type! Consider to use the 'as' operator!
-          [12:28]     Value '10' has the 'i8' type! Consider the 'as i32' command!
-[WARNING] [13:19] 'If' with a constant value 'true'!
-[WARNING] [10:15] Condition with a constant value (variable 'tmp' is equals 'true' (1))!
-          [10:15]     Variable 'tmp' declared as a constant here!
-[WARNING] [10:15] Condition with a constant value (variable 'tmp' is equals 'false' (0))!
-          [10:15]     Variable 'tmp' declared as a constant here!
-[WARNING] [21:19] Possible NULL-dereference error (variable 'b' is NULL)!
-          [14:19]     Variable 'b' becomes NULL-value
+[WARNING] [{X}apl:12:28] Function 'foo' has some arguments, which have the wrong type! Consider to use the 'as' operator!
+          [{X}apl:12:28]     Value '10' has the 'i8' type! Consider the 'as i32' command!
+[WARNING] [{X}apl:13:19] 'If' with a constant value 'true'!
+[WARNING] [{X}apl:10:15] Condition with a constant value (variable 'tmp' is equals 'true' (1))!
+          [{X}apl:10:15]     Variable 'tmp' declared as a constant here!
+[WARNING] [{X}apl:10:15] Condition with a constant value (variable 'tmp' is equals 'false' (0))!
+          [{X}apl:10:15]     Variable 'tmp' declared as a constant here!
+[WARNING] [{X}apl:21:19] Possible NULL-dereference error (variable 'b' is NULL)!
+          [{X}apl:14:19]     Variable 'b' becomes NULL-value
 /:

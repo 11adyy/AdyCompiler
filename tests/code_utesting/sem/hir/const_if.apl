@@ -7,6 +7,6 @@ function foo() {
 }
 
 :/ OUTPUT
-[WARNING] [3{X}] Condition with a constant value (variable 'a' is equals 'true' (1))!
-          [3{X}]     Variable 'a' declared as a constant here!
+[WARNING] [{X}apl:3:11] Condition with a constant value (variable 'a' is equals 'true' (1))!
+          [{X}apl:3:11]     Variable 'a' declared as a constant here!
 /:

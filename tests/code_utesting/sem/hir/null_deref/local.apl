@@ -7,5 +7,6 @@ start() {
 }
 
 :/ OUTPUT
-[WARNING] [3{X}] NULL-dereference error (variable 'p' is NULL)!
+[WARNING] [{X}apl:3:25] NULL-dereference error (variable 'p' is NULL)!
+          [{X}apl:2:14]     Variable 'p' is assigned with NULL here
 /:
