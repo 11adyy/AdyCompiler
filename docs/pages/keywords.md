@@ -1,5 +1,5 @@
 # APL Keywords
-This is a summary information about all available keywords in APL. For further information, check related pages of documentation.
+This is a summary information about almost all available keywords in APL. For further information, check related pages of documentation.
 
 | Keyword | Description | Example |
 |-|-|-|
