@@ -4,7 +4,7 @@ start() {
 }
 
 :/ OUTPUT
-[WARNING] [{X}apl:2:41] Syscall with number 4 has some wrong typed arguments! It can lead to UB, consider to cast them:
+[WARNING] [{X}apl:2:41] Syscall (write, write bytes from a user buffer to a file descriptor) with number 4 has some wrong typed arguments! It can lead to UB, consider to cast them:
           [{X}apl:2:41]     3 argument (cbuf, user buffer) should have the 'ptr i0' type, but the 'i8' is provided! Consider to cast it with 'as ptr i0'.
           [{X}apl:2:41]     2 argument (fd, file descriptor) should have the 'i32' type, but the 'i8' is provided! Consider to cast it with 'as i32'.
 /:
