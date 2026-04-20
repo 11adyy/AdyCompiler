@@ -17,7 +17,7 @@ ast_node_t* apl_parse_while(PARSER_ARGS) {
     ast_node_t* stmt = apl_parse_expression(it, ctx, smt, 1);
     if (stmt) AST_add_node(base, stmt);
     else {
-        PARSE_ERROR("Error during the parsing process of the condition in the '%s' statement!", WHILE_COMAND);
+        PARSE_ERROR("Error during parsing process of a condition in the '%s' statement!", WHILE_COMAND);
         AST_unload(base);
         RESTORE_TOKEN_POINT;
         return NULL;

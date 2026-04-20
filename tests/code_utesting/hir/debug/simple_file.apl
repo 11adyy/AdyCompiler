@@ -8,27 +8,20 @@ start() {
 :/ OUTPUT
 setpos, line=2, column=86, file={X}
 {
-setpos, line=1, column=10, file={X}
-setpos, line=3, column=7, file={X}
+setpos, line=1, column=10, file={X}apl
+setpos, line=3, column=7, file={X}apl
     start {
         {
-setpos, line=4, column=8, file={X}
+setpos, line=4, column=8, file={X}apl
             {
-setpos, line=4, column=8, file={X}
-setpos, line=4, column=8, file={X}
-setpos, line=4, column=11, file={X}
-                if i8n 1, goto lb10, else goto lb12;
-                lb10:
+                if i8n 1, goto lb8, else goto lb10;
+                lb8:
                 {
-setpos, line=4, column=19, file={X}
-setpos, line=4, column=19, file={X}
-setpos, line=4, column=22, file={X}
                     exit i8n 0;
                 }
-                goto lb12;
-                lb12:
-setpos, line=5, column=10, file={X}
-setpos, line=5, column=13, file={X}
+                goto lb10;
+                lb10:
+setpos, line=5, column=10, file={X}apl
                 exit i8n 1;
             }
         }
