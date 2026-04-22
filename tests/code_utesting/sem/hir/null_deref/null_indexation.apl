@@ -4,6 +4,6 @@ function foo() {
 }
 
 :/ OUTPUT
-[WARNING] [{X}apl:3{X}] NULL-dereference error (variable 'tmp' is NULL)!
-          [{X}apl:3:11]     Variable 'tmp' is assigned with NULL here
+[WARNING] [{X}apl:3:16] NULL-dereference error (variable 'tmp' is NULL)!
+          [{X}apl:3:16]     Variable 'tmp' is assigned with NULL here
 /:
