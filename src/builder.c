@@ -605,7 +605,7 @@ int main(int argc, char* argv[]) {
         HIR_CFG_squeeze_blocks(&cfgctx);
 
         if (options.flags.hir_analysis) {
-            SEM_perform_hir_check(&cfgctx, &dagctx, &hirctx, &smt);
+            SEM_perform_hir_check(&cfgctx, &dagctx, &smt);
         }
 
         lir_ctx_t lirctx = { .h = NULL, .t = NULL };
