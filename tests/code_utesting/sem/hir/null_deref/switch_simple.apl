@@ -37,7 +37,7 @@ function foo() {
 [WARNING] [{X}apl:17{X}] Condition with a constant value (variable 'tmp' is equals 'false' (0))!
           [{X}apl:17{X}]     Variable 'tmp' declared as a constant here!
 #
-[WARNING] [{X}apl:23{X}] NULL-dereference error (variable 'a' is NULL)!
+[WARNING] [{X}apl:23{X}] Possible NULL-dereference error (variable 'a' is NULL)!
           [{X}apl:{X}]     Variable 'a' becomes NULL-value
           [{X}apl:{X}]     Variable 'a' becomes NULL-value
 /:
