@@ -14,6 +14,6 @@ start() {
           [{X}apl:4:15]     Variable 'tmp' declared as a constant here!
 [WARNING] [{X}apl:4:15] Condition with a constant value (variable 'tmp' is equals 'false' (0))!
           [{X}apl:4:15]     Variable 'tmp' declared as a constant here!
-[WARNING] [{X}apl:9:16] Possible NULL-dereference error (variable 'a' is NULL)!
+[WARNING] [{X}apl:9:16] NULL-dereference error (variable 'a' is NULL)!
           [{X}apl:7:23]     Variable 'a' becomes NULL-value
 /:
