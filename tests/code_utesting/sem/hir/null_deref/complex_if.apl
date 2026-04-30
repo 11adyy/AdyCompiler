@@ -10,7 +10,7 @@ function foo() {
 
 :/ OUTPUT
 [WARNING] [{X}apl:4{X}] 'If' with a constant value 'true'!
-[WARNING] [{X}apl:8{X}] Possible NULL-dereference error (variable 'b' is NULL)!
+[WARNING] [{X}apl:8{X}] NULL-dereference error (variable 'b' is NULL)!
           [{X}apl:5{X}]     Variable 'a' becomes NULL-value
           [{X}apl:7{X}]     Variable 'b' is assigned with the 'a' here
 /:
