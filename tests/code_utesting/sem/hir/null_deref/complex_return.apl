@@ -27,8 +27,11 @@ start() {
 [WARNING] [{X}apl:13:16] 'If' with a constant value 'true'!
 [WARNING] [{X}apl:10:15] Condition with a constant value (variable 'tmp' is equals 'true' (1))!
           [{X}apl:10:15]     Variable 'tmp' declared as a constant here!
+          [{X}apl:10:15]     Can't reach the 'else' branch! Consider to refactor the code.
 [WARNING] [{X}apl:10:15] Condition with a constant value (variable 'tmp' is equals 'false' (0))!
           [{X}apl:10:15]     Variable 'tmp' declared as a constant here!
+          [{X}apl:10:15]     Can't reach the 'else' branch! Consider to refactor the code.
+          [{X}apl:10:15]     Can't reach the 'then' branch! Consider to refactor the code.
 [WARNING] [{X}apl:21:10] NULL-dereference error (variable 'b' is NULL)!
           [{X}apl:14:22]     Variable 'b' becomes NULL-value
 /:
