@@ -1,77 +1,105 @@
 # Code conventions
-*P.S. It's not a thing, but I'd like to share my preferred code style through this conventions. The compiler itself doesn't care about how a code is written.* </br>
-APL encourages code mostly based on C-code conventions.
-- **Variables**: use lowercase letters and underscores
+
+The compiler does not require a particular style, but the following conventions keep APL code easy to read.
+
+## Names
+
+Use lowercase with underscores for variables and functions:
+
 ```apl
 i32 counter = 0;
 ptr i32 data_ptr = ref counter;
-dref data_ptr = 1;
+
+function calculate_sum(ptr i32 data, i64 length) -> i32 {
+    return 0;
+}
 ```
 
-- **Constants**: use uppercase letters with underscores
+Use uppercase with underscores for constants and macro-like values:
+
 ```apl
-extern ptr u8 FRAMEBUFFER;
+#define BUFFER_SIZE 256
 glob ro i32 WIN_X = 1080;
 glob ro i32 WIN_Y = 1920;
 ```
 
-- **Functions**: use lowercase letters with underscores
+Use a leading underscore for private helper functions:
+
 ```apl
-function calculate_sum(ptr i32 arr, i64 length) -> i32 { return 0; }
+function _helper() -> i0 {
+    return;
+}
 ```
 
-- **Private functions**: use an underscore before a name of a function, if it is a private function
-```apl
-function _private();
-```
+## Layout
 
-- **Scopes**: K&R style
-Functions:
+Prefer K&R-style braces:
+
 ```apl
 function foo() -> i0 {
+    if ready; {
+        return;
+    }
+    else {
+        return;
+    }
 }
 ```
 
-- **Ifs**:
+Use the required semicolon after conditions:
+
 ```apl
-if cond0; {
-}
-else if cond1; {
-}
-else {
+while i < n; {
+    i += 1;
 }
 ```
 
-- **Loops**:
+## Entry point
+
+Use `start` for small programs:
+
 ```apl
-while cond0; {
-}
-loop {
+start() {
+    exit 0;
 }
 ```
 
-- **Entry point**:
+Use `@[entry]` when you need a normal function declaration as the entry point:
+
 ```apl
-start(i64 argc, ptr ptr i8 argv) {
+@[entry("_main")]
+function main(i64 argc, ptr ptr i8 argv) -> i0 {
+    exit 0;
 }
 ```
 
-- **Comments**: Comments can be written in one line with the start and the end symbol `:` (or `:/` with `/:`) and in several lines with the same logic. Actually, this is a copy of the C's comments '/**/' (without support of the '//' comment style), which means you have to always end your comment with the 'end' comment symbol.
-```apl
-: Hello there
-:
-:
-Hello there :
-: Hello there :
-:
-Hello there
-:
-:/ Large comment with a colon:
-/:
+## Headers
+
+Use `_h.apl` for prototype/header files:
+
+```text
+print_h.apl  <- prototypes and include guards
+print.apl    <- implementation
 ```
 
-- **File names**: Sneaky case for file names. If this is a 'header' file, add the `_h` path to a name
+Header guard example:
+
+```apl
+#ifndef PRINT_H_
+#define PRINT_H_ 0
+function print(ptr i8 s) -> i0;
+#endif
 ```
-print_h.apl <- Prototypes and includes
-print.apl   <- Implementation
+
+## Comments
+
+APL comments are colon-based:
+
+```apl
+: one-line comment :
+
+:/ block comment
+   across several lines /:
 ```
+
+Always close comments explicitly.
