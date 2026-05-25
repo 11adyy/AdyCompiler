@@ -6,7 +6,7 @@ function print(ptr i8 msg) -> i0;
 #line 2 "/Users/Noah/Documents/Repositories/AdyCompiler/tests/test_code/preproc/basic.apl"
 @[entry("_main")]
 function main(i32 argc, ptr ptr i8 argv) {
-    str msg = "Hello world!";
+    arr msg[0, i8] = "Hello world!";
     print(ref msg);
     exit 0;
 }

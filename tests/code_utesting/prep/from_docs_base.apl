@@ -1,11 +1,9 @@
-{
-    #include "print_h.apl"
+#include "print_h.apl"
 
-    start(i64 argc, ptr u64 argv) {
-        str msg = "Hello world!";
-        print(ref msg);
-        exit 0;
-    }
+start(i64 argc, ptr u64 argv) {
+    arr msg[0, i8] = "Hello world!";
+    print(ref msg);
+    exit 0;
 }
 
 :/ OUTPUT
