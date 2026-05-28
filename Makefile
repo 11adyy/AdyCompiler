@@ -1,69 +1,60 @@
 CC ?= gcc
 
-BUILD ?= debug
-AVAILABLE_MEMORY ?= 3000000
-LOGS ?=
-PRINT_PARSE ?= 1
+CFLAGS = -Wall -Wno-int-conversion -g -Iinclude
+LDFLAGS =
 
-PLATFORM ?= $(shell uname -s | tr '[:upper:]' '[:lower:]')-$(shell uname -m | tr '[:upper:]' '[:lower:]')
+ERROR_LOGS ?= 0
+WARN_LOGS ?= 0
+INFO_LOGS ?= 0
+DEBUG_LOGS ?= 0
+IO_LOGS ?= 0
+MEM_LOGS ?= 0
+LOGGING_LOGS ?= 0
+SPECIAL_LOGS ?= 0
+
+AVAILABLE_MEMORY ?= 3000000
+CFLAGS += -DALLOC_BUFFER_SIZE=$(AVAILABLE_MEMORY)
+
+ifeq ($(ERROR_LOGS),1)
+	CFLAGS += -DERROR_LOGS
+endif
+
+ifeq ($(WARN_LOGS),1)
+	CFLAGS += -DWARNING_LOGS
+endif
+
+ifeq ($(INFO_LOGS),1)
+	CFLAGS += -DINFO_LOGS
+endif
+
+ifeq ($(DEBUG_LOGS),1)
+	CFLAGS += -DDEBUG_LOGS
+endif
+
+ifeq ($(IO_LOGS),1)
+	CFLAGS += -DIO_OPERATION_LOGS
+endif
+
+ifeq ($(MEM_LOGS),1)
+	CFLAGS += -DMEM_OPERATION_LOGS
+endif
+
+ifeq ($(LOGGING_LOGS),1)
+	CFLAGS += -DLOGGING_LOGS
+endif
+
+ifeq ($(SPECIAL_LOGS),1)
+	CFLAGS += -DSPECIAL_LOGS
+endif
 
 SOURCES := $(sort $(shell find src std -type f -name '*.c'))
-OUTPUT = builds/$(PLATFORM)/aplc
-
-CPPFLAGS = -Iinclude -DALLOC_BUFFER_SIZE=$(AVAILABLE_MEMORY)
-CFLAGS = -Wall -Wno-int-conversion
-LDFLAGS =
-LDLIBS =
-
-ifeq ($(BUILD),debug)
-	CFLAGS += -g -O0
-else ifeq ($(BUILD),release)
-	CFLAGS += -O2
-else
-	$(error Unknown BUILD=$(BUILD), use debug or release)
-endif
-
-ifeq ($(PRINT_PARSE),1)
-	CPPFLAGS += -DPRINT_PARSE
-endif
-
-ifneq ($(filter error,$(LOGS)),)
-	CPPFLAGS += -DERROR_LOGS
-endif
-
-ifneq ($(filter warn,$(LOGS)),)
-	CPPFLAGS += -DWARNING_LOGS
-endif
-
-ifneq ($(filter info,$(LOGS)),)
-	CPPFLAGS += -DINFO_LOGS
-endif
-
-ifneq ($(filter debug,$(LOGS)),)
-	CPPFLAGS += -DDEBUG_LOGS
-endif
-
-ifneq ($(filter io,$(LOGS)),)
-	CPPFLAGS += -DIO_OPERATION_LOGS
-endif
-
-ifneq ($(filter mem,$(LOGS)),)
-	CPPFLAGS += -DMEM_OPERATION_LOGS
-endif
-
-ifneq ($(filter logging,$(LOGS)),)
-	CPPFLAGS += -DLOGGING_LOGS
-endif
-
-ifneq ($(filter special,$(LOGS)),)
-	CPPFLAGS += -DSPECIAL_LOGS
-endif
+OUTPUT = builds/ccompiler
 
 all: $(OUTPUT)
 
 $(OUTPUT): $(SOURCES)
 	@mkdir -p $(dir $@)
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(SOURCES) -o $@ $(LDFLAGS) $(LDLIBS)
+	$(CC) $(CFLAGS) -DPRINT_PARSE $(SOURCES) -o $@ $(LDFLAGS)
 
 clean:
 	rm -rf builds
@@ -71,15 +62,4 @@ clean:
 print-sources:
 	@printf "%s\n" $(SOURCES)
 
-print-config:
-	@echo "CC=$(CC)"
-	@echo "BUILD=$(BUILD)"
-	@echo "PLATFORM=$(PLATFORM)"
-	@echo "OUTPUT=$(OUTPUT)"
-	@echo "CPPFLAGS=$(CPPFLAGS)"
-	@echo "CFLAGS=$(CFLAGS)"
-	@echo "LDFLAGS=$(LDFLAGS)"
-	@echo "LDLIBS=$(LDLIBS)"
-	@echo "LOGS=$(LOGS)"
-
-.PHONY: all clean print-sources print-config
+.PHONY: all clean print-sources
