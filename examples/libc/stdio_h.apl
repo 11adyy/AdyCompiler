@@ -26,13 +26,13 @@ extern function freopen(ptr i8 path, ptr i8 mode, ptr apl_file stream) -> ptr i8
 extern function setbuf(ptr apl_file stream, ptr i8 buf) -> i0;
 extern function setvbuf(ptr apl_file stream, ptr i8 buf, i32 mode, u64 size) -> i32;
 
-extern function fprintf(ptr apl_file stream, ptr i8 fmt, ...) -> i32;
-extern function fscanf(ptr apl_file stream, ptr i8 fmt, ...) -> i32;
-extern function printf(ptr i8 fmt, ...) -> i32;
-extern function scanf(ptr i8 fmt, ...) -> i32;
-extern function snprintf(ptr i8 s, u64 n, ptr i8 fmt, ...) -> i32;
-extern function sprintf(ptr i8 s, ptr i8 fmt, ...) -> i32;
-extern function sscanf(ptr i8 s, ptr i8 fmt, ...) -> i32;
+@[abi] extern function fprintf(ptr apl_file stream, ptr i8 fmt, ...) -> i32;
+@[abi] extern function fscanf(ptr apl_file stream, ptr i8 fmt, ...) -> i32;
+@[abi] extern function printf(ptr i8 fmt, ...) -> i32;
+@[abi] extern function scanf(ptr i8 fmt, ...) -> i32;
+@[abi] extern function snprintf(ptr i8 s, u64 n, ptr i8 fmt, ...) -> i32;
+@[abi] extern function sprintf(ptr i8 s, ptr i8 fmt, ...) -> i32;
+@[abi] extern function sscanf(ptr i8 s, ptr i8 fmt, ...) -> i32;
 
 extern function fgetc(ptr apl_file stream) -> i32;
 extern function fgets(ptr i8 s, i32 n, ptr apl_file stream) -> ptr i8;

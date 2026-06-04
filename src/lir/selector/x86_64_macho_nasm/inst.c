@@ -53,10 +53,7 @@ static int _get_abi_argument(int index, int offset, lir_subject_t* s, abi_argume
         default: break;
     }
 
-    if (
-        fi->flags.vargs && 
-        !fi->flags.external /* APL ABI works only with APL functions */
-    ) {
+    if (fi->flags.vargs && !fi->flags.abi) {
         out->off = (index + !fi->flags.naked + 1) * -8;
         return 0;
     }
