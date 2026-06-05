@@ -1,11 +1,5 @@
 <div class="apl-home">
     <section class="apl-home-hero">
-        <div class="apl-scroll-monkey" aria-hidden="true">
-            <div class="apl-scroll-monkey-art">
-                <img class="apl-scroll-monkey-base" src="bg/base.png" alt="" />
-                <img class="apl-scroll-monkey-arm" src="bg/arm.png" alt="" />
-            </div>
-        </div>
         <div>
         <div class="hero-kicker">Language and compiler documentation</div>
             <h1 class="hero-title">
