@@ -42,7 +42,10 @@
       "scope": [
         "storage.type.primitive.apl",
         "source.apl storage.type.primitive",
-        "storage.type"
+        "storage.type",
+        "storage.type.user.apl",
+        "entity.name.type.container.apl",
+        "meta.array.element-type.apl storage.type.user.apl"
       ],
       "settings": {
         "foreground": "#4fbf4f"
