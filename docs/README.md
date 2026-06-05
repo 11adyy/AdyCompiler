@@ -13,13 +13,13 @@
                 <span class="hero-title-mark">Programming</span>
                 <span>Language</span>
             </h1>
-            <p class="hero-note">APL is a deliberately small systems-language experiment and compiler infrastructure for studying parsing, semantic diagnostics, intermediate representations, optimization, register allocation, and assembly generation.</p>
+            <p class="hero-note">APL is a deliberately small systems-language experiment and compiler infrastructure for studying parsing, semantic diagnostics, intermediate representations, optimization, register allocation, assembly generation, symtable optimization, and ML application.</p>
             <div class="hero-actions">
             <a href="#/pages/summary" class="hero-button primary">Overview</a>
             <a href="#/pages/hello-world-example" class="hero-button secondary">Start learning</a>
             <a href="#/pages/compiler-architecture" class="hero-button secondary">Compiler architecture</a>
         </div>
-        <div class="apl-command"><span>$</span><code>./builds/ccompiler --emit-ir --emit-asm examples/memory.apl</code></div>
+        <div class="apl-command"><span>$</span><code>git clone https://github.com/11adyy/AdyCompiler.git</code></div>
         </div>
     </section>
     <section class="apl-home-band">
