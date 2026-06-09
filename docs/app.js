@@ -181,12 +181,26 @@ function destroyBenchmarkCharts() {
 }
 
 function renderBenchmarkCharts() {
-  if (typeof Chart === 'undefined') return;
-
   destroyBenchmarkCharts();
 
   const cards = document.querySelectorAll('.benchmark-card');
+  if (typeof Chart === 'undefined') {
+    for (const card of cards) {
+      const wrap = card.querySelector('.benchmark-chart-wrap');
+      const next = wrap ? wrap.nextElementSibling : null;
+      if (wrap && !(next && next.classList && next.classList.contains('benchmark-note'))) {
+        const note = document.createElement('div');
+        note.className = 'benchmark-note';
+        note.textContent = 'Chart.js is still loading or unavailable.';
+        wrap.insertAdjacentElement('afterend', note);
+      }
+    }
+    return;
+  }
+
   for (const card of cards) {
+    card.querySelectorAll('.benchmark-note').forEach(note => note.remove());
+
     const canvas = card.querySelector('canvas.benchmark-chart');
     if (!canvas) continue;
 
@@ -252,7 +266,7 @@ function renderBenchmarkCharts() {
               callbacks: {
                 label: function(context) {
                   const suffix = cfg.tooltipSuffix || '';
-                  const raw = context.parsed.y ?? context.raw;
+                  const raw = context.parsed && typeof context.parsed.y !== 'undefined' ? context.parsed.y : context.raw;
                   const value = typeof raw === 'number' ? raw.toFixed(6) : raw;
                   return `${context.dataset.label}: ${value}${suffix}`;
                 }
@@ -281,6 +295,10 @@ function renderBenchmarkCharts() {
     }
   }
 }
+
+window.addEventListener('load', function() {
+  setTimeout(renderBenchmarkCharts, 0);
+});
 
 const aplMonkeyScrollController = (function() {
   const startAngle = 0;
@@ -343,6 +361,43 @@ const aplMonkeyScrollController = (function() {
   return { init, update: requestUpdate };
 })();
 
+function renderAplRunnerMarkup(code) {
+  const encoded = encodeURIComponent(code || '');
+  return `
+    <div class="apl-runner" data-lang="apl" data-code="${encoded}">
+      <div class="apl-runner-toolbar">
+        <div class="apl-runner-toolbar-left">
+          <div class="apl-runner-title">APL playground</div>
+          <span class="apl-runner-badge">Compile and run via backend</span>
+        </div>
+        <div class="apl-runner-toolbar-right">
+          <button class="apl-runner-button secondary" type="button" data-action="format">Format</button>
+          <button class="apl-runner-button" type="button" data-action="run">Run</button>
+        </div>
+      </div>
+      <div class="apl-runner-editor-shell">
+        <div class="apl-runner-tabs">
+          <span class="apl-runner-tab">main.apl</span>
+        </div>
+        <div class="apl-runner-editor"></div>
+      </div>
+      <pre class="apl-runner-output">Ready to run. The browser will POST this code to the APL backend.</pre>
+    </div>
+  `;
+}
+
+function notifyAplContentReady(root) {
+  let event;
+  try {
+    event = new CustomEvent('apl:content-ready', { detail: { root: root || document } });
+  } catch (e) {
+    event = document.createEvent('Event');
+    event.initEvent('apl:content-ready', true, true);
+    event.detail = { root: root || document };
+  }
+  document.dispatchEvent(event);
+}
+
 window.$docsify = {
   name: 'APL v3.6<small>Language docs & compiler internals</small>',
   repo: 'https://github.com/11adyy/AdyCompiler',
@@ -380,28 +435,7 @@ window.$docsify = {
     renderer: {
       code: function(code, lang) {
         if (lang === 'apl-run') {
-          const encoded = encodeURIComponent(code);
-          return `
-            <div class="apl-runner" data-lang="apl" data-code="${encoded}">
-              <div class="apl-runner-toolbar">
-                <div class="apl-runner-toolbar-left">
-                  <div class="apl-runner-title">APL playground</div>
-                  <span class="apl-runner-badge">Compile and run via backend</span>
-                </div>
-                <div class="apl-runner-toolbar-right">
-                  <button class="apl-runner-button secondary" type="button" data-action="format">Format</button>
-                  <button class="apl-runner-button" type="button" data-action="run">Run</button>
-                </div>
-              </div>
-              <div class="apl-runner-editor-shell">
-                <div class="apl-runner-tabs">
-                  <span class="apl-runner-tab">main.apl</span>
-                </div>
-                <div class="apl-runner-editor"></div>
-              </div>
-              <pre class="apl-runner-output">Ready to run. The browser will POST this code to the APL backend.</pre>
-            </div>
-          `;
+          return renderAplRunnerMarkup(code);
         }
 
         const language = String(lang || 'markup').toLowerCase();
@@ -896,6 +930,7 @@ window.$docsify = {
           record.html = renderMarkdown(markdown);
           body.innerHTML = record.html;
           bindDocumentBodyLinks(body);
+          notifyAplContentReady(body);
           record.loaded = true;
         } catch (err) {
           body.innerHTML = '<p>Could not open file: ' + escapeHtml(err.message) + '</p>';
@@ -932,6 +967,7 @@ window.$docsify = {
               const body = win.querySelector('.win95-doc-body');
               body.innerHTML = record.html;
               bindDocumentBodyLinks(body);
+              notifyAplContentReady(body);
             }
           } else {
             const titleNode = win.querySelector('.win95-window-title');
@@ -1426,6 +1462,30 @@ window.$docsify = {
         }).join('\n');
       }
 
+      function hydrateRunnerFallbacks(root) {
+        const scope = root || document;
+        scope.querySelectorAll('pre[data-lang="apl-run"], pre > code.language-apl-run').forEach(node => {
+          const pre = node.tagName === 'PRE' ? node : node.closest('pre');
+          if (!pre || pre.dataset.runnerHydrated === '1') return;
+          pre.dataset.runnerHydrated = '1';
+
+          const codeNode = pre.querySelector('code');
+          const code = codeNode ? codeNode.textContent : pre.textContent;
+          const holder = document.createElement('div');
+          holder.innerHTML = renderAplRunnerMarkup(code || '');
+          pre.replaceWith(holder.firstElementChild);
+        });
+      }
+
+      function hydrateRunners(root) {
+        const scope = root || document;
+        hydrateRunnerFallbacks(scope);
+        scope.querySelectorAll('.apl-runner').forEach(block => {
+          bindRunnerActions(block);
+          initRunner(block);
+        });
+      }
+
       async function initRunner(block) {
         if (!block || block.dataset.monacoReady === '1') return;
         block.dataset.monacoReady = '1';
@@ -1589,10 +1649,11 @@ window.$docsify = {
       }
 
       hook.doneEach(function() {
-        document.querySelectorAll('.apl-runner').forEach(block => {
-          bindRunnerActions(block);
-          initRunner(block);
-        });
+        hydrateRunners(document);
+      });
+
+      document.addEventListener('apl:content-ready', function(event) {
+        hydrateRunners(event.detail && event.detail.root ? event.detail.root : document);
       });
     },
 
@@ -1601,6 +1662,10 @@ window.$docsify = {
         setTimeout(function() {
           renderBenchmarkCharts();
         }, 0);
+      });
+
+      document.addEventListener('apl:content-ready', function() {
+        setTimeout(renderBenchmarkCharts, 0);
       });
     }
   ]
