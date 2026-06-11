@@ -4,7 +4,6 @@
 #include <std/mm.h>
 #include <std/str.h>
 #include <std/stack.h>
-
 #define ENTRY_ANNOTATION_COMMAND "entry"
 #define ALIGN_ANNOTATION_COMMAND "align"
 #define LIKEC_ANNOTATION_COMMAND "like_c"
@@ -35,13 +34,7 @@
 #define MODEL_INLINE             4
 
 typedef struct {
-    string_t* string;
-    long      value;
-} annotation_param_t;
-
-typedef struct {
     string_t* section;
-    int       salign;    /* Section's align */
     string_t* fname;
     int       do_inline; /* 1 - strongly yes, 2 - strongly no, 3 - increase inline chance */
     int       align;
@@ -103,7 +96,7 @@ typedef struct {
 
 int ANNOT_read_annotations(sstack_t* annots, annotations_summary_t* summary);
 int ANNOT_destroy_summary(annotations_summary_t* summray);
-annotation_t* ANNOT_create_annotation(annotation_type_t t, annotation_param_t* fp, annotation_param_t* sp);
+annotation_t* ANNOT_create_annotation(annotation_type_t t, string_t* data, long value);
 int ANNOT_destroy_annotation(annotation_t* annot);
 
 #endif
