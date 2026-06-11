@@ -16,6 +16,7 @@ _main:
     push    ecx
     mov     ecx, 1
     push    ecx
+    xor     eax, eax
     call    _apl_foo0
     add     esp, 8
     mov     eax, 1
