@@ -312,6 +312,9 @@ int x86_64_gnu_nasm_generate_asm(cfg_ctx_t* cctx, sym_table_t* smt, FILE* output
     foreach (section_info_t* section, &smt->c.sorted.sectb) {
         if (!section->name->requals(section->name, CONF_get_no_section())) {
             EMIT_COMMAND("section %s", section->name->body);
+            if (section->align != FIELD_NO_CHANGE) {
+                EMIT_COMMAND("align %i", section->align);
+            }
         }
         
         foreach (symbol_id_t id, &section->sorted.vars) {
