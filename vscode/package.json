@@ -3,7 +3,7 @@
   "displayName": "APL - VSCode language support and simple analysis",
   "description": "VS Code extention for APL",
   "icon": "./apl.png",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publisher": "11adyy",
   "engines": {
     "vscode": "^1.80.0"
