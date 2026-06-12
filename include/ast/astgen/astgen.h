@@ -534,4 +534,7 @@ Returns an AST node.
 */
 ast_node_t* apl_parse_contdef(PARSER_ARGS);
 
+// TODO: docs
+ast_node_t* apl_parse_declaration_value(PARSER_ARGS);
+
 #endif
