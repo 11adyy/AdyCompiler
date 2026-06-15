@@ -9,7 +9,15 @@ function _strlen(ptr i8 s) -> i32 {
 }
 
 function _putc(i8 c) -> i0 {
+#ifdef CAPL_MACHO64
     syscall(0x2000004, 1, ref c, 1);
+#endif
+#ifdef CAPL_GNU64
+    syscall(1, 1, ref c, 1);
+#endif
+#ifdef CAPL_GNUI386
+    syscall(1, 1, ref c, 1);
+#endif
 }
 
 function _putn(i32 a, i32 r) -> i0 {
