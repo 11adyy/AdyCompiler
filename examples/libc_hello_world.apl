@@ -1,4 +1,4 @@
-#include "libc/stdio_h.apl"
+#include <stdio_h.apl>
 
 @[entry("main")]
 function main(i32 argc, ptr ptr i8 argv) -> i8 {

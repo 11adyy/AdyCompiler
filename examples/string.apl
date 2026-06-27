@@ -1,5 +1,5 @@
-#include "libc/stdlib_h.apl"
-#include "libc/string_h.apl"
+#include <stdlib_h.apl>
+#include <string_h.apl>
 
 container string {
     ptr i8 body;
