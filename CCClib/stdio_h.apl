@@ -21,8 +21,8 @@ extern function tmpnam(ptr i8 s) -> ptr i8;
 
 extern function fclose(ptr apl_file stream) -> i32;
 extern function fflush(ptr apl_file stream) -> i32;
-extern function fopen(ptr i8 path, ptr i8 mode) -> ptr i8;
-extern function freopen(ptr i8 path, ptr i8 mode, ptr apl_file stream) -> ptr i8;
+extern function fopen(ptr i8 path, ptr i8 mode) -> ptr apl_file;
+extern function freopen(ptr i8 path, ptr i8 mode, ptr apl_file stream) -> ptr apl_file;
 extern function setbuf(ptr apl_file stream, ptr i8 buf) -> i0;
 extern function setvbuf(ptr apl_file stream, ptr i8 buf, i32 mode, u64 size) -> i32;
 
@@ -58,5 +58,10 @@ extern function clearerr(ptr apl_file stream) -> i0;
 extern function feof(ptr apl_file stream) -> i32;
 extern function ferror(ptr apl_file stream) -> i32;
 extern function perror(ptr i8 s) -> i0;
+
+extern function fdopen(i32 fd, ptr i8 mode) -> ptr apl_file;
+extern function fileno(ptr apl_file stream) -> i32;
+extern function popen(ptr i8 command, ptr i8 mode) -> ptr apl_file;
+extern function pclose(ptr apl_file stream) -> i32;
 
 #endif

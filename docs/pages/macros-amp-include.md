@@ -18,17 +18,21 @@ Quoted includes first search relative to the current file:
 #include "print_h.apl"
 ```
 
-System-style includes search the directory passed with `-I`:
+System-style includes search the directory passed with `-I`, then the standard
+library shipped with the compiler:
 
 ```apl
-#include <print_h.apl>
+#include <stdio_h.apl>
 ```
 
 Example command:
 
 ```bash
-./builds/ccompiler -I examples --output app main.apl
+./builds/linux-x86_64/aplc -I examples --output app main.apl
 ```
+
+The standard library location can be overridden with `APL_INCLUDE_PATH` and
+inspected with `aplc --print-stdlib-path`.
 
 ## Header pattern
 
