@@ -10,7 +10,7 @@ BINDIR ?= $(PREFIX)/bin
 DATADIR ?= $(PREFIX)/share
 CCClibDIR ?= $(DATADIR)/apl/include
 DOCDIR ?= $(DATADIR)/doc/apl
-VERSION ?= 3.6.5.5
+VERSION ?= 3.6_X
 
 BUILD ?= debug
 AVAILABLE_MEMORY ?= 16777216
@@ -116,16 +116,16 @@ release: ## Build an optimized compiler.
 install: $(OUTPUT) ## Install the compiler and APL standard library under PREFIX.
 	$(INSTALL) -d $(DESTDIR)$(BINDIR) $(DESTDIR)$(CCClibDIR) $(DESTDIR)$(DOCDIR)
 	$(INSTALL) -m 0755 $(OUTPUT) $(DESTDIR)$(BINDIR)/aplc
-	$(INSTALL) -m 0644 CCClib/*.apl CCClib/*.h $(DESTDIR)$(CCClibDIR)/
-	$(INSTALL) -m 0644 LICENSE CCClib/README.md $(DESTDIR)$(DOCDIR)/
+	$(INSTALL) -m 0644 CCClib/*.apl $(DESTDIR)$(CCClibDIR)/
+	$(INSTALL) -m 0644 LICENSE $(DESTDIR)$(DOCDIR)/
 
 package: ## Build a relocatable binary tarball with the standard library.
 	$(MAKE) BUILD=release PRINT_PARSE=0 -B all
 	$(RM) -r builds/package/apl-$(VERSION)
 	$(INSTALL) -d builds/package/apl-$(VERSION)/bin builds/package/apl-$(VERSION)/share/apl/include builds/package/apl-$(VERSION)/share/doc/apl
 	$(INSTALL) -m 0755 $(OUTPUT) builds/package/apl-$(VERSION)/bin/aplc
-	$(INSTALL) -m 0644 CCClib/*.apl CCClib/*.h builds/package/apl-$(VERSION)/share/apl/include/
-	$(INSTALL) -m 0644 LICENSE CCClib/README.md builds/package/apl-$(VERSION)/share/doc/apl/
+	$(INSTALL) -m 0644 CCClib/*.apl builds/package/apl-$(VERSION)/share/apl/include/
+	$(INSTALL) -m 0644 LICENSE builds/package/apl-$(VERSION)/share/doc/apl/
 	tar -C builds/package -czf builds/apl-$(VERSION)-$(PLATFORM).tar.gz apl-$(VERSION)
 
 run: $(OUTPUT) ## Compile INPUT with the built compiler.
