@@ -1,5 +1,5 @@
 import { Range, Position } from "vscode-languageserver/node";
-import { SemanticContext, MacroValue, TypeNode, MacroCondition } from "./aplSemantics";
+import { SemanticContext, MacroValue, TypeNode } from "./aplSemantics";
 
 function buildLineStarts(text: string): number[] {
   const starts = [0];
@@ -45,67 +45,28 @@ function parseMacroValue(raw: string): MacroValue {
   return { kind: "raw", text: t };
 }
 
-function cloneMacroConditions(conditions: MacroCondition[]): MacroCondition[] {
-  return conditions.map((c) => ({ name: c.name, isDefined: c.isDefined }));
-}
-
-function collectDefines(
-  text: string,
-  sem: SemanticContext,
-  filePath?: string,
-  initialConditions: MacroCondition[] = []
-) {
+function collectDefines(text: string, sem: SemanticContext, filePath?: string) {
   const prevFilePath = sem.setCurrentFilePath(filePath);
 
   try {
     const lineStarts = buildLineStarts(text);
-    const conditionStack = cloneMacroConditions(initialConditions);
 
-    const lines = text.match(/[^\r\n]*(?:\r\n|\n|\r|$)/g) ?? [];
-    let offset = 0;
+    const re = /^[ \t]*#define[ \t]+([A-Za-z_]\w*)(?:[ \t]+(.+?))?[ \t]*$/gm;
 
-    for (const rawLine of lines) {
-      if (rawLine.length === 0 && offset >= text.length) break;
+    let m: RegExpExecArray | null;
+    while ((m = re.exec(text))) {
+      const fullStart = m.index;
+      const full = m[0];
+      const name = m[1];
+      const valueRaw = m[2] ?? "";
 
-      const line = rawLine.replace(/\r?\n$|\r$/, "");
-      const directive = line.match(/^[ \t]*#[ \t]*(ifdef|ifndef|endif|define)\b(.*)$/);
+      const nameRel = full.indexOf(name);
+      const valueRel = valueRaw ? full.lastIndexOf(valueRaw) : full.length;
 
-      if (!directive) {
-        offset += rawLine.length;
-        continue;
-      }
-
-      const dir = directive[1];
-      const rest = directive[2] ?? "";
-
-      if (dir === "ifdef" || dir === "ifndef") {
-        const m = rest.match(/^[ \t]+([A-Za-z_]\w*)\b/);
-        if (m) conditionStack.push({ name: m[1], isDefined: dir === "ifdef" });
-        offset += rawLine.length;
-        continue;
-      }
-
-      if (dir === "endif") {
-        if (conditionStack.length > initialConditions.length) conditionStack.pop();
-        offset += rawLine.length;
-        continue;
-      }
-
-      const defineMatch = line.match(/^[ \t]*#[ \t]*define[ \t]+([A-Za-z_]\w*)(?:[ \t]+(.*?))?[ \t]*$/);
-      if (!defineMatch) {
-        offset += rawLine.length;
-        continue;
-      }
-
-      const name = defineMatch[1];
-      const valueRaw = defineMatch[2] ?? "";
-      const defineKeywordAt = line.indexOf("define");
-      const nameRel = line.indexOf(name, defineKeywordAt + "define".length);
-      const valueRel = valueRaw ? line.lastIndexOf(valueRaw) : line.length;
-
-      const nameStart = offset + nameRel;
+      const nameStart = fullStart + nameRel;
       const nameEnd = nameStart + name.length;
-      const valueStart = offset + valueRel;
+
+      const valueStart = fullStart + valueRel;
       const valueEnd = valueStart + valueRaw.length;
 
       const nameRange = Range.create(
@@ -117,11 +78,7 @@ function collectDefines(
         positionAt(lineStarts, valueEnd)
       );
 
-      sem.defineMacro(name, parseMacroValue(valueRaw), nameRange, valueRange, {
-        conditions: cloneMacroConditions(conditionStack)
-      });
-
-      offset += rawLine.length;
+      sem.defineMacro(name, parseMacroValue(valueRaw), nameRange, valueRange);
     }
   } finally {
     sem.setCurrentFilePath(prevFilePath);
@@ -431,21 +388,18 @@ class Parser {
   private sem?: SemanticContext;
   private pendingDoc: string | undefined;
   private pendingAnnotations: string[] = [];
-  private ppConditionStack: MacroCondition[];
 
   constructor(
     text: string,
     sem?: SemanticContext,
     private include?: IncludeResolver,
     private includeSeen: Set<string> = new Set(),
-    public filePath?: string,
-    initialPPConditions: MacroCondition[] = []
+    public filePath?: string
   ) {
     this.lines = buildLineIndex(text);
     this.t = lex(text);
     this.sem = sem;
     this.filePath = filePath;
-    this.ppConditionStack = cloneMacroConditions(initialPPConditions);
   }
 
   run(): ParseIssue[] {
@@ -472,10 +426,6 @@ class Parser {
       if (this.t[j].kind !== "eol") return this.t[j];
     }
     return undefined;
-  }
-
-  private currentPPConditions(): MacroCondition[] {
-    return cloneMacroConditions(this.ppConditionStack);
   }
 
   private parseConstArrayLen(msg: string): number | null {
@@ -930,10 +880,10 @@ class Parser {
           this.includeSeen.add(res.filePath);
 
           if (this.sem) {
-            collectDefines(res.text, this.sem, res.filePath, this.currentPPConditions());
+            collectDefines(res.text, this.sem, res.filePath);
           }
 
-          const p2 = new Parser(res.text, this.sem, this.include, this.includeSeen, res.filePath, this.currentPPConditions());
+          const p2 = new Parser(res.text, this.sem, this.include, this.includeSeen, res.filePath);
           p2.run();
         }
 
@@ -945,26 +895,17 @@ class Parser {
         this.consumePPLineEnd();
         return;
 
-      case "ifdef": {
-        const condTok = this.cur();
-        if (this.expect("ident", undefined, "#ifdef: expected identifier")) {
-          this.ppConditionStack.push({ name: condTok.text, isDefined: true });
-        }
+      case "ifdef":
+        this.expect("ident", undefined, "#ifdef: expected identifier");
         this.consumePPLineEnd();
         return;
-      }
 
-      case "ifndef": {
-        const condTok = this.cur();
-        if (this.expect("ident", undefined, "#ifndef: expected identifier")) {
-          this.ppConditionStack.push({ name: condTok.text, isDefined: false });
-        }
+      case "ifndef":
+        this.expect("ident", undefined, "#ifndef: expected identifier");
         this.consumePPLineEnd();
         return;
-      }
 
       case "endif":
-        if (this.ppConditionStack.length > 0) this.ppConditionStack.pop();
         this.consumePPLineEnd();
         return;
 

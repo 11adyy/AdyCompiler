@@ -1,8 +1,6 @@
 #ifndef APL_POLL_H_
 #define APL_POLL_H_ 0
 
-#include "platform_h.apl"
-
 #include "stddef_h.apl"
 
 #define POLLIN   1
@@ -19,11 +17,6 @@ container c_pollfd {
     i16 revents;
 }
 
-#ifdef CAPL_MACHO64
-@[vname("_poll")] extern function poll(ptr c_pollfd fds, u64 count, i32 timeout) -> i32;
-#endif
-#ifndef CAPL_MACHO64
 extern function poll(ptr c_pollfd fds, u64 count, i32 timeout) -> i32;
-#endif
 
 #endif

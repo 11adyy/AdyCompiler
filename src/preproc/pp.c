@@ -195,18 +195,15 @@ static inline int _permitted_character(char* p) {
     return 0;
 }
 
-#define PREDEFINE_FLAG(name)         MCTB_put_define(name, "1", &ppctx.defines);
-#define PREDEFINE_VALUE(name, value) MCTB_put_define(name, value, &ppctx.defines);
-
 int PP_perform(int fd, finder_ctx_t* fctx) {
     pp_ctx_t ppctx;
     _init_pp_ctx(&ppctx);
 
     switch (CONF_get_system_type()) {
-        case MACHO64:   PREDEFINE_FLAG("CAPL_MACHO64");   break;
-        case LINUX64:   PREDEFINE_FLAG("CAPL_GNU64");     break;
-        case I386:      PREDEFINE_FLAG("CAPL_GNUI386");   break;
-        case WINDOWS64: PREDEFINE_FLAG("CAPL_WINDOWS64"); break;
+        case MACHO64:   MCTB_put_define("CAPL_MACHO64",   "1", &ppctx.defines); break;
+        case LINUX64:   MCTB_put_define("CAPL_GNU64",     "1", &ppctx.defines); break;
+        case I386:      MCTB_put_define("CAPL_GNUI386",   "1", &ppctx.defines); break;
+        case WINDOWS64: MCTB_put_define("CAPL_WINDOWS64", "1", &ppctx.defines); break;
         default: break;
     }
 
