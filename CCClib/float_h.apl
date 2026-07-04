@@ -1,6 +1,8 @@
 #ifndef APL_FLOAT_H_
 #define APL_FLOAT_H_ 0
 
+#include "platform_h.apl"
+
 #define FLT_RADIX       2
 #define FLT_MANT_DIG    24
 #define DBL_MANT_DIG    53
