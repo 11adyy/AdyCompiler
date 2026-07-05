@@ -4,5 +4,9 @@
 function a();
 
 :/ OUTPUT
+#line 0 "{X}.apl"
+#line 1 "{X}.apl"
+#line 2 "{X}.apl"
+#line 3 "{X}.apl"
 function a();
 /:

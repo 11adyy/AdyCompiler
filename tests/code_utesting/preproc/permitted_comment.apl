@@ -3,4 +3,5 @@ start() {
 }
 
 :/ OUTPUT
+Processed file {X}.apl isn't found!
 /:
