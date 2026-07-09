@@ -1,3 +1,4 @@
+:/ aplc main.apl /:
 #include "game_h.apl"
 
 @[entry("main")]

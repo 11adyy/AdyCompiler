@@ -1,5 +1,6 @@
+:/ aplc main.apl /:
 :/ TODO: BUG, -O3 produces a wrong exit score (garbadge / segfault instead of 15, reproduce: p -> p -> ... till the end) /:
-#include "small_game_h.apl"
+#include "general_h.apl"
 
 function act_photo(ptr lis_game self) -> i0;
 function act_talk(ptr lis_game self) -> i0;
