@@ -24,16 +24,16 @@
 #endif
 
 #ifdef CAPL_MACHO64
-@[vname("_setlocale")] extern function setlocale(i32 category, ptr i8 locale) -> ptr i8;
+@[vname("_setlocale")] @[abi] extern function setlocale(i32 category, ptr i8 locale) -> ptr i8;
 #endif
 #ifndef CAPL_MACHO64
-extern function setlocale(i32 category, ptr i8 locale) -> ptr i8;
+@[abi] extern function setlocale(i32 category, ptr i8 locale) -> ptr i8;
 #endif
 #ifdef CAPL_MACHO64
-@[vname("_localeconv")] extern function localeconv() -> ptr c_lconv;
+@[vname("_localeconv")] @[abi] extern function localeconv() -> ptr c_lconv;
 #endif
 #ifndef CAPL_MACHO64
-extern function localeconv() -> ptr c_lconv;
+@[abi] extern function localeconv() -> ptr c_lconv;
 #endif
 
 #endif

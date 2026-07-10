@@ -14,16 +14,16 @@
 #endif
 
 #ifdef CAPL_MACHO64
-@[vname("_wait")] extern function wait(ptr i32 status) -> i32;
+@[vname("_wait")] @[abi] extern function wait(ptr i32 status) -> i32;
 #endif
 #ifndef CAPL_MACHO64
-extern function wait(ptr i32 status) -> i32;
+@[abi] extern function wait(ptr i32 status) -> i32;
 #endif
 #ifdef CAPL_MACHO64
-@[vname("_waitpid")] extern function waitpid(i32 pid, ptr i32 status, i32 options) -> i32;
+@[vname("_waitpid")] @[abi] extern function waitpid(i32 pid, ptr i32 status, i32 options) -> i32;
 #endif
 #ifndef CAPL_MACHO64
-extern function waitpid(i32 pid, ptr i32 status, i32 options) -> i32;
+@[abi] extern function waitpid(i32 pid, ptr i32 status, i32 options) -> i32;
 #endif
 
 #endif
