@@ -1,4 +1,5 @@
 CC ?= gcc
+AR ?= ar
 PYTHON ?= python3
 RM ?= rm -f
 MKDIR_P ?= mkdir -p
@@ -7,8 +8,10 @@ INSTALL ?= install
 PREFIX ?= /usr/local
 DESTDIR ?=
 BINDIR ?= $(PREFIX)/bin
+LIBDIR ?= $(PREFIX)/lib
 DATADIR ?= $(PREFIX)/share
 CCClibDIR ?= $(DATADIR)/apl/include
+APLRUNTIMEDIR ?= $(LIBDIR)/apl
 DOCDIR ?= $(DATADIR)/doc/apl
 VERSION ?= 3.6_X
 
@@ -54,8 +57,13 @@ PLATFORM ?= $(shell uname -s | tr '[:upper:]' '[:lower:]')-$(shell uname -m | tr
 
 SOURCES := $(sort $(shell find src std -type f -name '*.c'))
 OUTPUT = builds/$(PLATFORM)/aplc
+CCClib_IMPLS := $(sort $(shell find CCClib -type f -name '*.apl' ! -name '*_h.apl'))
+CCClib_BUILDDIR := builds/$(PLATFORM)/CCClib
+CCClib_OBJDIR := $(CCClib_BUILDDIR)/obj
+CCClib_OBJS := $(patsubst CCClib/%.apl,$(CCClib_OBJDIR)/%.o,$(CCClib_IMPLS))
+CCClib_ARCHIVE := $(CCClib_BUILDDIR)/libapl.a
 
-CPPFLAGS += -Iinclude -DALLOC_BUFFER_SIZE=$(AVAILABLE_MEMORY) -DAPL_DEFAULT_INCLUDE_DIR=\"$(CCClibDIR)\"
+CPPFLAGS += -Iinclude -DALLOC_BUFFER_SIZE=$(AVAILABLE_MEMORY) -DAPL_DEFAULT_INCLUDE_DIR=\"$(CCClibDIR)\" -DAPL_DEFAULT_RUNTIME_LIB=\"$(APLRUNTIMEDIR)/libapl.a\"
 CFLAGS += -Wall -Wno-int-conversion
 LDFLAGS +=
 LDLIBS +=
@@ -115,24 +123,37 @@ $(OUTPUT): $(SOURCES)
 	@$(MKDIR_P) $(dir $@)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(SOURCES) -o $@ $(LDFLAGS) $(LDLIBS)
 
+$(CCClib_OBJDIR)/%.o: CCClib/%.apl $(OUTPUT)
+	@$(MKDIR_P) $(dir $@)
+	$(OUTPUT) $(RUN_ARGS) -c --output $@ $<
+
+$(CCClib_ARCHIVE): $(CCClib_OBJS)
+	@$(MKDIR_P) $(dir $@)
+	$(RM) $@
+	$(AR) rcs $@ $^
+
+CCClib: $(CCClib_ARCHIVE) ## Build the APL runtime static library.
+
 debug: ## Build a debug compiler.
 	$(MAKE) BUILD=debug all
 
 release: ## Build an optimized compiler.
 	$(MAKE) BUILD=release PRINT_PARSE=0 all
 
-install: $(OUTPUT) ## Install the compiler and APL standard library under PREFIX.
-	$(INSTALL) -d $(DESTDIR)$(BINDIR) $(DESTDIR)$(CCClibDIR) $(DESTDIR)$(DOCDIR)
+install: $(OUTPUT) $(CCClib_ARCHIVE) ## Install the compiler and APL standard library under PREFIX.
+	$(INSTALL) -d $(DESTDIR)$(BINDIR) $(DESTDIR)$(CCClibDIR) $(DESTDIR)$(APLRUNTIMEDIR) $(DESTDIR)$(DOCDIR)
 	$(INSTALL) -m 0755 $(OUTPUT) $(DESTDIR)$(BINDIR)/aplc
 	$(INSTALL) -m 0644 CCClib/*.apl $(DESTDIR)$(CCClibDIR)/
+	$(INSTALL) -m 0644 $(CCClib_ARCHIVE) $(DESTDIR)$(APLRUNTIMEDIR)/libapl.a
 	$(INSTALL) -m 0644 LICENSE $(DESTDIR)$(DOCDIR)/
 
 package: ## Build a relocatable binary tarball with the standard library.
-	$(MAKE) BUILD=release PRINT_PARSE=0 -B all
+	$(MAKE) BUILD=release PRINT_PARSE=0 -B all CCClib
 	$(RM) -r builds/package/apl-$(VERSION)
-	$(INSTALL) -d builds/package/apl-$(VERSION)/bin builds/package/apl-$(VERSION)/share/apl/include builds/package/apl-$(VERSION)/share/doc/apl
+	$(INSTALL) -d builds/package/apl-$(VERSION)/bin builds/package/apl-$(VERSION)/lib/apl builds/package/apl-$(VERSION)/share/apl/include builds/package/apl-$(VERSION)/share/doc/apl
 	$(INSTALL) -m 0755 $(OUTPUT) builds/package/apl-$(VERSION)/bin/aplc
 	$(INSTALL) -m 0644 CCClib/*.apl builds/package/apl-$(VERSION)/share/apl/include/
+	$(INSTALL) -m 0644 $(CCClib_ARCHIVE) builds/package/apl-$(VERSION)/lib/apl/libapl.a
 	$(INSTALL) -m 0644 LICENSE builds/package/apl-$(VERSION)/share/doc/apl/
 	tar -C builds/package -czf builds/apl-$(VERSION)-$(PLATFORM).tar.gz apl-$(VERSION)
 
@@ -161,9 +182,6 @@ std-test: ## Run std library tests, e.g. make std-test or make std-test STD_UTES
 		cd tests && $(PYTHON) std_testing.py --path $(STD_UTEST) --compiler $(CC) --output-dir bin --base ../; \
 	fi
 
-CCClib-test: $(OUTPUT) ## Parse all shipped APL standard library headers.
-	$(OUTPUT) --without-compilation tests/CCClib_smoke.apl
-
 vscode-docker-build: ## Build the VS Code extension Docker image.
 	docker build -t $(VSCODE_DOCKER_IMAGE) vscode
 
@@ -187,7 +205,11 @@ print-config:
 	@echo "PLATFORM=$(PLATFORM)"
 	@echo "OUTPUT=$(OUTPUT)"
 	@echo "PREFIX=$(PREFIX)"
+	@echo "LIBDIR=$(LIBDIR)"
 	@echo "CCClibDIR=$(CCClibDIR)"
+	@echo "APLRUNTIMEDIR=$(APLRUNTIMEDIR)"
+	@echo "CCClib_IMPLS=$(CCClib_IMPLS)"
+	@echo "CCClib_ARCHIVE=$(CCClib_ARCHIVE)"
 	@echo "CPPFLAGS=$(CPPFLAGS)"
 	@echo "CFLAGS=$(CFLAGS)"
 	@echo "LDFLAGS=$(LDFLAGS)"
@@ -207,4 +229,4 @@ help:
 	@awk 'BEGIN {FS = ":.*## "; printf "Usage: make <target> [VAR=value]\n\nTargets:\n"} /^[a-zA-Z0-9_.-]+:.*## / {printf "  %-14s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 .DELETE_ON_ERROR:
-.PHONY: all debug release install package run test unit-test rewrite-test std-test CCClib-test vscode-docker-build vscode-docker-package clean clean-tests distclean print-sources print-config help
+.PHONY: all CCClib debug release install package run test unit-test rewrite-test std-test vscode-docker-build vscode-docker-package clean clean-tests distclean print-sources print-config help
