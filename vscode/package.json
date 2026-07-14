@@ -18,6 +18,7 @@
   "main": "./out/extension.js",
   "activationEvents": [
     "onLanguage:apl",
+    "onCommand:apl.runModuleTest",
     "onCommand:extension.sayHello"
   ],
   "contributes": {
@@ -56,7 +57,38 @@
         "uiTheme": "vs-dark",
         "path": "./themes/apl-color-theme.json"
       }
-    ]
+    ],
+    "commands": [
+      {
+        "command": "apl.runModuleTest",
+        "title": "Run APL Module Test",
+        "category": "APL",
+        "icon": "$(play)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "apl.runModuleTest",
+          "when": "resourceLangId == apl",
+          "group": "navigation@1"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "apl.runModuleTest",
+          "when": "resourceLangId == apl",
+          "group": "navigation@1"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "apl.runModuleTest",
+          "when": "resourceExtname == .apl",
+          "group": "navigation@1"
+        }
+      ]
+    }
   },
   "scripts": {
     "build": "tsc -p ./",
