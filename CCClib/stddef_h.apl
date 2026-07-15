@@ -5,24 +5,23 @@
 #include "types_h.apl"
 
 #ifdef CAPL_GNUI386
-#define size_t    u32
-#define ssize_t   i32
-#define ptrdiff_t i32
-#define wchar_t   i32
+    #define size_t    u32
+    #define ssize_t   i32
+    #define ptrdiff_t i32
+    #define wchar_t   i32
 #endif
 #ifndef CAPL_GNUI386
 #ifdef CAPL_WINDOWS64
-#define size_t    u64
-#define ssize_t   i64
-#define ptrdiff_t i64
-#define wchar_t   u16
+    #define size_t    u64
+    #define ssize_t   i64
+    #define ptrdiff_t i64
+    #define wchar_t   u16
 #endif
 #ifndef CAPL_WINDOWS64
-#define size_t    u64
-#define ssize_t   i64
-#define ptrdiff_t i64
-#define wchar_t   i32
-#endif
+    #define size_t    u64
+    #define ssize_t   i64
+    #define ptrdiff_t i64
+    #define wchar_t   i32
 #endif
 
 #endif

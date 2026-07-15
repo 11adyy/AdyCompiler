@@ -4,13 +4,13 @@
 #include "platform_h.apl"
 #include "sys_types_h.apl"
 
-#define WNOHANG    1
-#define WUNTRACED  2
+#define WNOHANG         1
+#define WUNTRACED       2
 #ifdef CAPL_MACHO64
-#define WCONTINUED 16
+    #define WCONTINUED  16
 #endif
 #ifndef CAPL_MACHO64
-#define WCONTINUED 8
+    #define WCONTINUED  8
 #endif
 
 :/ Waits for any child process to change state.

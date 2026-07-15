@@ -22,12 +22,12 @@
 #define L_tmpnam     20
 
 #ifdef CAPL_MACHO64
-extern ptr FILE ___stdinp;
-extern ptr FILE ___stdoutp;
-extern ptr FILE ___stderrp;
-#define stdin  ___stdinp
-#define stdout ___stdoutp
-#define stderr ___stderrp
+    extern ptr FILE ___stdinp;
+    extern ptr FILE ___stdoutp;
+    extern ptr FILE ___stderrp;
+    #define stdin   ___stdinp
+    #define stdout  ___stdoutp
+    #define stderr  ___stderrp
 #endif
 
 #ifndef CAPL_MACHO64

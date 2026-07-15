@@ -5,17 +5,17 @@
 #include "stddef_h.apl"
 #include "types_h.apl"
 
-#define CLOCKS_PER_SEC 1000000
-#define CLOCK_REALTIME  0
+#define CLOCKS_PER_SEC                  1000000
+#define CLOCK_REALTIME                  0
 #ifdef CAPL_MACHO64
-#define CLOCK_MONOTONIC 6
-#define CLOCK_MONOTONIC_RAW 4
-#define CLOCK_UPTIME_RAW 8
+    #define CLOCK_MONOTONIC             6
+    #define CLOCK_MONOTONIC_RAW         4
+    #define CLOCK_UPTIME_RAW            8
 #endif
 #ifndef CAPL_MACHO64
-#define CLOCK_MONOTONIC 1
-#define CLOCK_PROCESS_CPUTIME_ID 2
-#define CLOCK_THREAD_CPUTIME_ID 3
+    #define CLOCK_MONOTONIC             1
+    #define CLOCK_PROCESS_CPUTIME_ID    2
+    #define CLOCK_THREAD_CPUTIME_ID     3
 #endif
 
 :/ Returns processor time consumed by the program.
