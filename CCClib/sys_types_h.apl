@@ -4,7 +4,7 @@
 #include "platform_h.apl"
 #include "stddef_h.apl"
 
-#define clock_t   i64
+#define clock_t       i64
 
 #ifdef CAPL_MACHO64
     #define dev_t     i32
