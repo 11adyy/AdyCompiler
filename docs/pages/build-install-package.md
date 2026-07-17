@@ -12,6 +12,37 @@ make release
 The development binary automatically finds the `CCClib` directory in the
 repository.
 
+## Build the standard library from the Makefile
+
+The root `Makefile` has a separate target for the APL runtime library:
+
+```bash
+make CCClib
+```
+
+This builds the compiler if needed, compiles the implementation files from
+`CCClib/*.apl` that are not headers, and writes the static archive here:
+
+```text
+builds/<platform>/CCClib/libapl.a
+```
+
+For a release-mode runtime archive, pass the same build settings used by the
+package target:
+
+```bash
+make BUILD=release PRINT_PARSE=0 CCClib
+```
+
+`make print-config` shows the resolved library paths and inputs:
+
+```text
+CCClibDIR
+APLRUNTIMEDIR
+CCClib_IMPLS
+CCClib_ARCHIVE
+```
+
 ## Install
 
 Install both `aplc` and its APL standard library:
@@ -38,6 +69,9 @@ make install PREFIX=/usr DESTDIR=/tmp/apl-package-root
 The compiler discovers installed headers automatically, so applications can
 use `#include <stdio_h.apl>` without passing `-I CCClib`.
 
+See the [`CCClib` reference](CCClib-reference.md) for header groups,
+containers, and usage examples.
+
 Use `APL_INCLUDE_PATH` to override the standard-library directory. The `-I`
 option adds a project include directory without disabling the standard library:
 
@@ -49,8 +83,8 @@ aplc --print-stdlib-path
 
 ## Create a relocatable package
 
-Create an archive containing the compiler, matching headers, license, and
-library documentation:
+Create an archive containing the compiler, matching headers, runtime archive,
+and license:
 
 ```bash
 make package

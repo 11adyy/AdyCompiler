@@ -71,6 +71,10 @@
                 <h3>Functions</h3>
                 <p>Definitions, prototypes, overloads, generics, function pointers, local functions, lambdas, varargs, syscalls, and assembly.</p>
             </a>
+            <a href="#/pages/CCClib-reference" class="doc-card">
+                <h3>Standard library</h3>
+                <p>How to include <code>CCClib</code> headers, which libc-style declarations are available, and which APL containers are linked from <code>libapl.a</code>.</p>
+            </a>
             <a href="#/pages/containers" class="doc-card">
                 <h3>Containers</h3>
                 <p>Value-layout custom types, nested fields, array fields, and explicit self calls.</p>
