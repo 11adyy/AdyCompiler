@@ -5,8 +5,8 @@
 - C/POSIX-style headers such as `stdio_h.apl`, `stdlib_h.apl`, `string_h.apl`,
   `unistd_h.apl`, and `math_h.apl`.
 - APL convenience containers and wrappers implemented in `libapl.a`, mainly
-  `string`, `linked_list`, `queue`, `stack`, and the static `std` helper
-  container from `io_h.apl`.
+  `string`, `file`, `linked_list`, `queue`, `stack`, and the static `std`
+  helper container from `io_h.apl`.
 
 The library is intentionally small. Most headers are thin ABI declarations for
 the host runtime, while the APL containers are simple building blocks for
@@ -63,6 +63,7 @@ runtime path inside the package tree.
 | File | Role |
 |---|---|
 | `CCClib/*_h.apl` | Public headers. These define constants, type aliases, containers, extern declarations, and inline wrappers. |
+| `CCClib/stdio.apl` | Implementation for the APL `file` helper container. |
 | `CCClib/string.apl` | Implementation for the APL `string` helper container. |
 | `CCClib/list.apl` | Implementation for `linked_list` and `linked_list_block`. |
 | `CCClib/queue.apl` | Implementation for `queue`. |
@@ -109,6 +110,67 @@ from `sizeof(i32)`.
 
 Avoid `std::gets(buffer)` for new code because it wraps the unsafe libc
 `gets`. Use `std::gets(buffer, size)` when reading a bounded line.
+
+## `file`
+
+`stdio_h.apl` declares the C stream API and a APL `file` wrapper around
+`ptr FILE`. Files opened with `file::open` own the stream and close it from
+`close` or `destroy`. Streams created with `file::wrap(stream, 0)` are borrowed.
+`file::standard_input`, `file::standard_output`, and `file::standard_error`
+wrap duplicated standard descriptors, so destroying those wrappers does not
+close the process-level standard descriptors.
+
+```apl
+#include <stdio_h.apl>
+#include <stdlib_h.apl>
+#include <string_h.apl>
+
+start() {
+    ptr i8 path = ref "sample.tmp";
+    ptr i8 text = ref "hello\n";
+
+    ptr file f = file::open(path, ref "w+");
+    if not f; exit 1;
+
+    f.write(text as ptr i0, strlen(text));
+    f.seek(0 as i64, SEEK_SET as i32);
+
+    ptr i8 buffer = malloc(16) as ptr i8;
+    if not buffer; {
+        f.destroy();
+        remove(path);
+        exit 2;
+    }
+
+    u64 n = f.read(buffer as ptr i0, strlen(text));
+    buffer[n] = 0 as i8;
+
+    free(buffer as ptr i0);
+    f.destroy();
+    remove(path);
+    exit 0;
+}
+```
+
+Common `file` operations:
+
+| Operation | Behavior |
+|---|---|
+| `file::open(path, mode)` | Open a C buffered stream and return an owning wrapper. |
+| `file::temporary()` | Open a temporary binary stream and return an owning wrapper. |
+| `file::wrap(body, owned)` | Wrap an existing `ptr FILE`; use `owned = 0` for borrowed streams. |
+| `file::standard_input()`, `standard_output()`, `standard_error()` | Return owning wrappers around duplicated standard descriptors. |
+| `is_open()`, `raw()`, `detach()` | Inspect or detach the wrapped stream. |
+| `close()`, `destroy()` | Close/detach the stream and optionally free the wrapper. |
+| `read()`, `write()` | Byte-oriented buffered I/O. |
+| `read_items()`, `write_items()` | Fixed-size item I/O over `fread` and `fwrite`. |
+| `read_char()`, `write_char()`, `read_line()`, `write_string()` | Character, line, and null-terminated string helpers. |
+| `seek()`, `tell()`, `rewind()`, `size()` | Stream positioning helpers. |
+| `flush()`, `clear_error()`, `eof()`, `error()`, `fd()` | Status and descriptor helpers. |
+
+Always call `destroy` for wrappers returned by `file::open`, `file::temporary`,
+the `standard_*` helpers, and `file::wrap`. For borrowed wrappers,
+`destroy` frees only the wrapper and leaves the underlying stream open.
 
 ## `string`
 
@@ -257,7 +319,7 @@ Use this table as a quick map. The detailed signatures are in the corresponding
 | Header | Functions and definitions |
 |---|---|
 | `io_h.apl` | `std` wrappers for printing, descriptor I/O, stream I/O, allocation, typed memory operations, string length/compare/duplication. |
-| `stdio_h.apl` | `remove`, `rename`, `tmpfile`, `tmpnam`, `fclose`, `fflush`, `fopen`, `freopen`, `setbuf`, `setvbuf`, `fprintf`, `fscanf`, `printf`, `scanf`, `snprintf`, `sprintf`, `sscanf`, `fgetc`, `fgets`, `fputc`, `fputs`, `getc`, `getchar`, `gets`, `putc`, `putchar`, `puts`, `ungetc`, `fread`, `fwrite`, `fgetpos`, `fseek`, `fsetpos`, `ftell`, `rewind`, `clearerr`, `feof`, `ferror`, `perror`, plus `stdin`, `stdout`, `stderr`, `EOF`, and seek constants. |
+| `stdio_h.apl` | `remove`, `rename`, `tmpfile`, `tmpnam`, `fclose`, `fflush`, `fopen`, `freopen`, `setbuf`, `setvbuf`, `fprintf`, `fscanf`, `printf`, `scanf`, `snprintf`, `sprintf`, `sscanf`, `fgetc`, `fgets`, `fputc`, `fputs`, `getc`, `getchar`, `gets`, `putc`, `putchar`, `puts`, `ungetc`, `fread`, `fwrite`, `fgetpos`, `fseek`, `fsetpos`, `ftell`, `rewind`, `clearerr`, `feof`, `ferror`, `perror`, plus `stdin`, `stdout`, `stderr`, `EOF`, seek constants, and the APL `file` container. |
 | `stdlib_h.apl` | `malloc`, `calloc`, `realloc`, `aligned_alloc`, `posix_memalign`, `free`, `abort`, `_Exit`, `atexit`, `system`, `getenv`, `atoi`, `atol`, `atoll`, `strtol`, `strtoll`, `strtoul`, `strtoull`, `strtod`, `strtof`, `strtold`, `rand`, `srand`, `abs`, `labs`, `llabs`, `div`, `ldiv`, `lldiv`, `bsearch`, `qsort`, plus `EXIT_SUCCESS`, `EXIT_FAILURE`, `RAND_MAX`. |
 | `string_h.apl` | `memcpy`, `memmove`, `memset`, `memcmp`, `memchr`, `strlen`, `strnlen`, `strcpy`, `strncpy`, `strcat`, `strncat`, `strcmp`, `strncmp`, `strchr`, `strrchr`, `strstr`, `strpbrk`, `strspn`, `strcspn`, `strcoll`, `strxfrm`, `strtok`, `strtok_r`, `strerror`, `strdup`, `strndup`, plus the APL `string` container. |
 | `ctype_h.apl` | C-style aliases such as `char`, `int`, `long`, `double`; `isalnum`, `isalpha`, `isblank`, `iscntrl`, `isdigit`, `isgraph`, `islower`, `isprint`, `ispunct`, `isspace`, `isupper`, `isxdigit`, `tolower`, `toupper`. |
@@ -301,6 +363,7 @@ Small executable examples are kept in:
 | Example | Demonstrates |
 |---|---|
 | `examples/small/CCClib.apl` | `io_h.apl` and `std::print`. |
+| `examples/small/file_usecase.apl` | `file` stream creation, write/read, seeking, sizing, and cleanup. |
 | `examples/small/list_usecase.apl` | `linked_list` insertion, access, popping, and destruction. |
 | `examples/small/queue_usecase.apl` | FIFO `queue` behavior. |
 | `examples/small/stack_usecase.apl` | LIFO `stack` behavior. |
