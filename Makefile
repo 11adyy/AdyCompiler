@@ -1,36 +1,49 @@
-CC ?= gcc
-AR ?= ar
-PYTHON ?= python3
-RM ?= rm -f
-MKDIR_P ?= mkdir -p
-INSTALL ?= install
+CC 						?= gcc
+AR 						?= ar
+PYTHON 					?= python3
+RM 						?= rm -f
+MKDIR_P 				?= mkdir -p
+INSTALL 				?= install
 
-PREFIX ?= /usr/local
-DESTDIR ?=
-BINDIR ?= $(PREFIX)/bin
-LIBDIR ?= $(PREFIX)/lib
-DATADIR ?= $(PREFIX)/share
-CCClibDIR ?= $(DATADIR)/apl/include
-APLRUNTIMEDIR ?= $(LIBDIR)/apl
-DOCDIR ?= $(DATADIR)/doc/apl
-VERSION ?= 3.6_X
+PREFIX 					?= /usr/local
+DESTDIR 				?=
+BINDIR 					?= $(PREFIX)/bin
+LIBDIR 					?= $(PREFIX)/lib
+DATADIR 				?= $(PREFIX)/share
+CCClibDIR 				?= $(DATADIR)/apl/include
+APLRUNTIMEDIR 			?= $(LIBDIR)/apl
+DOCDIR 					?= $(DATADIR)/doc/apl
+VERSION 				?= 3.6_X
 
-BUILD ?= debug
-AVAILABLE_MEMORY ?= 67108864
-LOGS ?=
-PRINT_PARSE ?= 1
-ENABLE_Z3 ?= auto
-INPUT ?= examples/print.apl
-UTEST ?= code_utesting
-STD_UTEST ?= std_utesting
-VSCODE_DOCKER_IMAGE ?= apl-extension
-VSCODE_OUTPUT_DIR ?= $(CURDIR)/vscode/output
+BUILD 					?= debug
+AVAILABLE_MEMORY 		?= 67108864
+LOGS 					?=
+PRINT_PARSE 			?= 1
+ENABLE_Z3 				?= auto
+INPUT 					?= examples/print.apl
+UTEST 					?= code_utesting
+STD_UTEST 				?= std_utesting
+VSCODE_DOCKER_IMAGE 	?= apl-extension
+VSCODE_OUTPUT_DIR 		?= $(CURDIR)/vscode/output
+DOCS_BACKEND_BUILD_DIR 	?= docs/back/.build
+DOCS_BACKEND_PLATFORM 	?= ../$(DOCS_BACKEND_BUILD_DIR)
+DOCS_BACKEND_COMPILER 	?= $(DOCS_BACKEND_BUILD_DIR)/aplc
+DOCS_BACKEND_OUTPUT 	?= docs/back/apl_docs_backend
 
 UNAME_S ?= $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
-RUN_ARGS ?= --arch x86_64 --sys-type macho64 --asm-format macho64 --linker clang
+	RUN_ARGS ?= 				\
+		--arch x86_64 			\
+		--sys-type macho64 		\
+		--asm-format macho64 	\
+		--linker clang
 else
-RUN_ARGS ?= --arch x86_64 --sys-type linux64 --asm-format elf64 --linker gcc --linker-no-pie
+	RUN_ARGS ?= 				\
+		--arch x86_64 			\
+		--sys-type linux64 		\
+		--asm-format elf64 		\
+		--linker gcc 			\
+		--linker-no-pie 
 endif
 
 Z3_AVAILABLE := $(shell pkg-config --exists z3 2>/dev/null && echo 1 || echo 0)
@@ -53,18 +66,18 @@ endif
 
 PLATFORM ?= $(shell uname -s | tr '[:upper:]' '[:lower:]')-$(shell uname -m | tr '[:upper:]' '[:lower:]')
 
-SOURCES := $(sort $(shell find src std -type f -name '*.c'))
-OUTPUT = builds/$(PLATFORM)/aplc
-CCClib_IMPLS := $(sort $(shell find CCClib -type f -name '*.apl' ! -name '*_h.apl'))
+SOURCES 		:= $(sort $(shell find src std -type f -name '*.c'))
+OUTPUT 			= builds/$(PLATFORM)/aplc
+CCClib_IMPLS 	:= $(sort $(shell find CCClib -type f -name '*.apl' ! -name '*_h.apl'))
 CCClib_BUILDDIR := builds/$(PLATFORM)/CCClib
-CCClib_OBJDIR := $(CCClib_BUILDDIR)/obj
-CCClib_OBJS := $(patsubst CCClib/%.apl,$(CCClib_OBJDIR)/%.o,$(CCClib_IMPLS))
-CCClib_ARCHIVE := $(CCClib_BUILDDIR)/libapl.a
+CCClib_OBJDIR   := $(CCClib_BUILDDIR)/obj
+CCClib_OBJS     := $(patsubst CCClib/%.apl,$(CCClib_OBJDIR)/%.o,$(CCClib_IMPLS))
+CCClib_ARCHIVE  := $(CCClib_BUILDDIR)/libapl.a
 
-CPPFLAGS += -Iinclude -DALLOC_BUFFER_SIZE=$(AVAILABLE_MEMORY) -DAPL_DEFAULT_INCLUDE_DIR=\"$(CCClibDIR)\" -DAPL_DEFAULT_RUNTIME_LIB=\"$(APLRUNTIMEDIR)/libapl.a\"
-CFLAGS += -Wall -Wno-int-conversion
-LDFLAGS +=
-LDLIBS +=
+CPPFLAGS 		+= -Iinclude -DALLOC_BUFFER_SIZE=$(AVAILABLE_MEMORY) -DAPL_DEFAULT_INCLUDE_DIR=\"$(CCClibDIR)\" -DAPL_DEFAULT_RUNTIME_LIB=\"$(APLRUNTIMEDIR)/libapl.a\"
+CFLAGS   		+= -Wall -Wno-int-conversion
+LDFLAGS  		+=
+LDLIBS   		+=
 
 ifeq ($(BUILD),debug)
 	CFLAGS += -g -O0
@@ -131,6 +144,13 @@ $(CCClib_ARCHIVE): $(CCClib_OBJS)
 	$(AR) rcs $@ $^
 
 CCClib: $(CCClib_ARCHIVE) ## Build the APL runtime static library.
+
+docs-backend: ## Build the APL HTTP backend for the docs Playground.
+	$(MAKE) PLATFORM=$(DOCS_BACKEND_PLATFORM) BUILD=$(BUILD) PRINT_PARSE=$(PRINT_PARSE) ENABLE_Z3=$(ENABLE_Z3) all CCClib
+	$(DOCS_BACKEND_COMPILER) $(RUN_ARGS) docs/back/main.apl --output $(DOCS_BACKEND_OUTPUT)
+
+docs-backend-run: docs-backend ## Build and run the APL docs backend on 127.0.0.1:8000.
+	./$(DOCS_BACKEND_OUTPUT)
 
 debug: ## Build a debug compiler.
 	$(MAKE) BUILD=debug all
