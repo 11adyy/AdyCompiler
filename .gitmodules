@@ -1,0 +1,8 @@
+[submodule "CCClib"]
+	path = CCClib
+	url = https://github.com/11adyy/CCClib.git
+	branch = main
+[submodule "vscode"]
+	path = vscode
+	url = https://github.com/11adyy/apl-vscode.git
+	branch = main

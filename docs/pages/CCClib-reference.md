@@ -54,6 +54,13 @@ make CCClib
 make BUILD=release PRINT_PARSE=0 CCClib
 ```
 
+The source directory defaults to `CCClib`. For a checkout where the standard
+library is provided from another location, pass `CCClib_SRC_DIR`:
+
+```bash
+make CCClib_SRC_DIR=../CCClib CCClib
+```
+
 The archive is written to `builds/<platform>/CCClib/libapl.a`. Installed
 compilers use the compiled-in runtime path, and package builds use the adjacent
 runtime path inside the package tree.

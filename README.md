@@ -60,7 +60,7 @@ This repository also includes a [documentation site](https://11adyy.github.io/Ad
 ## Introduction
 This compiler is not primarily about creating a language with complex syntax and high-level abstractions. APL now has value-layout containers, but it still avoids a large object model and keeps the interesting work in the compiler pipeline. The main goal is to implement modern code optimization techniques, observe how input code can be transformed into a higher-performance version of itself, and test ideas such as neural-network-based heuristics and compressed symbol tables. This `README` describes what has been implemented so far. </br>
 
-In short, APL has an `EBNF-defined` [[?]](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form) syntax, its own [VS Code extension](https://github.com/11adyy/AdyCompiler/tree/HIR_LIR_SSA/vscode), and a small [documentation site](https://11adyy.github.io/AdyCompiler/). If you are more interested in the language than in the compiler pipeline, start with the documentation site. </br>
+In short, APL has an `EBNF-defined` [[?]](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form) syntax, its own [VS Code extension](https://github.com/11adyy/apl-vscode), and a small [documentation site](https://11adyy.github.io/AdyCompiler/). If you are more interested in the language than in the compiler pipeline, start with the documentation site. </br>
 
 P.S.: *The language itself is not the main subject of this README, but while explaining each compiler layer I will use direct examples written in APL. Its surface grammar is close enough to C-like languages to make the examples readable.*
 

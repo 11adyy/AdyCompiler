@@ -23,8 +23,11 @@ ENABLE_Z3 				?= auto
 INPUT 					?= examples/print.apl
 UTEST 					?= code_utesting
 STD_UTEST 				?= std_utesting
+CCClib_SRC_DIR 		?= CCClib
+VSCODE_DIR 				?= vscode
 VSCODE_DOCKER_IMAGE 	?= apl-extension
-VSCODE_OUTPUT_DIR 		?= $(CURDIR)/vscode/output
+VSCODE_ABS_DIR 		:= $(abspath $(VSCODE_DIR))
+VSCODE_OUTPUT_DIR 		?= $(VSCODE_ABS_DIR)/output
 DOCS_BACKEND_BUILD_DIR 	?= docs/back/.build
 DOCS_BACKEND_PLATFORM 	?= ../$(DOCS_BACKEND_BUILD_DIR)
 DOCS_BACKEND_COMPILER 	?= $(DOCS_BACKEND_BUILD_DIR)/aplc
@@ -68,10 +71,11 @@ PLATFORM ?= $(shell uname -s | tr '[:upper:]' '[:lower:]')-$(shell uname -m | tr
 
 SOURCES 		:= $(sort $(shell find src std -type f -name '*.c'))
 OUTPUT 			= builds/$(PLATFORM)/aplc
-CCClib_IMPLS 	:= $(sort $(shell find CCClib -type f -name '*.apl' ! -name '*_h.apl'))
+CCClib_SOURCES  := $(sort $(shell if [ -d "$(CCClib_SRC_DIR)" ]; then find "$(CCClib_SRC_DIR)" -maxdepth 1 -type f -name '*.apl'; fi))
+CCClib_IMPLS 	:= $(sort $(shell if [ -d "$(CCClib_SRC_DIR)" ]; then find "$(CCClib_SRC_DIR)" -type f -name '*.apl' ! -name '*_h.apl'; fi))
 CCClib_BUILDDIR := builds/$(PLATFORM)/CCClib
 CCClib_OBJDIR   := $(CCClib_BUILDDIR)/obj
-CCClib_OBJS     := $(patsubst CCClib/%.apl,$(CCClib_OBJDIR)/%.o,$(CCClib_IMPLS))
+CCClib_OBJS     := $(patsubst $(CCClib_SRC_DIR)/%.apl,$(CCClib_OBJDIR)/%.o,$(CCClib_IMPLS))
 CCClib_ARCHIVE  := $(CCClib_BUILDDIR)/libapl.a
 
 CPPFLAGS 		+= -Iinclude -DALLOC_BUFFER_SIZE=$(AVAILABLE_MEMORY) -DAPL_DEFAULT_INCLUDE_DIR=\"$(CCClibDIR)\" -DAPL_DEFAULT_RUNTIME_LIB=\"$(APLRUNTIMEDIR)/libapl.a\"
@@ -130,15 +134,29 @@ endif
 
 all: $(OUTPUT) ## Build the compiler with the current configuration.
 
+check-CCClib-src:
+	@if [ ! -d "$(CCClib_SRC_DIR)" ] || [ -z "$$(find "$(CCClib_SRC_DIR)" -maxdepth 1 -type f -name '*.apl' -print -quit 2>/dev/null)" ]; then \
+		echo "error: APL library source directory '$(CCClib_SRC_DIR)' is missing or empty."; \
+		echo "       If it is a submodule, run: git submodule update --init --recursive $(CCClib_SRC_DIR)"; \
+		exit 1; \
+	fi
+
+check-vscode-src:
+	@if [ ! -f "$(VSCODE_DIR)/package.json" ] || [ ! -f "$(VSCODE_DIR)/Dockerfile" ]; then \
+		echo "error: VS Code extension directory '$(VSCODE_DIR)' is missing or incomplete."; \
+		echo "       If it is a submodule, run: git submodule update --init --recursive $(VSCODE_DIR)"; \
+		exit 1; \
+	fi
+
 $(OUTPUT): $(SOURCES)
 	@$(MKDIR_P) $(dir $@)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(SOURCES) -o $@ $(LDFLAGS) $(LDLIBS)
 
-$(CCClib_OBJDIR)/%.o: CCClib/%.apl $(OUTPUT)
+$(CCClib_OBJDIR)/%.o: $(CCClib_SRC_DIR)/%.apl $(OUTPUT) | check-CCClib-src
 	@$(MKDIR_P) $(dir $@)
 	$(OUTPUT) $(RUN_ARGS) -c --output $@ $<
 
-$(CCClib_ARCHIVE): $(CCClib_OBJS)
+$(CCClib_ARCHIVE): $(CCClib_OBJS) | check-CCClib-src
 	@$(MKDIR_P) $(dir $@)
 	$(RM) $@
 	$(AR) rcs $@ $^
@@ -146,7 +164,7 @@ $(CCClib_ARCHIVE): $(CCClib_OBJS)
 CCClib: $(CCClib_ARCHIVE) ## Build the APL runtime static library.
 
 docs-backend: ## Build the APL HTTP backend for the docs Playground.
-	$(MAKE) PLATFORM=$(DOCS_BACKEND_PLATFORM) BUILD=$(BUILD) PRINT_PARSE=$(PRINT_PARSE) ENABLE_Z3=$(ENABLE_Z3) all CCClib
+	$(MAKE) PLATFORM=$(DOCS_BACKEND_PLATFORM) BUILD=$(BUILD) PRINT_PARSE=$(PRINT_PARSE) ENABLE_Z3=$(ENABLE_Z3) CCClib_SRC_DIR=$(CCClib_SRC_DIR) all CCClib
 	$(DOCS_BACKEND_COMPILER) $(RUN_ARGS) docs/back/main.apl --output $(DOCS_BACKEND_OUTPUT)
 
 docs-backend-run: docs-backend ## Build and run the APL docs backend on 127.0.0.1:8000.
@@ -158,19 +176,19 @@ debug: ## Build a debug compiler.
 release: ## Build an optimized compiler.
 	$(MAKE) BUILD=release PRINT_PARSE=0 all
 
-install: $(OUTPUT) $(CCClib_ARCHIVE) ## Install the compiler and APL standard library under PREFIX.
+install: $(OUTPUT) $(CCClib_ARCHIVE) | check-CCClib-src ## Install the compiler and APL standard library under PREFIX.
 	$(INSTALL) -d $(DESTDIR)$(BINDIR) $(DESTDIR)$(CCClibDIR) $(DESTDIR)$(APLRUNTIMEDIR) $(DESTDIR)$(DOCDIR)
 	$(INSTALL) -m 0755 $(OUTPUT) $(DESTDIR)$(BINDIR)/aplc
-	$(INSTALL) -m 0644 CCClib/*.apl $(DESTDIR)$(CCClibDIR)/
+	$(INSTALL) -m 0644 $(CCClib_SOURCES) $(DESTDIR)$(CCClibDIR)/
 	$(INSTALL) -m 0644 $(CCClib_ARCHIVE) $(DESTDIR)$(APLRUNTIMEDIR)/libapl.a
 	$(INSTALL) -m 0644 LICENSE $(DESTDIR)$(DOCDIR)/
 
-package: ## Build a relocatable binary tarball with the standard library.
-	$(MAKE) BUILD=release PRINT_PARSE=0 -B all CCClib
+package: | check-CCClib-src ## Build a relocatable binary tarball with the standard library.
+	$(MAKE) BUILD=release PRINT_PARSE=0 CCClib_SRC_DIR=$(CCClib_SRC_DIR) -B all CCClib
 	$(RM) -r builds/package/apl-$(VERSION)
 	$(INSTALL) -d builds/package/apl-$(VERSION)/bin builds/package/apl-$(VERSION)/lib/apl builds/package/apl-$(VERSION)/share/apl/include builds/package/apl-$(VERSION)/share/doc/apl
 	$(INSTALL) -m 0755 $(OUTPUT) builds/package/apl-$(VERSION)/bin/aplc
-	$(INSTALL) -m 0644 CCClib/*.apl builds/package/apl-$(VERSION)/share/apl/include/
+	$(INSTALL) -m 0644 $(CCClib_SOURCES) builds/package/apl-$(VERSION)/share/apl/include/
 	$(INSTALL) -m 0644 $(CCClib_ARCHIVE) builds/package/apl-$(VERSION)/lib/apl/libapl.a
 	$(INSTALL) -m 0644 LICENSE builds/package/apl-$(VERSION)/share/doc/apl/
 	tar -C builds/package -czf builds/apl-$(VERSION)-$(PLATFORM).tar.gz apl-$(VERSION)
@@ -199,11 +217,14 @@ std-test: ## Run std library tests, e.g. make std-test or make std-test STD_UTES
 		cd tests && $(PYTHON) std_testing.py --path $(STD_UTEST) --compiler $(CC) --output-dir bin --base ../; \
 	fi
 
-vscode-docker-build: ## Build the VS Code extension Docker image.
-	docker build -t $(VSCODE_DOCKER_IMAGE) vscode
+vscode-docker-build: | check-vscode-src ## Build the VS Code extension Docker image.
+	docker build -t $(VSCODE_DOCKER_IMAGE) $(VSCODE_ABS_DIR)
 
-vscode-docker-package: vscode-docker-build ## Build and package the VS Code extension in Docker.
-	docker run --rm -v $(CURDIR)/vscode:/app -v $(VSCODE_OUTPUT_DIR):/output $(VSCODE_DOCKER_IMAGE)
+vscode-docker-package: vscode-docker-build | check-vscode-src ## Build and package the VS Code extension in Docker.
+	docker run --rm -v $(VSCODE_ABS_DIR):/app -v $(VSCODE_OUTPUT_DIR):/output $(VSCODE_DOCKER_IMAGE)
+
+submodules: ## Initialize repository submodules.
+	git submodule update --init --recursive
 
 clean: ## Remove compiler build outputs.
 	$(RM) -r builds
@@ -224,7 +245,9 @@ print-config:
 	@echo "PREFIX=$(PREFIX)"
 	@echo "LIBDIR=$(LIBDIR)"
 	@echo "CCClibDIR=$(CCClibDIR)"
+	@echo "CCClib_SRC_DIR=$(CCClib_SRC_DIR)"
 	@echo "APLRUNTIMEDIR=$(APLRUNTIMEDIR)"
+	@echo "CCClib_SOURCES=$(CCClib_SOURCES)"
 	@echo "CCClib_IMPLS=$(CCClib_IMPLS)"
 	@echo "CCClib_ARCHIVE=$(CCClib_ARCHIVE)"
 	@echo "CPPFLAGS=$(CPPFLAGS)"
@@ -239,6 +262,7 @@ print-config:
 	@echo "LOGS=$(LOGS)"
 	@echo "INPUT=$(INPUT)"
 	@echo "RUN_ARGS=$(RUN_ARGS)"
+	@echo "VSCODE_DIR=$(VSCODE_DIR)"
 	@echo "VSCODE_DOCKER_IMAGE=$(VSCODE_DOCKER_IMAGE)"
 	@echo "VSCODE_OUTPUT_DIR=$(VSCODE_OUTPUT_DIR)"
 
@@ -246,4 +270,4 @@ help:
 	@awk 'BEGIN {FS = ":.*## "; printf "Usage: make <target> [VAR=value]\n\nTargets:\n"} /^[a-zA-Z0-9_.-]+:.*## / {printf "  %-14s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 .DELETE_ON_ERROR:
-.PHONY: all CCClib debug release install package run test unit-test rewrite-test std-test vscode-docker-build vscode-docker-package clean clean-tests distclean print-sources print-config help
+.PHONY: all check-CCClib-src check-vscode-src CCClib debug release install package run test unit-test rewrite-test std-test vscode-docker-build vscode-docker-package submodules clean clean-tests distclean print-sources print-config help
