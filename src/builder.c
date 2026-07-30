@@ -170,8 +170,8 @@ static int _file_from_executable(const char* argv0, const char* suffix, char* ou
     return 1;
 }
 
-static inline const char* _find_stdlib(const char* argv0, char* out, size_t out_size) {
-    const char* env = getenv("APL_INCLUDE_PATH");
+static inline char* _find_stdlib(const char* argv0, char* out, size_t out_size) {
+    char* env = getenv("APL_INCLUDE_PATH");
     if (_readable_directory(env))                                            return env;
     if (_path_from_executable(argv0, "../share/apl/include", out, out_size)) return out;
     if (_path_from_executable(argv0, "../../CCClib", out, out_size))         return out;
@@ -180,8 +180,8 @@ static inline const char* _find_stdlib(const char* argv0, char* out, size_t out_
     return NULL;
 }
 
-static inline const char* _find_runtime_library(const char* argv0, char* out, size_t out_size) {
-    const char* env = getenv("APL_RUNTIME_LIB");
+static inline char* _find_runtime_library(const char* argv0, char* out, size_t out_size) {
+    char* env = getenv("APL_RUNTIME_LIB");
     if (_readable_file(env))                                                return env;
     if (_file_from_executable(argv0, "../lib/apl/libapl.a", out, out_size)) return out;
     if (_file_from_executable(argv0, "CCClib/libapl.a", out, out_size))     return out;

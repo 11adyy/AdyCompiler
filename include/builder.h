@@ -79,7 +79,7 @@
 #include <asm/x86_64_macho_nasm_asmgen.h>
 
 #include <gem_data.h>
-#define CAPL_VERSION                 "3.6.11:2907.26" // major.minor<.patch> (old version style):ddmm.yy (new version style)
+#define CAPL_VERSION                 "3.6.12:3007.26" // major.minor<.patch> (old version style):ddmm.yy (new version style)
 
 #ifndef APL_DEFAULT_INCLUDE_DIR
     #define APL_DEFAULT_INCLUDE_DIR  "/usr/local/share/apl/include"
