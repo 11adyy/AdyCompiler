@@ -1,7 +1,5 @@
 # Examples
 
-The examples below are based on files from `tests/code_utesting/**/*.apl`.
-
 ## Arithmetic and casts
 
 ```apl
@@ -149,10 +147,6 @@ function print(ptr i8 s) -> i0 {
 
 ## HTTP HTML page
 
-`examples/small/http_page.apl` starts a small localhost HTTP server with
-`CCClib/http`, serves `examples/small/http_page.html` from `/`, and exposes the
-diagram image through a static route.
-
 ```apl
 #include <http_h.apl>
 
@@ -174,18 +168,4 @@ start() {
     if not server.static(ref "/assets/", ref "examples/small/"); exit 3;
     exit server.listen() as u8;
 }
-```
-
-Build and run:
-
-```bash
-builds/darwin-x86_64/aplc --output /private/tmp/apl_http_page_example examples/small/http_page.apl
-/private/tmp/apl_http_page_example
-```
-
-Open `http://127.0.0.1:18083/`. The page button loads
-`/assets/http_page_diagram.svg` from the same APL server. Stop the example with:
-
-```bash
-curl http://127.0.0.1:18083/stop
 ```

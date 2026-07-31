@@ -1581,7 +1581,7 @@ body::before,
 }
 
 .apl-home-route .apl-home-hero > .apl-scroll-monkey::before {
-  content: "monkey.gif";
+  content: "user.gif";
   position: absolute;
   top: 2px;
   left: 2px;

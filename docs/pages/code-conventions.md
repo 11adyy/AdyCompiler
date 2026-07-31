@@ -1,6 +1,6 @@
 # Code conventions
 
-The compiler does not require a particular style, but the following conventions keep APL code easy to read.
+The compiler **does not** require a particular style, but the following conventions keep APL code easy to read.
 
 ## Names
 

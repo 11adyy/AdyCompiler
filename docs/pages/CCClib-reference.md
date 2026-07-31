@@ -2,15 +2,10 @@
 
 `CCClib` is the standard library shipped with the compiler. It has two layers:
 
-- C/POSIX-style headers such as `stdio_h.apl`, `stdlib_h.apl`, `string_h.apl`,
-  `unistd_h.apl`, `math_h.apl`, and `raylib_h.apl`.
-- APL convenience containers and wrappers implemented in `libapl.a`, mainly
-  `string`, `file`, `linked_list`, `queue`, `stack`, `town`, `http_server`, and
-  the static `std` helper container from `io_h.apl`.
+- C/POSIX-style headers such as `stdio_h.apl`, `stdlib_h.apl`, `string_h.apl`, `unistd_h.apl`, `math_h.apl`, and `raylib_h.apl`.
+- APL convenience containers and wrappers implemented in `libapl.a`, mainly `string`, `file`, `linked_list`, `queue`, `stack`, `town`, `http_server`, and the static `std` helper container from `io_h.apl`.
 
-The library is intentionally small. Most headers are thin ABI declarations for
-the host runtime, while the APL containers are simple building blocks for
-examples, tests, and small programs.
+The library is intentionally small. Most headers are thin ABI declarations for the host runtime, while the APL containers are simple building blocks for examples, tests, and small programs.
 
 ## Include and link
 
@@ -54,16 +49,13 @@ make CCClib
 make BUILD=release PRINT_PARSE=0 CCClib
 ```
 
-The source directory defaults to `CCClib`. For a checkout where the standard
-library is provided from another location, pass `CCClib_SRC_DIR`:
+The source directory defaults to `CCClib`. For a checkout where the standard library is provided from another location, pass `CCClib_SRC_DIR`:
 
 ```bash
 make CCClib_SRC_DIR=../CCClib CCClib
 ```
 
-The archive is written to `builds/<platform>/CCClib/libapl.a`. Installed
-compilers use the compiled-in runtime path, and package builds use the adjacent
-runtime path inside the package tree.
+The archive is written to `builds/<platform>/CCClib/libapl.a`. Installed compilers use the compiled-in runtime path, and package builds use the adjacent runtime path inside the package tree.
 
 ## File layout
 
@@ -114,21 +106,13 @@ Main `std` helpers:
 | Memory | `std::malloc`, `std::calloc`, `std::calloc<T>`, `std::realloc`, `std::realloc<T>`, `std::free`, `std::free<T>`, `std::copy<T>`, `std::move<T>`, `std::zero<T>` |
 | Strings | `std::strlen(ptr i8)`, `std::strlen(ptr string)`, `std::strcmp(ptr i8, ptr i8)`, `std::strcmp(ptr string, ptr string)`, `std::strdup(ptr i8)`, `std::strdup(ptr string)` |
 
-Prefer the typed helpers when possible. For example, `std::calloc<i32>(16)`
-returns `ptr i32`, and `std::copy<i32>(dst, src, count)` computes byte sizes
-from `sizeof(i32)`.
+Prefer the typed helpers when possible. For example, `std::calloc<i32>(16)` returns `ptr i32`, and `std::copy<i32>(dst, src, count)` computes byte sizes from `sizeof(i32)`.
 
-Avoid `std::gets(buffer)` for new code because it wraps the unsafe libc
-`gets`. Use `std::gets(buffer, size)` when reading a bounded line.
+Avoid `std::gets(buffer)` for new code because it wraps the unsafe libc `gets`. Use `std::gets(buffer, size)` when reading a bounded line.
 
 ## `file`
 
-`stdio_h.apl` declares the C stream API and a APL `file` wrapper around
-`ptr FILE`. Files opened with `file::open` own the stream and close it from
-`close` or `destroy`. Streams created with `file::wrap(stream, 0)` are borrowed.
-`file::standard_input`, `file::standard_output`, and `file::standard_error`
-wrap duplicated standard descriptors, so destroying those wrappers does not
-close the process-level standard descriptors.
+`stdio_h.apl` declares the C stream API and a APL `file` wrapper around `ptr FILE`. Files opened with `file::open` own the stream and close it from `close` or `destroy`. Streams created with `file::wrap(stream, 0)` are borrowed. `file::standard_input`, `file::standard_output`, and `file::standard_error` wrap duplicated standard descriptors, so destroying those wrappers does not close the process-level standard descriptors.
 
 ```apl
 #include <stdio_h.apl>
@@ -178,14 +162,11 @@ Common `file` operations:
 | `seek()`, `tell()`, `rewind()`, `size()` | Stream positioning helpers. |
 | `flush()`, `clear_error()`, `eof()`, `error()`, `fd()` | Status and descriptor helpers. |
 
-Always call `destroy` for wrappers returned by `file::open`, `file::temporary`,
-the `standard_*` helpers, and `file::wrap`. For borrowed wrappers,
-`destroy` frees only the wrapper and leaves the underlying stream open.
+Always call `destroy` for wrappers returned by `file::open`, `file::temporary`, the `standard_*` helpers, and `file::wrap`. For borrowed wrappers, `destroy` frees only the wrapper and leaves the underlying stream open.
 
 ## `string`
 
-`string_h.apl` declares both libc-style byte-string functions and the APL
-`string` container. The container owns a duplicated null-terminated byte buffer:
+`string_h.apl` declares both libc-style byte-string functions and the APL `string` container. The container owns a duplicated null-terminated byte buffer:
 
 ```apl
 #include <string_h.apl>
@@ -218,8 +199,7 @@ After `destroy`, the pointer must not be reused.
 
 ## `linked_list`
 
-`list_h.apl` provides an untyped doubly linked list. It stores payloads as
-`ptr i0`; the list owns only its internal nodes.
+`list_h.apl` provides an untyped doubly linked list. It stores payloads as `ptr i0`; the list owns only its internal nodes.
 
 ```apl
 #include <list_h.apl>
@@ -263,9 +243,7 @@ lists because neighboring links are updated directly.
 
 ## `queue`
 
-`queue_h.apl` implements a FIFO queue on top of `linked_list`. Payload ownership
-is the same as for the list: the queue frees nodes, not the data pointed to by
-payloads.
+`queue_h.apl` implements a FIFO queue on top of `linked_list`. Payload ownership is the same as for the list: the queue frees nodes, not the data pointed to by payloads.
 
 ```apl
 #include <queue_h.apl>
@@ -289,8 +267,7 @@ start() {
 }
 ```
 
-Queue operations: `new`, `init`, `push`, `pop`, `front`, `back`, `clear`,
-`destroy`, `size`, and `empty`.
+Queue operations: `new`, `init`, `push`, `pop`, `front`, `back`, `clear`, `destroy`, `size`, and `empty`.
 
 ## `stack`
 
@@ -318,14 +295,11 @@ start() {
 }
 ```
 
-Stack operations: `new`, `init`, `push`, `pop`, `top`, `clear`, `destroy`,
-`size`, and `empty`.
+Stack operations: `new`, `init`, `push`, `pop`, `top`, `clear`, `destroy`, `size`, and `empty`.
 
 ## `town`
 
-`town_h.apl` declares a tiny Oregon town lookup container. Its records live as
-global objects in `town.apl`, and `town::find` returns pointers to those globals.
-Population values are Census PEP Vintage 2025 estimates.
+`town_h.apl` declares a tiny Oregon town lookup container. Its records live as global objects in `town.apl`, and `town::find` returns pointers to those globals. Population values are Census PEP Vintage 2025 estimates.
 
 ```apl
 #include <town_h.apl>
@@ -340,14 +314,11 @@ start() {
 }
 ```
 
-The lookup is exact and case-sensitive. Returned `town` pointers are borrowed
-static records and must not be freed.
+The lookup is exact and case-sensitive. Returned `town` pointers are borrowed static records and must not be freed.
 
 ## `http_server`
 
-`http_h.apl` declares a small blocking HTTP/1.1 server for simple local tools
-and demos. Register handlers with `get`, `post`, or `route`, then call
-`listen`. A handler receives `ptr http_request` and `ptr http_response`.
+`http_h.apl` declares a small blocking HTTP/1.1 server for simple local tools and demos. Register handlers with `get`, `post`, or `route`, then call `listen`. A handler receives `ptr http_request` and `ptr http_response`.
 
 ```apl
 #include <http_h.apl>
@@ -372,9 +343,7 @@ start() {
 }
 ```
 
-`http_response` can send raw bytes with `write`, inline text/HTML with `text`
-and `html`, or file contents with `file` and `html_file`. Static routes reject
-paths containing `..` and infer common content types from file extensions.
+`http_response` can send raw bytes with `write`, inline text/HTML with `text` and `html`, or file contents with `file` and `html_file`. Static routes reject paths containing `..` and infer common content types from file extensions.
 
 Main containers:
 
@@ -384,13 +353,9 @@ Main containers:
 | `http_response` | Per-client writer for status, headers, raw bytes, text, HTML, and file responses. |
 | `http_server` | Fixed-size route table, static route table, bind address, socket, and blocking accept loop. |
 
-Response order matters: set `status` before `header`, `write`, `text`, `html`,
-`file`, or `html_file`. Calling `header` starts the status line; body helpers
-finish headers automatically.
+Response order matters: set `status` before `header`, `write`, `text`, `html`, `file`, or `html_file`. Calling `header` starts the status line; body helpers finish headers automatically.
 
-The server is intentionally small. It handles one client at a time, closes each
-connection after one response, and does not implement keep-alive, TLS, chunked
-transfer, percent-decoding, or a complete HTTP parser.
+The server is intentionally small. It handles one client at a time, closes each connection after one response, and does not implement keep-alive, TLS, chunked transfer, percent-decoding, or a complete HTTP parser.
 
 Example page server:
 
@@ -399,25 +364,15 @@ builds/darwin-x86_64/aplc --output /private/tmp/apl_http_page_example examples/s
 /private/tmp/apl_http_page_example
 ```
 
-Then open `http://127.0.0.1:18083/`. The example also exposes
-`/assets/http_page_diagram.svg` through `http_server::static` and `/stop` for a
-clean test shutdown.
+Then open `http://127.0.0.1:18083/`. The example also exposes `/assets/http_page_diagram.svg` through `http_server::static` and `/stop` for a clean test shutdown.
 
-Until integer-literal ABI lowering is fixed, cast numeric arguments that cross
-an ABI function boundary, for example `res.text(200 as i32, ref "ok\n")`.
+Until integer-literal ABI lowering is fixed, cast numeric arguments that cross an ABI function boundary, for example `res.text(200 as i32, ref "ok\n")`.
 
 ## `raylib`
 
-`raylib_h.apl` is a thin ABI binding for raylib 6.0. It declares raylib value
-types as C-compatible containers, enum values as preprocessor constants, and
-the public `RLAPI` functions as `extern @[abi]` declarations. `Color` is exposed
-as a packed `u32` matching raylib's 4-byte `{ r, g, b, a }` ABI layout. The
-header also provides small value constructors such as `ray_color`,
-`ray_vector2`, `ray_vector3`, `ray_rectangle`, and the standard raylib color
-constants such as `RAYWHITE`, `MAROON`, and `BLACK`.
+`raylib_h.apl` is a thin ABI binding for raylib 6.0. It declares raylib value types as C-compatible containers, enum values as preprocessor constants, and the public `RLAPI` functions as `extern @[abi]` declarations. `Color` is exposed as a packed `u32` matching raylib's 4-byte `{ r, g, b, a }` ABI layout. The header also provides small value constructors such as `ray_color`, `ray_vector2`, `ray_vector3`, `ray_rectangle`, and the standard raylib color constants such as `RAYWHITE`, `MAROON`, and `BLACK`.
 
-The binding is header-only; `libapl.a` does not contain raylib itself. Pass the
-native raylib library to the linker:
+The binding is header-only; `libapl.a` does not contain raylib itself. Pass the native raylib library to the linker:
 
 ```bash
 RAYLIB_PREFIX=$PWD/.local/raylib-6.0
@@ -425,12 +380,9 @@ builds/linux-x86_64/aplc -I CCClib --output /tmp/raylib_window examples/small/ra
     -L"$RAYLIB_PREFIX/lib" -Wl,-rpath,"$RAYLIB_PREFIX/lib" -lraylib
 ```
 
-If `pkg-config` is not available for raylib on your machine, use the platform
-flags from your raylib install. On many Linux installs that is equivalent to
-`-lraylib -lm -ldl -lpthread`.
+If `pkg-config` is not available for raylib on your machine, use the platform flags from your raylib install. On many Linux installs that is equivalent to `-lraylib -lm -ldl -lpthread`.
 
-For non-`Color` container values returned by helpers, assign them to a local
-variable before passing them to an ABI function:
+For non-`Color` container values returned by helpers, assign them to a local variable before passing them to an ABI function:
 
 ```apl
 Color background;
@@ -440,8 +392,7 @@ ClearBackground(background);
 
 ## Header function map
 
-Use this table as a quick map. The detailed signatures are in the corresponding
-`CCClib/*_h.apl` header comments.
+Use this table as a quick map. The detailed signatures are in the corresponding `CCClib/*_h.apl` header comments.
 
 | Header | Functions and definitions |
 |---|---|
@@ -469,22 +420,13 @@ Use this table as a quick map. The detailed signatures are in the corresponding
 
 ## Ownership and ABI rules
 
-`linked_list`, `queue`, and `stack` do not copy or free payloads. If a payload
-was allocated with `malloc` or `std::calloc<T>`, the caller must free it after
-removing it or before dropping all references to it.
+`linked_list`, `queue`, and `stack` do not copy or free payloads. If a payload was allocated with `malloc` or `std::calloc<T>`, the caller must free it after removing it or before dropping all references to it.
 
-`string::new` duplicates the input bytes and `string::destroy` frees that owned
-copy. `strdup` and `strndup` return heap allocations that must be released with
-`free` or `std::free`.
+`string::new` duplicates the input bytes and `string::destroy` frees that owned copy. `strdup` and `strndup` return heap allocations that must be released with `free` or `std::free`.
 
-Most non-container functions are `extern @[abi]` declarations. They call the
-host C runtime and follow the selected target ABI. On Mach-O targets the
-headers use `@[vname("_name")]` for linker symbols with leading underscores; on
-GNU-style targets they use the plain C names.
+Most non-container functions are `extern @[abi]` declarations. They call the host C runtime and follow the selected target ABI. On Mach-O targets the headers use `@[vname("_name")]` for linker symbols with leading underscores; on GNU-style targets they use the plain C names.
 
-Variadic functions such as `printf`, `scanf`, `open`, `fcntl`, and `execl`
-depend on the target calling convention. Cast arguments explicitly when a
-format string or ABI expects a specific width.
+Variadic functions such as `printf`, `scanf`, `open`, `fcntl`, and `execl` depend on the target calling convention. Cast arguments explicitly when a format string or ABI expects a specific width.
 
 ## Examples
 

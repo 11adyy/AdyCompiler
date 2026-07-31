@@ -9,19 +9,11 @@ make release
 ./builds/$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m)/aplc --version
 ```
 
-The development binary automatically finds the `CCClib` submodule directory in
-the repository.
-
+The development binary automatically finds the `CCClib` submodule directory in the repository. </br>
 Clone with submodules, or initialize them after cloning:
 
 ```bash
 git clone --recurse-submodules https://github.com/11adyy/AdyCompiler.git
-git submodule update --init --recursive
-```
-
-The root `Makefile` also exposes this as:
-
-```bash
 make submodules
 ```
 
@@ -33,15 +25,13 @@ The root `Makefile` has a separate target for the APL runtime library:
 make CCClib
 ```
 
-This builds the compiler if needed, compiles the implementation files from the
-standard-library source directory, and writes the static archive here:
+This builds the compiler if needed, compiles the implementation files from the standard-library source directory, and writes the static archive here:
 
 ```text
 builds/<platform>/CCClib/libapl.a
 ```
 
-For a release-mode runtime archive, pass the same build settings used by the
-package target:
+For a release-mode runtime archive, pass the same build settings used by the package target:
 
 ```bash
 make BUILD=release PRINT_PARSE=0 CCClib
@@ -58,8 +48,7 @@ CCClib_IMPLS
 CCClib_ARCHIVE
 ```
 
-`CCClib_SRC_DIR` defaults to the `CCClib` submodule. Sibling checkouts can still
-be selected explicitly:
+`CCClib_SRC_DIR` defaults to the `CCClib` submodule. Sibling checkouts can still be selected explicitly:
 
 ```bash
 make CCClib_SRC_DIR=../CCClib CCClib
@@ -88,14 +77,9 @@ The default installation layout is:
 make install PREFIX=/usr DESTDIR=/tmp/apl-package-root
 ```
 
-The compiler discovers installed headers automatically, so applications can
-use `#include <stdio_h.apl>` without passing `-I CCClib`.
-
-See the [`CCClib` reference](CCClib-reference.md) for header groups,
-containers, and usage examples.
-
-Use `APL_INCLUDE_PATH` to override the standard-library directory. The `-I`
-option adds a project include directory without disabling the standard library:
+The compiler discovers installed headers automatically, so applications can use `#include <stdio_h.apl>` without passing `-I CCClib`. </br>
+See the [`CCClib` reference](CCClib-reference.md) for header groups, containers, and usage examples. </br>
+Use `APL_INCLUDE_PATH` to override the standard-library directory. The `-I` option adds a project include directory without disabling the standard library:
 
 ```bash
 APL_INCLUDE_PATH=/opt/apl/include aplc program.apl
@@ -112,14 +96,11 @@ make vscode-docker-package
 make VSCODE_DIR=../Ady-vscode vscode-docker-package
 ```
 
-When `vscode` is a submodule and has not been initialized, the Makefile prints
-the matching `git submodule update` command instead of failing later inside
-Docker.
+When `vscode` is a submodule and has not been initialized, the Makefile prints the matching `git submodule update` command instead of failing later inside Docker.
 
 ## Create a relocatable package
 
-Create an archive containing the compiler, matching headers, runtime archive,
-and license:
+Create an archive containing the compiler, matching headers, runtime archive, and license:
 
 ```bash
 make package
@@ -131,5 +112,4 @@ The archive is written to:
 builds/apl-<version>-<platform>.tar.gz
 ```
 
-Its `bin/aplc` executable discovers the adjacent `share/apl/include` directory,
-so the extracted tree can be moved to another prefix without rebuilding.
+Its `bin/aplc` executable discovers the adjacent `share/apl/include` directory, so the extracted tree can be moved to another prefix without rebuilding.
