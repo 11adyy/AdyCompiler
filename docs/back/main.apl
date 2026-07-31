@@ -206,24 +206,13 @@ function prepare_runner_paths() -> i0 {
 }
 
 function build_runner_command() -> i0 {
-#ifdef CAPL_MACHO64
     snprintf(
         ref runner_command,
         APL_RUNNER_COMMAND_LIMIT as u64,
-        ref "src=%s; bin=%s; compiler=docs/back/.build/aplc; if [ ! -x \"$compiler\" ]; then compiler=builds/darwin-x86_64/aplc; fi; if [ ! -x \"$compiler\" ]; then compiler=docs/back/ccompiler; fi; run_timeout() { if command -v timeout >/dev/null 2>&1; then timeout \"$@\"; else shift; \"$@\"; fi; }; printf '=== compiler stdout ===\\n'; run_timeout 20s \"$compiler\" \"$src\" -I CCClib --ast-analysis --ir-analysis --arch x86_64 --sys-type macho64 --asm-format macho64 --linker clang --output \"$bin\" 2>&1; c=$?; printf '\\n=== compiler exit code ===\\n%%d\\n\\n' \"$c\"; if [ \"$c\" -eq 0 ] && [ -f \"$bin\" ]; then chmod +x \"$bin\"; printf '=== program stdout ===\\n'; run_timeout 5s \"$bin\" 2>&1; r=$?; printf '\\n=== program exit code ===\\n%%d\\n' \"$r\"; exit \"$r\"; fi; exit \"$c\"",
+        ref "src=%s; bin=%s; compiler=/home/11adyy/Documents/AdyCompiler/docs/back/.build/aplc; if [ ! -x \"$compiler\" ]; then compiler=/home/11adyy/Documents/AdyCompiler/builds/linux-x86_64/aplc; fi; if [ ! -x \"$compiler\" ]; then compiler=/home/11adyy/Documents/AdyCompiler/docs/back/ccompiler; fi; printf '=== compiler stdout ===\\n'; timeout 20s \"$compiler\" \"$src\" -I /home/11adyy/Documents/AdyCompiler/CCClib --ast-analysis --ir-analysis --arch x86_64 --sys-type linux64 --asm-format elf64 --linker gcc --linker-no-pie --output \"$bin\" 2>&1; c=$?; printf '\\n=== compiler exit code ===\\n%%d\\n\\n' \"$c\"; if [ \"$c\" -eq 0 ] && [ -f \"$bin\" ]; then chmod +x \"$bin\"; printf '=== program stdout ===\\n'; timeout 5s \"$bin\" 2>&1; r=$?; printf '\\n=== program exit code ===\\n%%d\\n' \"$r\"; exit \"$r\"; fi; exit \"$c\"",
         ref runner_source_path,
         ref runner_binary_path
     );
-#endif
-#ifndef CAPL_MACHO64
-    snprintf(
-        ref runner_command,
-        APL_RUNNER_COMMAND_LIMIT as u64,
-        ref "src=%s; bin=%s; compiler=docs/back/.build/aplc; if [ ! -x \"$compiler\" ]; then compiler=builds/linux-x86_64/aplc; fi; if [ ! -x \"$compiler\" ]; then compiler=docs/back/ccompiler; fi; run_timeout() { if command -v timeout >/dev/null 2>&1; then timeout \"$@\"; else shift; \"$@\"; fi; }; printf '=== compiler stdout ===\\n'; run_timeout 20s \"$compiler\" \"$src\" -I CCClib --ast-analysis --ir-analysis --arch x86_64 --sys-type linux64 --asm-format elf64 --linker gcc --linker-no-pie --output \"$bin\" 2>&1; c=$?; printf '\\n=== compiler exit code ===\\n%%d\\n\\n' \"$c\"; if [ \"$c\" -eq 0 ] && [ -f \"$bin\" ]; then chmod +x \"$bin\"; printf '=== program stdout ===\\n'; run_timeout 5s \"$bin\" 2>&1; r=$?; printf '\\n=== program exit code ===\\n%%d\\n' \"$r\"; exit \"$r\"; fi; exit \"$c\"",
-        ref runner_source_path,
-        ref runner_binary_path
-    );
-#endif
 }
 
 function run_shell_command(ptr i8 command, ptr i8 output, i32 limit) -> i32 {
@@ -252,7 +241,7 @@ function run_shell_command(ptr i8 command, ptr i8 output, i32 limit) -> i32 {
 }
 
 function root(ptr http_request req, ptr http_response res) -> i0 {
-    res.html_file(ref "docs/index.html");
+    res.html_file(ref "/home/11adyy/Documents/AdyCompiler/docs/index.html");
 }
 
 function stop(ptr http_request req, ptr http_response res) -> i0 {
@@ -321,7 +310,7 @@ start() {
         not server.get(ref "/stop", stop) ||
         not server.route(ref "OPTIONS", ref "/apl/run", options_apl_run) ||
         not server.post(ref "/apl/run", apl_run) ||
-        not server.static(ref "/", ref "docs/");
+        not server.static(ref "/", ref "/home/11adyy/Documents/AdyCompiler/docs/");
     exit 1;
 
     exit server.listen() as u8;
