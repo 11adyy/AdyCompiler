@@ -1,5 +1,4 @@
-: ASM_ARCH=x86_64_nasm_macho,x86_64_nasm_gnu,i386_nasm_gnu :
-#include "raw_syscall.inc"
+: ASM_ARCH=x86_64_nasm_macho :
 : BLOCK_TEST :
 : RUN_ASM :
 function strlen(ptr i8 s) -> i64 {
@@ -12,7 +11,7 @@ function strlen(ptr i8 s) -> i64 {
 }
 
 function puts(ptr i8 s) -> i0 {
-    syscall(RAW_SYS_WRITE, 1, s, strlen(s));
+    syscall(0x2000004, 1, s, strlen(s));
 }
 
 start() {

@@ -1,5 +1,4 @@
-: ASM_ARCH=x86_64_nasm_macho,x86_64_nasm_gnu,i386_nasm_gnu :
-#include "raw_syscall.inc"
+: ASM_ARCH=x86_64_nasm_macho :
 : RUN_ASM :
 
 #define ALLOC_BUFFER_SIZE 100000
@@ -83,12 +82,12 @@ start() {
     buffer[1] = 'a';
     buffer[2] = 'x';
     buffer[3] = '\n';
-    syscall(RAW_SYS_WRITE, 1, buffer, 4);
+    syscall(0x2000004, 1, buffer, 4);
     dealloc(buffer as ptr i0);
     buffer = malloc(10 as i64) as ptr u8;
     buffer[0] = 'A';
     buffer[1] = 'M';
-    syscall(RAW_SYS_WRITE, 1, buffer, 4);
+    syscall(0x2000004, 1, buffer, 4);
     exit 0;
 }
 

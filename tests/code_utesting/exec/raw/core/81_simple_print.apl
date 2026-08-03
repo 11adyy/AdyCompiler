@@ -1,5 +1,4 @@
-: ASM_ARCH=x86_64_nasm_macho,x86_64_nasm_gnu,i386_nasm_gnu :
-#include "raw_syscall.inc"
+: ASM_ARCH=x86_64_nasm_macho :
 : RUN_ASM :
 function strlen(ptr i8 s) -> i32 {
     i32 l = 0;
@@ -13,7 +12,7 @@ function strlen(ptr i8 s) -> i32 {
 
 start(i32 argc, ptr ptr i8 argv) {
     arr msg[0, i8] = "Hello, World!\n";
-    syscall(RAW_SYS_WRITE, 1, ref msg, strlen(ref msg));
+    syscall(0x2000004, 1, ref msg, strlen(ref msg));
 }
 
 :/ OUTPUT
