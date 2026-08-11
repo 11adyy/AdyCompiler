@@ -10,7 +10,10 @@ start(i32 a) {
 }
 
 :/ OUTPUT
-[WARNING] [{X}.apl:2:12] Possible Division of zero! This expression will return 0. (variable 'tmp' is NULL)!
-[WARNING] [{X}.apl:6:9] Function 'foo' has the 'i32' return type but the call doesn't store it anywhere else.
-[WARNING] [{X}.apl:8:17] Function 'foo' has the 'i32' return type but the call doesn't store it anywhere else.
+[WARNING] Possible division by zero here! a can be zero!
+    at: {X}.apl:2:12
+[WARNING] Function 'foo' has the 'i32' return type but the call doesn't store it anywhere else.
+    at: {X}.apl:6:9
+[WARNING] Function 'foo' has the 'i32' return type but the call doesn't store it anywhere else.
+    at: {X}.apl:8:17
 /:

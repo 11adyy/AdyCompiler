@@ -8,11 +8,15 @@ start() {
 }
 
 :/ OUTPUT
-[WARNING] [{X}apl:4:13] Function 'malloc' has some arguments, which have a wrong type! Consider to use the 'as' operator!
-          [{X}apl:4:13]     Value '0' has the 'i8' type! Consider the 'as i64' command!
-[WARNING] [{X}apl:4:13] Zero malloc size error
-[WARNING] [{X}apl:4:13] 'malloc' function must accept non-Zero size!
-[WARNING] [{X}apl:7:17] NULL free argument error (variable 'null' is '0')!
-          [{X}apl:7:17]     Variable 'null' is assigned with '0' here
-[WARNING] [{X}apl:7:17] 'free' function must accept non-NULL pointer to an allocation!
+[WARNING] Function 'malloc' has some arguments, which have a wrong type! Consider to use the 'as' operator!
+    at: {X}.apl:4:13
+    trace: Value '0' has the 'i8' type! Consider the 'as i64' command!
+      at: {X}.apl:4:13
+[WARNING] The 'malloc' function expects non-zero argument 'size', but the provided value is 0!
+    at: {X}.apl:4:13
+[WARNING] The 'free' function expects non-NULL argument 'ptr', but the provided value is NULL! (variable 'null' is
+          NULL)!
+    at: {X}.apl:7:17
+    trace: Variable 'null' is assigned with NULL here
+      at: {X}.apl:7:17
 /:
