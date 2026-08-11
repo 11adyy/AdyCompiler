@@ -3,5 +3,6 @@ function foo() {
 }
 
 :/ OUTPUT
-[WARNING] [{X}apl:2{X}] NULL-dereference error!
+[WARNING] NULL-dereference error
+    at: {X}.apl:2:9
 /:

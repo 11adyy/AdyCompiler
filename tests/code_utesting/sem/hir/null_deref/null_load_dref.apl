@@ -5,6 +5,10 @@ function foo() {
 }
 
 :/ OUTPUT
-[WARNING] [{X}apl:2{X}] NULL-dereference error!
-[WARNING] [{X}apl:4{X}] NULL-dereference error (variable 'a' is NULL)!
+[WARNING] NULL-dereference error
+    at: {X}.apl:2:10
+[WARNING] NULL-dereference error (variable 'a' is NULL)!
+    at: {X}.apl:4:16
+    trace: Variable 'a' is assigned with NULL here
+      at: {X}.apl:4:16
 /:

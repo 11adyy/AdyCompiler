@@ -11,6 +11,8 @@ function foo() {
 }
 
 :/ OUTPUT
-[WARNING] [{X}apl:6:8] Condition with a constant value (variable 'tmp' is equals 'false' (0))!
-          [{X}apl:6:8]     Variable 'tmp' declared as a constant here!
+[WARNING] Condition with a constant value (variable 'tmp' is equals 'false' (0))!
+    at: {X}.apl:6:8
+    trace: Variable 'tmp' declared as a constant here!
+      at: {X}.apl:6:8
 /:

@@ -10,10 +10,16 @@ start() {
 }
 
 :/ OUTPUT
-[WARNING] [{X}apl:4:15] Condition with a constant value (variable 'tmp' is equals 'true' (1))!
-          [{X}apl:4:15]     Variable 'tmp' declared as a constant here!
-[WARNING] [{X}apl:4:15] Condition with a constant value (variable 'tmp' is equals 'false' (0))!
-          [{X}apl:4:15]     Variable 'tmp' declared as a constant here!
-[WARNING] [{X}apl:9:16] NULL-dereference error (variable 'a' is NULL)!
-          [{X}apl:7:23]     Variable 'a' becomes NULL-value
+[WARNING] Condition with a constant value (variable 'tmp' is equals 'true' (1))!
+    at: {X}.apl:4:15
+    trace: Variable 'tmp' declared as a constant here!
+      at: {X}.apl:4:15
+[WARNING] Possible NULL-dereference error (variable 'a' is NULL)!
+    at: {X}.apl:9:16
+    trace: Variable 'a' becomes NULL
+      at: {X}.apl:7:23
+[WARNING] Condition with a constant value (variable 'tmp' is equals 'false' (0))!
+    at: {X}.apl:9:16
+    trace: Variable 'tmp' declared as a constant here!
+      at: {X}.apl:4:15
 /:

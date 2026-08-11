@@ -7,7 +7,10 @@ start() {
 }
 
 :/ OUTPUT
-[WARNING] [{X}apl:6:9] Function 'foo' has the 'i32' return type but the call doesn't store it anywhere else.
-[WARNING] [{X}apl:3:16] NULL-dereference error (variable 'p' is NULL)!
-          [{X}apl:2:14]     Variable 'p' is assigned with NULL here
+[WARNING] Function 'foo' has the 'i32' return type but the call doesn't store it anywhere else.
+    at: {X}.apl:6:13
+[WARNING] NULL-dereference error (variable 'p' is NULL)!
+    at: {X}.apl:3:16
+    trace: Variable 'p' is assigned with NULL here
+      at: {X}.apl:2:14
 /:

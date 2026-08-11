@@ -9,8 +9,12 @@ function foo() {
 }
 
 :/ OUTPUT
-[WARNING] [{X}apl:4{X}] 'If' with a constant value 'true'!
-[WARNING] [{X}apl:8{X}] NULL-dereference error (variable 'b' is NULL)!
-          [{X}apl:5{X}]     Variable 'a' becomes NULL-value
-          [{X}apl:7{X}]     Variable 'b' is assigned with the 'a' here
+[WARNING] 'If' with a constant value 'true'!
+    at: {X}.apl:4:8
+[WARNING] Possible NULL-dereference error (variable 'b' is NULL)!
+    at: {X}.apl:8:10
+    trace: Variable 'b' is assigned with 'a' here
+      at: {X}.apl:7:14
+    trace: Variable 'a' becomes NULL
+      at: {X}.apl:5:14
 /:

@@ -7,7 +7,10 @@ start() {
 }
 
 :/ OUTPUT
-[WARNING] [{X}apl:3:8] 'If' with a constant value 'true'!
-[WARNING] [{X}apl:6:11] NULL-dereference error (variable 'a' is NULL)!
-          [{X}apl:4:14]     Variable 'a' becomes NULL-value
+[WARNING] 'If' with a constant value 'true'!
+    at: {X}.apl:3:8
+[WARNING] Possible NULL-dereference error (variable 'a' is NULL)!
+    at: {X}.apl:6:11
+    trace: Variable 'a' becomes NULL
+      at: {X}.apl:4:14
 /:

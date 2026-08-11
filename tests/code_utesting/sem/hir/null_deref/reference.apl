@@ -6,6 +6,8 @@ start() {
 }
 
 :/ OUTPUT
-[WARNING] [{X}apl:5:16] NULL-dereference error (variable 'c' is NULL)!
-          [{X}apl:5:16]     Variable 'c' is assigned with NULL here
+[WARNING] NULL-dereference error (variable 'c' is NULL)!
+    at: {X}.apl:5:16
+    trace: Variable 'c' is assigned with NULL here
+      at: {X}.apl:5:16
 /:
