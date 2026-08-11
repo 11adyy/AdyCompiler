@@ -74,6 +74,9 @@ PLATFORM ?= $(shell uname -s | tr '[:upper:]' '[:lower:]')-$(shell uname -m | tr
 
 SOURCES 		:= $(sort $(shell find src std -type f -name '*.c'))
 OUTPUT 			= builds/$(PLATFORM)/aplc
+OBJDIR 			= builds/$(PLATFORM)/obj
+OBJECTS 		:= $(patsubst %.c,$(OBJDIR)/%.o,$(SOURCES))
+DEPS 			:= $(OBJECTS:.o=.d)
 CCClib_SOURCES  := $(sort $(shell if [ -d "$(CCClib_SRC_DIR)" ]; then find "$(CCClib_SRC_DIR)" -maxdepth 1 -type f -name '*.apl'; fi))
 CCClib_IMPLS 	:= $(sort $(shell if [ -d "$(CCClib_SRC_DIR)" ]; then find "$(CCClib_SRC_DIR)" -type f -name '*.apl' ! -name '*_h.apl'; fi))
 CCClib_BUILDDIR := builds/$(PLATFORM)/CCClib
@@ -152,9 +155,13 @@ check-vscode-src:
 		exit 1; \
 	fi
 
-$(OUTPUT): $(SOURCES)
+$(OUTPUT): $(OBJECTS)
 	@$(MKDIR_P) $(dir $@)
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(SOURCES) -o $@ $(LDFLAGS) $(LDLIBS)
+	$(CC) $(OBJECTS) -o $@ $(LDFLAGS) $(LDLIBS)
+
+$(OBJDIR)/%.o: %.c Makefile
+	@$(MKDIR_P) $(dir $@)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -MMD -MP -c $< -o $@
 
 $(CCClib_OBJDIR)/%.o: $(CCClib_SRC_DIR)/%.apl $(OUTPUT) | check-CCClib-src
 	@$(MKDIR_P) $(dir $@)
@@ -257,6 +264,7 @@ print-config:
 	@echo "BUILD=$(BUILD)"
 	@echo "PLATFORM=$(PLATFORM)"
 	@echo "OUTPUT=$(OUTPUT)"
+	@echo "OBJDIR=$(OBJDIR)"
 	@echo "PREFIX=$(PREFIX)"
 	@echo "LIBDIR=$(LIBDIR)"
 	@echo "CCClibDIR=$(CCClibDIR)"
@@ -289,3 +297,5 @@ help:
 
 .DELETE_ON_ERROR:
 .PHONY: all check-CCClib-src check-vscode-src CCClib debug release install package run test unit-test rewrite-test std-test cli-test vscode-docker-build vscode-docker-package submodules clean clean-tests distclean print-sources print-config help
+
+-include $(DEPS)
