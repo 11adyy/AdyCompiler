@@ -69,6 +69,9 @@ The default installation layout is:
 /usr/local/bin/aplc
 /usr/local/share/apl/include/
 /usr/local/share/doc/apl/
+/usr/local/share/bash-completion/completions/aplc
+/usr/local/share/zsh/site-functions/_aplc
+/usr/local/share/fish/vendor_completions.d/aplc.fish
 ```
 
 `DESTDIR` is supported for distribution packaging and staged installations:
@@ -85,6 +88,35 @@ Use `APL_INCLUDE_PATH` to override the standard-library directory. The `-I` opti
 APL_INCLUDE_PATH=/opt/apl/include aplc program.apl
 aplc -I project/include program.apl
 aplc --print-stdlib-path
+```
+
+## Shell completion
+
+`make install` installs TAB completion for bash, zsh, and fish. Open a new shell after installation; most distributions load files from the standard completion directories automatically.
+
+For a local checkout without installing, load completion manually:
+
+```bash
+# bash
+source completions/aplc.bash
+
+# zsh
+fpath=("$PWD/completions" $fpath)
+autoload -Uz compinit
+compinit
+
+# fish
+mkdir -p ~/.config/fish/completions
+ln -sf "$PWD/completions/aplc.fish" ~/.config/fish/completions/aplc.fish
+```
+
+The install paths can be overridden for unusual distributions:
+
+```bash
+make install PREFIX=/usr \
+  BASH_COMPLETION_DIR=/usr/share/bash-completion/completions \
+  ZSH_COMPLETION_DIR=/usr/share/zsh/site-functions \
+  FISH_COMPLETION_DIR=/usr/share/fish/vendor_completions.d
 ```
 
 ## Build the VS Code extension package

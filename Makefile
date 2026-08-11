@@ -13,6 +13,9 @@ DATADIR 				?= $(PREFIX)/share
 CCClibDIR 				?= $(DATADIR)/apl/include
 APLRUNTIMEDIR 			?= $(LIBDIR)/apl
 DOCDIR 					?= $(DATADIR)/doc/apl
+BASH_COMPLETION_DIR 	?= $(DATADIR)/bash-completion/completions
+ZSH_COMPLETION_DIR 		?= $(DATADIR)/zsh/site-functions
+FISH_COMPLETION_DIR 	?= $(DATADIR)/fish/vendor_completions.d
 VERSION 				?= 3.6_X
 
 BUILD 					?= debug
@@ -77,6 +80,7 @@ CCClib_BUILDDIR := builds/$(PLATFORM)/CCClib
 CCClib_OBJDIR   := $(CCClib_BUILDDIR)/obj
 CCClib_OBJS     := $(patsubst $(CCClib_SRC_DIR)/%.apl,$(CCClib_OBJDIR)/%.o,$(CCClib_IMPLS))
 CCClib_ARCHIVE  := $(CCClib_BUILDDIR)/libapl.a
+COMPLETION_DIR  ?= completions
 
 CPPFLAGS 		+= -Iinclude -DALLOC_BUFFER_SIZE=$(AVAILABLE_MEMORY) -DAPL_DEFAULT_INCLUDE_DIR=\"$(CCClibDIR)\" -DAPL_DEFAULT_RUNTIME_LIB=\"$(APLRUNTIMEDIR)/libapl.a\"
 CFLAGS   		+= -Wall -Wno-int-conversion
@@ -178,19 +182,27 @@ release: ## Build an optimized compiler.
 
 install: $(OUTPUT) $(CCClib_ARCHIVE) | check-CCClib-src ## Install the compiler and APL standard library under PREFIX.
 	$(INSTALL) -d $(DESTDIR)$(BINDIR) $(DESTDIR)$(CCClibDIR) $(DESTDIR)$(APLRUNTIMEDIR) $(DESTDIR)$(DOCDIR)
+	$(INSTALL) -d $(DESTDIR)$(BASH_COMPLETION_DIR) $(DESTDIR)$(ZSH_COMPLETION_DIR) $(DESTDIR)$(FISH_COMPLETION_DIR)
 	$(INSTALL) -m 0755 $(OUTPUT) $(DESTDIR)$(BINDIR)/aplc
 	$(INSTALL) -m 0644 $(CCClib_SOURCES) $(DESTDIR)$(CCClibDIR)/
 	$(INSTALL) -m 0644 $(CCClib_ARCHIVE) $(DESTDIR)$(APLRUNTIMEDIR)/libapl.a
 	$(INSTALL) -m 0644 LICENSE $(DESTDIR)$(DOCDIR)/
+	$(INSTALL) -m 0644 $(COMPLETION_DIR)/aplc.bash $(DESTDIR)$(BASH_COMPLETION_DIR)/aplc
+	$(INSTALL) -m 0644 $(COMPLETION_DIR)/_aplc $(DESTDIR)$(ZSH_COMPLETION_DIR)/_aplc
+	$(INSTALL) -m 0644 $(COMPLETION_DIR)/aplc.fish $(DESTDIR)$(FISH_COMPLETION_DIR)/aplc.fish
 
 package: | check-CCClib-src ## Build a relocatable binary tarball with the standard library.
 	$(MAKE) BUILD=release PRINT_PARSE=0 CCClib_SRC_DIR=$(CCClib_SRC_DIR) -B all CCClib
 	$(RM) -r builds/package/apl-$(VERSION)
 	$(INSTALL) -d builds/package/apl-$(VERSION)/bin builds/package/apl-$(VERSION)/lib/apl builds/package/apl-$(VERSION)/share/apl/include builds/package/apl-$(VERSION)/share/doc/apl
+	$(INSTALL) -d builds/package/apl-$(VERSION)/share/bash-completion/completions builds/package/apl-$(VERSION)/share/zsh/site-functions builds/package/apl-$(VERSION)/share/fish/vendor_completions.d
 	$(INSTALL) -m 0755 $(OUTPUT) builds/package/apl-$(VERSION)/bin/aplc
 	$(INSTALL) -m 0644 $(CCClib_SOURCES) builds/package/apl-$(VERSION)/share/apl/include/
 	$(INSTALL) -m 0644 $(CCClib_ARCHIVE) builds/package/apl-$(VERSION)/lib/apl/libapl.a
 	$(INSTALL) -m 0644 LICENSE builds/package/apl-$(VERSION)/share/doc/apl/
+	$(INSTALL) -m 0644 $(COMPLETION_DIR)/aplc.bash builds/package/apl-$(VERSION)/share/bash-completion/completions/aplc
+	$(INSTALL) -m 0644 $(COMPLETION_DIR)/_aplc builds/package/apl-$(VERSION)/share/zsh/site-functions/_aplc
+	$(INSTALL) -m 0644 $(COMPLETION_DIR)/aplc.fish builds/package/apl-$(VERSION)/share/fish/vendor_completions.d/aplc.fish
 	tar -C builds/package -czf builds/apl-$(VERSION)-$(PLATFORM).tar.gz apl-$(VERSION)
 
 run: $(OUTPUT) ## Compile INPUT with the built compiler.
@@ -250,6 +262,9 @@ print-config:
 	@echo "CCClibDIR=$(CCClibDIR)"
 	@echo "CCClib_SRC_DIR=$(CCClib_SRC_DIR)"
 	@echo "APLRUNTIMEDIR=$(APLRUNTIMEDIR)"
+	@echo "BASH_COMPLETION_DIR=$(BASH_COMPLETION_DIR)"
+	@echo "ZSH_COMPLETION_DIR=$(ZSH_COMPLETION_DIR)"
+	@echo "FISH_COMPLETION_DIR=$(FISH_COMPLETION_DIR)"
 	@echo "CCClib_SOURCES=$(CCClib_SOURCES)"
 	@echo "CCClib_IMPLS=$(CCClib_IMPLS)"
 	@echo "CCClib_ARCHIVE=$(CCClib_ARCHIVE)"
