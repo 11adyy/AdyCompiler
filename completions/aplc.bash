@@ -38,7 +38,7 @@ _aplc()
         --output
         --ast-analysis
         --ir-analysis
-        --analysis-only
+        --CSA
         --debug
         --no-debug
         --i-dont-know-what-i-am-doing

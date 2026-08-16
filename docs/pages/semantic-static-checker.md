@@ -9,10 +9,10 @@ The compiler has two optional analysis stages:
 ./builds/<platform>/aplc --ast-analysis --ir-analysis main.apl
 ```
 
-Use `--analysis-only` when you want both passes without producing LIR, assembly, objects, or an executable:
+Use `--CSA` to run Ady Static Analyzer only:
 
 ```bash
-./builds/<platform>/aplc --analysis-only main.apl
+./builds/<platform>/aplc --CSA main.apl
 ```
 
 These checks are intentionally lightweight. They help catch mistakes before or during lowering, but APL is still an unsafe low-level language.
