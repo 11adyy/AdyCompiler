@@ -22,21 +22,21 @@ function foo() {
 
 :/ OUTPUT
 [WARNING] 'If' with a constant value 'true'!
-    at: /private/var/folders/74/d7gcqwxd1x9__83fh6m_lb6c0000gn/T/tmp3ki58brc.apl:5:8
+    at: {X}.apl:5:8
 [WARNING] Condition with a constant value (variable 'tmp' is equals 'true' (1))!
-    at: /private/var/folders/74/d7gcqwxd1x9__83fh6m_lb6c0000gn/T/tmp3ki58brc.apl:8:19
+    at: {X}.apl:8:19
     trace: Variable 'tmp' declared as a constant here!
-      at: /private/var/folders/74/d7gcqwxd1x9__83fh6m_lb6c0000gn/T/tmp3ki58brc.apl:8:19
+      at: {X}.apl:8:19
 [WARNING] Possible NULL-dereference error (variable 'c' is NULL)!
-    at: /private/var/folders/74/d7gcqwxd1x9__83fh6m_lb6c0000gn/T/tmp3ki58brc.apl:19:10
+    at: {X}.apl:19:10
     trace: Variable 'c' is assigned with 'b' here
-      at: /private/var/folders/74/d7gcqwxd1x9__83fh6m_lb6c0000gn/T/tmp3ki58brc.apl:18:14
+      at: {X}.apl:18:14
     trace: Variable 'b' is assigned with 'a' here
-      at: /private/var/folders/74/d7gcqwxd1x9__83fh6m_lb6c0000gn/T/tmp3ki58brc.apl:13:14
+      at: {X}.apl:13:14
     trace: Variable 'a' becomes NULL
-      at: /private/var/folders/74/d7gcqwxd1x9__83fh6m_lb6c0000gn/T/tmp3ki58brc.apl:9:29
+      at: {X}.apl:9:29
 [WARNING] Condition with a constant value (variable 'tmp' is equals 'false' (0))!
-    at: /private/var/folders/74/d7gcqwxd1x9__83fh6m_lb6c0000gn/T/tmp3ki58brc.apl:19:10
+    at: {X}.apl:19:10
     trace: Variable 'tmp' declared as a constant here!
-      at: /private/var/folders/74/d7gcqwxd1x9__83fh6m_lb6c0000gn/T/tmp3ki58brc.apl:8:19
+      at: {X}.apl:8:19
 /:
