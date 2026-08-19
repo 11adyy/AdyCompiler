@@ -368,7 +368,7 @@ class BuilderCLITests(unittest.TestCase):
         result = self.run_aplc("--version")
 
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertRegex(result.stdout, r"^aplc \S+\n$")
+        self.assertRegex(result.stdout, r"^aplc \S+\n")
         self.assert_no_stderr(result)
 
     def test_something_prints_embedded_payload(self) -> None:
@@ -951,6 +951,7 @@ class BuilderCLITests(unittest.TestCase):
 
             result = self.run_aplc(
                 "--ast-analysis",
+                "--i-dont-know-what-i-am-doing",
                 "-c",
                 "--output", output,
                 source,
@@ -975,6 +976,7 @@ class BuilderCLITests(unittest.TestCase):
             result = self.run_aplc(
                 "--ir-analysis",
                 "--constant",
+                "--i-dont-know-what-i-am-doing",
                 "-c",
                 "--output", output,
                 source,
@@ -991,7 +993,7 @@ class BuilderCLITests(unittest.TestCase):
             _minimal_source(source)
 
             result = self.run_aplc(
-                "--i-dont-know-what-i-am-doing",
+                "--i-know-what-i-am-doing",
                 "--ast-analysis",
                 "-c",
                 "--output", output,

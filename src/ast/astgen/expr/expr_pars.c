@@ -301,7 +301,6 @@ _primary_resolve_complete: {}
     return node;
 }
 
-ast_node_t* apl_parse_expression(PARSER_ARGS) {
-    PARSER_ARGS_USE;
+DEFINE_PARSER(apl_parse_expression, {
     return _parse_binary_expression(it, ctx, smt, 0, carry);
-}
+})
