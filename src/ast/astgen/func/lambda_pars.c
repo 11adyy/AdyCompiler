@@ -33,7 +33,7 @@ DEFINE_PARSER(apl_parse_lambda, {
     ast_node_t* body = NULL;
     PRESERVE_AST_CARRY_ARG({ 
         if (!consume_token(it, OPEN_BLOCK_TOKEN)) body = apl_parse_line_scope(it, ctx, smt, 1);
-        else body = apl_parse_scope(it, ctx, smt, 1);
+        else                                      body = apl_parse_scope(it, ctx, smt, 1);
      }, base->sinfo.v_id);
 
     PARSER_ASSERT_DO(
