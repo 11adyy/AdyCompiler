@@ -31,13 +31,13 @@ start() {
       at: {X}.apl:10:13
 [WARNING] Call of 'a' has some arguments, which have a wrong type! Consider to use the 'as' operator!
     at: {X}.apl:18:13
-    trace: Variable 'tmp' has the 'ptr u8' type! Consider the 'as ptr els' command!
+    trace: Variable 'tmp' has the 'smth' type! Consider the 'as ptr els' command!
       at: {X}.apl:18:13
     trace: Variable 'tmp' declared here!
       at: {X}.apl:18:13
 [WARNING] Call of 'b' has some arguments, which have a wrong type! Consider to use the 'as' operator!
     at: {X}.apl:19:13
-    trace: Variable 'tmp' has the 'ptr u8' type! Consider the 'as ptr smth' command!
+    trace: Variable 'tmp' has the 'els' type! Consider the 'as ptr smth' command!
       at: {X}.apl:19:13
     trace: Variable 'tmp' declared here!
       at: {X}.apl:19:13
