@@ -29,6 +29,9 @@
                 "APL_INCLUDE_PATH": "${workspaceFolder}/CCClib"
             },
             "preLaunchTask": "Build compiler and APL runtime (debug)",
+            "initCommands": [
+                "command script import ${workspaceFolder}/.vscode/apl_lldb_printers.py"
+            ],
             "terminal": "integrated"
         },
         {
@@ -54,6 +57,9 @@
                 "APL_INCLUDE_PATH": "${workspaceFolder}/CCClib"
             },
             "preLaunchTask": "Build compiler and APL runtime (debug)",
+            "initCommands": [
+                "command script import ${workspaceFolder}/.vscode/apl_lldb_printers.py"
+            ],
             "terminal": "integrated"
         },
         {
@@ -92,6 +98,11 @@
             "externalConsole": false,
             "setupCommands": [
                 {
+                    "description": "Load APL pretty printers",
+                    "text": "-interpreter-exec console \"source ${workspaceFolder}/.vscode/apl_gdb_printers.py\"",
+                    "ignoreFailures": true
+                },
+                {
                     "description": "Enable pretty-printing for gdb",
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
@@ -128,6 +139,11 @@
             "miDebuggerPath": "/usr/bin/gdb",
             "externalConsole": false,
             "setupCommands": [
+                {
+                    "description": "Load APL pretty printers",
+                    "text": "-interpreter-exec console \"source ${workspaceFolder}/.vscode/apl_gdb_printers.py\"",
+                    "ignoreFailures": true
+                },
                 {
                     "description": "Enable pretty-printing for gdb",
                     "text": "-enable-pretty-printing",
