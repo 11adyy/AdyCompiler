@@ -1,8 +1,8 @@
 # Compiler usage
 
-## In few words
+## In a few words
 
-The explcit build command is next:
+An explicit build command looks like this:
 
 ```bash
 aplc                 \
@@ -16,7 +16,7 @@ aplc                 \
 ./hello
 ```
 
-The implicit command is:
+The shortest command is:
 
 ```bash
 aplc hello.apl
