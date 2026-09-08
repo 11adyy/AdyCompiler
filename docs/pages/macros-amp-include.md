@@ -97,6 +97,13 @@ Remove a definition:
 #undef PRINT_H_
 ```
 
+### Pre-defines
+
+Pre-processor predefines several flags:
+- `CAPL_GNU64/CAPL_WINDOWS64/CAPL_MACHO64` flag
+- `usize` allias to the platform's biggest unsigned type
+- `isize` allias to the platform's biggest type
+
 ## Comments
 
 APL uses colon comments:
