@@ -1,0 +1,18 @@
+{
+  "name": "32_child_interface_stateful_workflow",
+  "description": "Stateful child interface has inherited read and child mutation methods defined in different files.",
+  "entry": "main.apl",
+  "sources": [
+    "value.apl",
+    "add.apl",
+    "workflow.apl",
+    "main.apl"
+  ],
+  "expected_exit_code": 42,
+  "features": [
+    "interface_inheritance",
+    "stateful",
+    "split_overrides",
+    "cross_tu"
+  ]
+}
