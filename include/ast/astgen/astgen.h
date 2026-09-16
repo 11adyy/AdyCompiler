@@ -452,6 +452,7 @@ Params:
 Returns an ast node.
 */
 ast_node_t* apl_parse_start(PARSER_ARGS);
+ast_node_t* apl_parse_place(PARSER_ARGS);
 
 /*
 Parse .apl syscall block. Should be invoked on syscall token.
